@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Home -->
+  <url>
+    <loc>https://almightportfolio.vercel.app/</loc>
+    <lastmod>2025-11-03</lastmod>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- About page -->
+  <url>
+    <loc>https://almightportfolio.vercel.app/about</loc>
+    <lastmod>2025-11-03</lastmod>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Projects or Works -->
+  <url>
+    <loc>https://almightportfolio.vercel.app/projects</loc>
+    <lastmod>2025-11-03</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Contact -->
+  <url>
+    <loc>https://almightportfolio.vercel.app/contact</loc>
+    <lastmod>2025-11-03</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+</urlset>
