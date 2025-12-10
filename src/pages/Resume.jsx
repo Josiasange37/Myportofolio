@@ -34,6 +34,36 @@ const Resume = () => {
 
                 {/* Hero */}
                 <div className="text-center mb-16">
+                    {/* Profile Photo */}
+                    <div className="flex justify-center mb-8">
+                        <div className="relative group">
+                            {/* Animated gradient border */}
+                            <div className="absolute -inset-1 bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 rounded-full opacity-75 group-hover:opacity-100 blur-lg transition-all duration-500 animate-gradient-xy"></div>
+
+                            {/* Photo container */}
+                            <div className="relative w-48 h-48 rounded-full overflow-hidden border-4 border-black bg-gradient-to-br from-cyan-500/20 to-purple-500/20 backdrop-blur-xl">
+                                {/* Placeholder - Replace with your photo */}
+                                <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900">
+                                    <div className="text-center">
+                                        <div className="text-6xl mb-2">👤</div>
+                                        <p className="text-xs text-gray-500 font-mono">YOUR_PHOTO</p>
+                                    </div>
+                                </div>
+
+                                {/* Uncomment and use this when you have a photo */}
+                                {/* <img 
+                  src="/path/to/your/photo.jpg" 
+                  alt="Josias Aaron" 
+                  className="w-full h-full object-cover"
+                /> */}
+                            </div>
+
+                            {/* Corner accent */}
+                            <div className="absolute -top-2 -right-2 w-8 h-8 bg-cyan-400 rounded-full animate-pulse"></div>
+                            <div className="absolute -bottom-2 -left-2 w-6 h-6 bg-purple-400 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+                        </div>
+                    </div>
+
                     <h1 className="text-6xl font-black mb-4 text-white" style={{ textShadow: '0 0 40px rgba(6,182,212,0.5)' }}>
                         JOSIAS AARON
                     </h1>
@@ -76,9 +106,18 @@ const Resume = () => {
 
                 {/* Journey Timeline */}
                 <section className="mb-16">
-                    <div className="flex items-center gap-3 mb-6">
-                        <FaRocket className="text-3xl text-cyan-400" />
-                        <h2 className="text-4xl font-bold text-white">THE_JOURNEY</h2>
+                    <div className="flex items-center justify-between mb-6 flex-wrap gap-4">
+                        <div className="flex items-center gap-3">
+                            <FaRocket className="text-3xl text-cyan-400" />
+                            <h2 className="text-4xl font-bold text-white">THE_JOURNEY</h2>
+                        </div>
+                        <a
+                            href="/progression"
+                            className="px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white font-bold text-sm rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(168,85,247,0.5)] flex items-center gap-2"
+                        >
+                            <FaRocket className="text-lg" />
+                            <span>SEE_ALL_MY_PROGRESSION</span>
+                        </a>
                     </div>
 
                     <div className="space-y-8">
