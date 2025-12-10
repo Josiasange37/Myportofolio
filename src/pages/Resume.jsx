@@ -1,11 +1,19 @@
 import React from 'react'
-import { FaArrowLeft, FaDownload, FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa'
+import { FaArrowLeft, FaDownload, FaGithub, FaLinkedin, FaEnvelope, FaLightbulb, FaRocket, FaHeart } from 'react-icons/fa'
 
 const Resume = () => {
     return (
         <div className="min-h-screen bg-black text-white">
+            {/* Cursor Flashlight Effect */}
+            <div
+                className="fixed inset-0 pointer-events-none z-50 mix-blend-screen"
+                style={{
+                    background: `radial-gradient(circle 600px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(6,182,212,0.15), transparent 80%)`
+                }}
+            />
+
             {/* Header */}
-            <header className="fixed top-0 left-0 right-0 bg-black/80 backdrop-blur-xl border-b border-gray-800 z-50">
+            <header className="fixed top-0 left-0 right-0 bg-black/80 backdrop-blur-xl border-b border-gray-800 z-40">
                 <div className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
                     <a
                         href="/"
@@ -46,47 +54,116 @@ const Resume = () => {
                     </div>
                 </div>
 
-                {/* Summary */}
-                <section className="mb-12 bg-gradient-to-br from-cyan-500/10 to-purple-500/10 backdrop-blur-xl border border-gray-700/50 rounded-2xl p-8">
-                    <h2 className="text-3xl font-bold mb-4 text-white">PROFESSIONAL_SUMMARY</h2>
-                    <p className="text-gray-300 leading-relaxed">
-                        I bridge the gap between <span className="text-cyan-400 font-mono">imagination</span> and <span className="text-purple-400 font-mono">execution</span>.
-                        As a Red Teamer and Full Stack Developer, I specialize in analyzing system vulnerabilities, breaking security protocols (legally),
-                        and building immersive digital experiences. My code isn't just syntax; it's a digital architecture designed to scale, perform, and mesmerize.
-                    </p>
+                {/* My Story - Origin */}
+                <section className="mb-16">
+                    <div className="flex items-center gap-3 mb-6">
+                        <FaLightbulb className="text-3xl text-yellow-400" />
+                        <h2 className="text-4xl font-bold text-white">THE_SPARK</h2>
+                    </div>
+
+                    <div className="bg-gradient-to-br from-yellow-500/10 to-orange-500/10 backdrop-blur-xl border border-gray-700/50 rounded-2xl p-8">
+                        <p className="text-gray-300 leading-relaxed mb-4">
+                            <span className="text-yellow-400 font-bold">It all started with curiosity.</span> As a kid, I was fascinated by how things worked—not just accepting them as they were, but wanting to understand the "why" and "how" behind everything.
+                        </p>
+                        <p className="text-gray-300 leading-relaxed mb-4">
+                            My first encounter with technology wasn't through a computer, but through <span className="text-cyan-400 font-mono">taking things apart</span>. Old radios, broken electronics, anything I could get my hands on. I wanted to see what made them tick.
+                        </p>
+                        <p className="text-gray-300 leading-relaxed">
+                            That curiosity evolved when I got my first computer. I didn't just want to use it—I wanted to <span className="text-purple-400 font-mono">control it</span>, <span className="text-cyan-400 font-mono">understand it</span>, and eventually, <span className="text-pink-400 font-mono">break it</span> (in the best way possible).
+                        </p>
+                    </div>
                 </section>
 
-                {/* Experience */}
-                <section className="mb-12">
-                    <h2 className="text-3xl font-bold mb-6 text-white">WORK_EXPERIENCE</h2>
+                {/* Journey Timeline */}
+                <section className="mb-16">
+                    <div className="flex items-center gap-3 mb-6">
+                        <FaRocket className="text-3xl text-cyan-400" />
+                        <h2 className="text-4xl font-bold text-white">THE_JOURNEY</h2>
+                    </div>
 
                     <div className="space-y-8">
-                        {/* Add your work experience here */}
-                        <div className="border-l-2 border-cyan-400 pl-6">
-                            <h3 className="text-xl font-bold text-cyan-400">Red Team Specialist</h3>
-                            <p className="text-gray-400 font-mono text-sm mb-2">Company Name • 2023 - Present</p>
-                            <ul className="list-disc list-inside text-gray-300 space-y-2">
-                                <li>Conducted penetration testing and vulnerability assessments</li>
-                                <li>Developed custom exploitation tools and security frameworks</li>
-                                <li>Analyzed and broke security protocols to improve system defenses</li>
-                            </ul>
+                        {/* Chapter 1 */}
+                        <div className="relative pl-8 border-l-2 border-cyan-400">
+                            <div className="absolute -left-3 top-0 w-5 h-5 rounded-full bg-cyan-400"></div>
+                            <h3 className="text-2xl font-bold text-cyan-400 mb-2">First Lines of Code</h3>
+                            <p className="text-gray-400 font-mono text-sm mb-3">Early Days • Self-Taught</p>
+                            <p className="text-gray-300 leading-relaxed mb-3">
+                                I wrote my first "Hello World" in <span className="text-cyan-400 font-mono">Python</span>. It was magical—I could make the computer do what I wanted with just text. From there, I dove deep into programming, spending countless nights learning, breaking things, and fixing them.
+                            </p>
+                            <p className="text-gray-300 leading-relaxed">
+                                <span className="text-yellow-400">Key Moment:</span> Built my first game—a simple text-based adventure. It wasn't much, but it was <span className="font-bold">mine</span>.
+                            </p>
                         </div>
 
-                        <div className="border-l-2 border-purple-400 pl-6">
-                            <h3 className="text-xl font-bold text-purple-400">Full Stack Developer</h3>
-                            <p className="text-gray-400 font-mono text-sm mb-2">Company Name • 2021 - 2023</p>
-                            <ul className="list-disc list-inside text-gray-300 space-y-2">
-                                <li>Built scalable web applications using React, Node.js, and modern frameworks</li>
-                                <li>Developed immersive 3D experiences and game development projects</li>
-                                <li>Implemented secure authentication and data protection systems</li>
-                            </ul>
+                        {/* Chapter 2 */}
+                        <div className="relative pl-8 border-l-2 border-purple-400">
+                            <div className="absolute -left-3 top-0 w-5 h-5 rounded-full bg-purple-400"></div>
+                            <h3 className="text-2xl font-bold text-purple-400 mb-2">Discovering Security</h3>
+                            <p className="text-gray-400 font-mono text-sm mb-3">The Turning Point</p>
+                            <p className="text-gray-300 leading-relaxed mb-3">
+                                One day, I stumbled upon a video about <span className="text-purple-400 font-mono">ethical hacking</span>. Watching someone break into a system (legally) and explain vulnerabilities blew my mind. I realized: <span className="font-bold">I wanted to be on both sides—building and breaking</span>.
+                            </p>
+                            <p className="text-gray-300 leading-relaxed">
+                                <span className="text-yellow-400">Inspiration:</span> Watching talks from security researchers and CTF champions showed me that hacking isn't just about breaking—it's about <span className="text-cyan-400">understanding systems at their core</span>.
+                            </p>
+                        </div>
+
+                        {/* Chapter 3 */}
+                        <div className="relative pl-8 border-l-2 border-pink-400">
+                            <div className="absolute -left-3 top-0 w-5 h-5 rounded-full bg-pink-400"></div>
+                            <h3 className="text-2xl font-bold text-pink-400 mb-2">Building & Breaking</h3>
+                            <p className="text-gray-400 font-mono text-sm mb-3">Present Day</p>
+                            <p className="text-gray-300 leading-relaxed mb-3">
+                                Now, I split my time between <span className="text-cyan-400 font-mono">creating</span> and <span className="text-pink-400 font-mono">destroying</span> (ethically). As a Full Stack Developer, I build scalable applications. As a Red Teamer, I break them to make them stronger.
+                            </p>
+                            <p className="text-gray-300 leading-relaxed">
+                                <span className="text-yellow-400">Philosophy:</span> "I constantly evolve and adapt—that is my philosophy. That is why I am <span className="text-white font-bold">ALMIGHT</span>."
+                            </p>
                         </div>
                     </div>
                 </section>
 
-                {/* Skills */}
-                <section className="mb-12">
-                    <h2 className="text-3xl font-bold mb-6 text-white">TECHNICAL_SKILLS</h2>
+                {/* Inspirations */}
+                <section className="mb-16">
+                    <div className="flex items-center gap-3 mb-6">
+                        <FaHeart className="text-3xl text-pink-400" />
+                        <h2 className="text-4xl font-bold text-white">WHO_INSPIRED_ME</h2>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="bg-black/40 backdrop-blur-xl border border-cyan-400/30 rounded-xl p-6">
+                            <h3 className="text-xl font-bold text-cyan-400 mb-3">The Builders</h3>
+                            <p className="text-gray-300 text-sm leading-relaxed">
+                                Developers who create beautiful, functional systems. Those who see code as art and engineering as craft. They taught me that <span className="text-cyan-400">elegance matters</span>.
+                            </p>
+                        </div>
+
+                        <div className="bg-black/40 backdrop-blur-xl border border-purple-400/30 rounded-xl p-6">
+                            <h3 className="text-xl font-bold text-purple-400 mb-3">The Breakers</h3>
+                            <p className="text-gray-300 text-sm leading-relaxed">
+                                Security researchers who think differently. Those who see vulnerabilities where others see features. They showed me that <span className="text-purple-400">curiosity is power</span>.
+                            </p>
+                        </div>
+
+                        <div className="bg-black/40 backdrop-blur-xl border border-pink-400/30 rounded-xl p-6">
+                            <h3 className="text-xl font-bold text-pink-400 mb-3">The Innovators</h3>
+                            <p className="text-gray-300 text-sm leading-relaxed">
+                                Visionaries who push boundaries. Those who don't accept "that's how it's always been done." They inspired me to <span className="text-pink-400">challenge everything</span>.
+                            </p>
+                        </div>
+
+                        <div className="bg-black/40 backdrop-blur-xl border border-orange-400/30 rounded-xl p-6">
+                            <h3 className="text-xl font-bold text-orange-400 mb-3">The Community</h3>
+                            <p className="text-gray-300 text-sm leading-relaxed">
+                                Open-source contributors, mentors, and fellow learners. Those who share knowledge freely. They reminded me that <span className="text-orange-400">we grow together</span>.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Skills & Experience */}
+                <section className="mb-16">
+                    <h2 className="text-4xl font-bold text-white mb-6">TECHNICAL_ARSENAL</h2>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="bg-black/40 backdrop-blur-xl border border-gray-700/50 rounded-xl p-6">
@@ -113,27 +190,32 @@ const Resume = () => {
                     </div>
                 </section>
 
-                {/* Education */}
-                <section className="mb-12">
-                    <h2 className="text-3xl font-bold mb-6 text-white">EDUCATION</h2>
+                {/* Current Focus */}
+                <section className="mb-16">
+                    <h2 className="text-4xl font-bold text-white mb-6">CURRENT_FOCUS</h2>
 
-                    <div className="bg-black/40 backdrop-blur-xl border border-gray-700/50 rounded-xl p-6">
-                        <h3 className="text-xl font-bold text-white">Computer Science / Cybersecurity</h3>
-                        <p className="text-gray-400 font-mono text-sm mb-2">University Name • Year</p>
-                        <p className="text-gray-300">Specialized in cybersecurity, software engineering, and system architecture</p>
-                    </div>
-                </section>
-
-                {/* Certifications */}
-                <section className="mb-12">
-                    <h2 className="text-3xl font-bold mb-6 text-white">CERTIFICATIONS</h2>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {['CEH - Certified Ethical Hacker', 'OSCP - Offensive Security', 'CompTIA Security+', 'AWS Certified'].map(cert => (
-                            <div key={cert} className="bg-gradient-to-r from-cyan-500/10 to-purple-500/10 border border-gray-700/50 rounded-lg p-4">
-                                <p className="text-white font-mono">{cert}</p>
-                            </div>
-                        ))}
+                    <div className="bg-gradient-to-br from-cyan-500/10 to-purple-500/10 backdrop-blur-xl border border-gray-700/50 rounded-2xl p-8">
+                        <p className="text-gray-300 leading-relaxed mb-4">
+                            Right now, I'm focused on bridging the gap between <span className="text-cyan-400 font-mono">imagination</span> and <span className="text-purple-400 font-mono">execution</span>.
+                        </p>
+                        <ul className="space-y-3 text-gray-300">
+                            <li className="flex items-start gap-3">
+                                <span className="text-cyan-400 mt-1">▸</span>
+                                <span>Building immersive 3D experiences and game development projects</span>
+                            </li>
+                            <li className="flex items-start gap-3">
+                                <span className="text-purple-400 mt-1">▸</span>
+                                <span>Analyzing system vulnerabilities and improving security protocols</span>
+                            </li>
+                            <li className="flex items-start gap-3">
+                                <span className="text-pink-400 mt-1">▸</span>
+                                <span>Contributing to open-source security tools and frameworks</span>
+                            </li>
+                            <li className="flex items-start gap-3">
+                                <span className="text-orange-400 mt-1">▸</span>
+                                <span>Constantly evolving and adapting—because that's what ALMIGHT does</span>
+                            </li>
+                        </ul>
                     </div>
                 </section>
 
@@ -142,7 +224,7 @@ const Resume = () => {
             {/* Footer */}
             <footer className="border-t border-gray-800 py-6">
                 <div className="max-w-5xl mx-auto px-6 text-center text-gray-500 font-mono text-sm">
-                    © 2025 JOSIAS AARON (ALMIGHT). ALL RIGHTS RESERVED.
+                    © 2025 JOSIAS AARON (ALMIGHT). CONSTANTLY EVOLVING.
                 </div>
             </footer>
         </div>
