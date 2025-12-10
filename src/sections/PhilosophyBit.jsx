@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { FaBrain, FaRocket, FaLightbulb, FaCode, FaShieldAlt, FaInfinity } from 'react-icons/fa'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
+import { View, Sphere, MeshDistortMaterial, Float, PerspectiveCamera } from '@react-three/drei'
+import { useFrame } from '@react-three/fiber'
 
 const PhilosophyCard = ({ icon: Icon, title, description, index, color }) => {
   const [cardRef, cardVisible] = useScrollAnimation(0.1)
@@ -38,6 +40,52 @@ const PhilosophyCard = ({ icon: Icon, title, description, index, color }) => {
         </div>
       </div>
     </div>
+  )
+}
+
+const PhilosophyScene = () => {
+  const groupRef = useRef()
+
+  useFrame((state) => {
+    if (groupRef.current) {
+      groupRef.current.rotation.y = state.clock.getElapsedTime() * 0.1
+    }
+  })
+
+  return (
+    <>
+      <PerspectiveCamera makeDefault position={[0, 0, 8]} fov={50} />
+      <ambientLight intensity={0.5} />
+      <pointLight position={[10, 10, 10]} intensity={1} color="#a855f7" />
+      <pointLight position={[-10, -10, -10]} intensity={0.5} color="#06b6d4" />
+
+      <group ref={groupRef}>
+        {/* Main morphing blob */}
+        <Float speed={2} rotationIntensity={0.5} floatIntensity={0.5}>
+          <Sphere args={[1.5, 64, 64]} position={[0, 0, 0]}>
+            <MeshDistortMaterial
+              color="#a855f7"
+              envMapIntensity={1}
+              clearcoat={1}
+              clearcoatRoughness={0}
+              metalness={0.1}
+              distort={0.6}
+              speed={3}
+              transparent
+              opacity={0.6}
+            />
+          </Sphere>
+
+          {/* Secondary blobs */}
+          <Sphere args={[0.5, 32, 32]} position={[2, 2, -2]}>
+            <MeshDistortMaterial color="#06b6d4" distort={0.4} speed={2} transparent opacity={0.4} />
+          </Sphere>
+          <Sphere args={[0.3, 32, 32]} position={[-2, -1, 1]}>
+            <MeshDistortMaterial color="#ec4899" distort={0.4} speed={4} transparent opacity={0.4} />
+          </Sphere>
+        </Float>
+      </group>
+    </>
   )
 }
 
@@ -86,14 +134,13 @@ const PhilosophyBit = () => {
 
   return (
     <section className="min-h-screen w-full relative flex items-center justify-center bg-gradient-to-b from-black via-purple-950/10 to-black py-20">
+      {/* 3D Background */}
+      <View className="absolute top-0 left-0 w-full h-full pointer-events-none">
+        <PhilosophyScene />
+      </View>
+
       {/* Background effects */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_rgba(168,85,247,0.1),_transparent_50%)]" />
-
-      {/* Animated particles */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse" style={{ top: '10%', left: '10%' }}></div>
-        <div className="absolute w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl animate-pulse" style={{ top: '60%', right: '10%', animationDelay: '1s' }}></div>
-      </div>
 
       <div className="max-w-7xl w-full mx-auto px-6 relative z-10">
 
@@ -103,7 +150,7 @@ const PhilosophyBit = () => {
           className={`text-center mb-12 scroll-hidden ${headerVisible ? 'animate-fade-in-down' : ''
             }`}
         >
-          <h2 className="text-5xl md:text-6xl font-black mb-6 bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+          <h2 className="text-5xl md:text-6xl font-black mb-6 text-white" style={{ textShadow: '0 0 40px rgba(6,182,212,0.5), 0 0 80px rgba(168,85,247,0.3)' }}>
             PHILOSOPHY
           </h2>
         </div>
@@ -118,19 +165,18 @@ const PhilosophyBit = () => {
             <div className="absolute -inset-4 bg-gradient-to-r from-cyan-500/20 via-purple-500/20 to-pink-500/20 blur-2xl rounded-full"></div>
             <div className="relative bg-black/40 backdrop-blur-xl border border-purple-500/30 rounded-2xl px-8 py-6 max-w-3xl">
               <p className="text-2xl md:text-3xl font-light text-cyan-200 leading-relaxed font-mono mb-3">
-                "Humanity's superpower = Evolution + Adaptation + Imagination "
+                "Humanity's superpower = "
               </p>
               <p className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400">
                 Evolution + Adaptation + Imagination
               </p>
               <p className="mt-6 text-gray-400 text-sm md:text-base">
-                I build not just to solve problems, but to expand the boundaries of what's possible.
+                We build not just to solve problems, but to expand the boundaries of what's possible.
               </p>
-
             </div>
           </div>
         </div>
-        <h1 className="text-5xl md:text-6xl font-black mb-6 bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent text-center">My visions</h1>
+
         {/* Philosophy Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {philosophies.map((philosophy, index) => (

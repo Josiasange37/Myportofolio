@@ -117,13 +117,20 @@ const AboutBit = () => {
             </p>
             <p>I constantly evolve and adapt that is my philosophy that is why i am ALMIGHT</p>
 
-            <div className="pt-4 flex gap-4">
+            <div className="pt-4 flex flex-wrap gap-4 items-center">
               <div className="px-4 py-2 border border-purple-500/50 rounded text-xs font-mono text-purple-300">
                 STATUS: ONLINE
               </div>
               <div className="px-4 py-2 border border-cyan-500/50 rounded text-xs font-mono text-cyan-300">
                 LOCATION: CLASSIFIED
               </div>
+              <a
+                href="/resume"
+                className="px-6 py-2 bg-gradient-to-r from-cyan-500 to-purple-500 hover:from-cyan-400 hover:to-purple-400 text-white font-bold text-sm rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(6,182,212,0.5)] flex items-center gap-2"
+              >
+                <FaTerminal className="text-sm" />
+                <span>VIEW_FULL_RESUME</span>
+              </a>
             </div>
           </div>
         </div>

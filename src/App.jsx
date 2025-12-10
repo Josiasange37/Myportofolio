@@ -3,6 +3,7 @@ import { Canvas } from '@react-three/fiber'
 import { View, Preload, Stars } from '@react-three/drei'
 import { useGitHubData } from './hooks/useGitHubData'
 import { useScrollProgress } from './hooks/use3DAnimation'
+import { useCursorFlashlight } from './hooks/useCursorFlashlight'
 import ErrorBoundary from './components/ErrorBoundary'
 import CanvasErrorBoundary from './components/CanvasErrorBoundary'
 
@@ -43,11 +44,11 @@ const NavDots = ({ activeSection, scrollTo }) => (
         <button
           key={item.name}
           onClick={() => scrollTo(idx)}
-          className={`group relative flex items-center justify-center transition-all duration-500 ${isActive
-            ? 'p-3 rounded-xl bg-cyan-500/20 border border-cyan-400 text-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.5)] scale-110'
-            : 'p-1 hover:scale-125'
-            }`}
-          aria-label={`Scroll to ${item.name}`}
+          className={`group relative flex items - center justify - center transition - all duration - 500 ${isActive
+              ? 'p-3 rounded-xl bg-cyan-500/20 border border-cyan-400 text-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.5)] scale-110'
+              : 'p-1 hover:scale-125'
+            } `}
+          aria-label={`Scroll to ${item.name} `}
         >
           {isActive ? (
             <Icon size={20} strokeWidth={2.5} />
@@ -69,6 +70,7 @@ const App = () => {
   const containerRef = useRef(null)
   const { data: githubData, loading } = useGitHubData('Josiasange37') // User: Josiasange37
   const scrollProgress = useScrollProgress()
+  const cursorPos = useCursorFlashlight()
 
   const activeSection = Math.round(scrollProgress * 6)
 
@@ -90,6 +92,14 @@ const App = () => {
   return (
     <ErrorBoundary>
       <div ref={containerRef} className="relative w-full bg-black text-white selection:bg-purple-500 selection:text-white overflow-x-hidden">
+
+        {/* Cursor Flashlight Effect */}
+        <div
+          className="fixed inset-0 pointer-events-none z-50 mix-blend-screen"
+          style={{
+            background: `radial - gradient(circle 600px at ${cursorPos.x}px ${cursorPos.y}px, rgba(6, 182, 212, 0.15), transparent 80 %)`
+          }}
+        />
 
         {/* Background Canvas - Shared WebGL Context */}
         <CanvasErrorBoundary>
@@ -118,7 +128,7 @@ const App = () => {
         {/* Progress Bar */}
         <div
           className="fixed top-0 left-0 h-1 bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 z-50 transition-all duration-100 ease-out"
-          style={{ width: `${scrollProgress * 100}%` }}
+          style={{ width: `${scrollProgress * 100}% ` }}
         />
 
         {/* Sections */}

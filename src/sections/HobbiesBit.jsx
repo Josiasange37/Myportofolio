@@ -105,7 +105,7 @@ const HobbiesBit = () => {
           className={`text-center mb-16 scroll-hidden ${headerVisible ? 'animate-fade-in-down' : ''
             }`}
         >
-          <h2 className="text-5xl md:text-6xl font-black mb-4 bg-gradient-to-r from-orange-400 via-pink-500 to-orange-400 bg-clip-text text-transparent">
+          <h2 className="text-5xl md:text-6xl font-black mb-4 text-white" style={{ textShadow: '0 0 40px rgba(251,146,60,0.5), 0 0 80px rgba(236,72,153,0.3)' }}>
             ORBITAL HOBBIES
           </h2>
           <p className="text-gray-400 font-mono text-lg">

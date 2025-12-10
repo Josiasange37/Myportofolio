@@ -138,10 +138,8 @@ const GitHubActivityBit = ({ data }) => {
                 >
                     <div className="flex items-center gap-3 mb-4">
                         <FaCode className="text-3xl text-cyan-400" />
-                        <h2 className="text-4xl font-black text-white">
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">
-                                COMMIT_ACTIVITY
-                            </span>
+                        <h2 className="text-4xl font-black text-white" style={{ textShadow: '0 0 40px rgba(6,182,212,0.5), 0 0 80px rgba(168,85,247,0.3)' }}>
+                            COMMIT_ACTIVITY
                         </h2>
                     </div>
 

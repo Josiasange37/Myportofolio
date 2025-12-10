@@ -104,7 +104,7 @@ const ContactBit = () => {
           className={`text-center mb-6 scroll-hidden ${headingVisible ? 'animate-fade-in-down' : ''
             }`}
         >
-          <h2 className="text-5xl md:text-7xl font-black bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent mb-4">
+          <h2 className="text-5xl md:text-7xl font-black mb-4 text-white" style={{ textShadow: '0 0 40px rgba(6,182,212,0.5), 0 0 80px rgba(168,85,247,0.3)' }}>
             READY TO DEPLOY?
           </h2>
         </div>
