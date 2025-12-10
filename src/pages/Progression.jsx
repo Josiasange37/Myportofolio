@@ -7,27 +7,31 @@ const Progression = () => {
     // Progression data
     const progressionData = {
         school: [
-            { id: 1, year: '2015', title: 'Started Learning', description: 'First introduction to computers and programming', level: 'beginner' },
-            { id: 2, year: '2017', title: 'High School CS', description: 'Formal computer science education begins', level: 'beginner' },
-            { id: 3, year: '2019', title: 'University Entry', description: 'Computer Science / Cybersecurity program', level: 'intermediate' },
-            { id: 4, year: '2023', title: 'Graduation', description: 'Completed degree with honors', level: 'advanced' },
+            { id: 1, year: '2015', title: 'Started Learning', description: 'First introduction to computers and programming', level: 'beginner', image: null },
+            { id: 2, year: '2017', title: 'High School CS', description: 'Formal computer science education begins', level: 'beginner', image: null },
+            { id: 3, year: '2019', title: 'University Entry', description: 'Computer Science / Cybersecurity program', level: 'intermediate', image: null },
+            { id: 4, year: '2023', title: 'Graduation', description: 'Completed degree with honors', level: 'advanced', image: null },
         ],
         experience: [
-            { id: 5, year: '2018', title: 'First CTF', description: 'Participated in Capture The Flag competition', type: 'event', category: 'redteam' },
-            { id: 6, year: '2020', title: 'CEH Certified', description: 'Certified Ethical Hacker certification', type: 'cert', category: 'redteam' },
-            { id: 7, year: '2021', title: 'First Dev Job', description: 'Junior Full Stack Developer position', type: 'work', category: 'programming' },
-            { id: 8, year: '2022', title: 'OSCP Certified', description: 'Offensive Security Certified Professional', type: 'cert', category: 'redteam' },
-            { id: 9, year: '2022', title: 'Security Conference', description: 'Spoke at cybersecurity conference', type: 'event', category: 'redteam' },
-            { id: 10, year: '2023', title: 'Senior Developer', description: 'Promoted to Senior Full Stack Developer', type: 'work', category: 'programming' },
-            { id: 11, year: '2024', title: 'Red Team Lead', description: 'Leading red team operations', type: 'work', category: 'redteam' },
+            { id: 5, year: '2018', title: 'First CTF', description: 'Participated in Capture The Flag competition', type: 'event', category: 'redteam', image: null },
+            { id: 6, year: '2020', title: 'CEH Certified', description: 'Certified Ethical Hacker certification', type: 'cert', category: 'redteam', image: null, certImage: '/certs/ceh.jpg' },
+            { id: 7, year: '2021', title: 'First Dev Job', description: 'Junior Full Stack Developer position', type: 'work', category: 'programming', image: null },
+            { id: 8, year: '2022', title: 'OSCP Certified', description: 'Offensive Security Certified Professional', type: 'cert', category: 'redteam', image: null, certImage: '/certs/oscp.jpg' },
+            { id: 9, year: '2022', title: 'Security Conference', description: 'Spoke at cybersecurity conference', type: 'event', category: 'redteam', image: null },
+            { id: 10, year: '2023', title: 'Senior Developer', description: 'Promoted to Senior Full Stack Developer', type: 'work', category: 'programming', image: null },
+            { id: 11, year: '2024', title: 'Red Team Lead', description: 'Leading red team operations', type: 'work', category: 'redteam', image: null },
         ],
         goals: [
-            { id: 12, year: '2025', title: 'Master 3D Development', description: 'Become expert in Three.js and game development', category: 'programming' },
-            { id: 13, year: '2025', title: 'OSEP Certification', description: 'Offensive Security Experienced Penetration Tester', category: 'redteam' },
-            { id: 14, year: '2026', title: 'Open Source Contribution', description: 'Launch major security framework', category: 'both' },
-            { id: 15, year: '2027', title: 'Tech Leadership', description: 'CTO or Security Director role', category: 'both' },
+            { id: 12, year: '2025', title: 'Master 3D Development', description: 'Become expert in Three.js and game development', category: 'programming', image: null },
+            { id: 13, year: '2025', title: 'OSEP Certification', description: 'Offensive Security Experienced Penetration Tester', category: 'redteam', image: null },
+            { id: 14, year: '2026', title: 'Open Source Contribution', description: 'Launch major security framework', category: 'both', image: null },
+            { id: 15, year: '2027', title: 'Tech Leadership', description: 'CTO or Security Director role', category: 'both', image: null },
         ]
     }
+
+    // Certifications data
+    const certifications = progressionData.experience.filter(item => item.type === 'cert')
+
 
     // Combine all data for network graph
     const allNodes = [
@@ -83,8 +87,8 @@ const Progression = () => {
                         <button
                             onClick={() => setActiveTab('all')}
                             className={`px-4 py-2 rounded-lg font-mono text-sm transition-all ${activeTab === 'all'
-                                    ? 'bg-gradient-to-r from-cyan-500 to-purple-500 text-white'
-                                    : 'bg-gray-800 text-gray-400 hover:text-white'
+                                ? 'bg-gradient-to-r from-cyan-500 to-purple-500 text-white'
+                                : 'bg-gray-800 text-gray-400 hover:text-white'
                                 }`}
                         >
                             ALL
@@ -92,8 +96,8 @@ const Progression = () => {
                         <button
                             onClick={() => setActiveTab('programming')}
                             className={`px-4 py-2 rounded-lg font-mono text-sm transition-all ${activeTab === 'programming'
-                                    ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white'
-                                    : 'bg-gray-800 text-gray-400 hover:text-white'
+                                ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white'
+                                : 'bg-gray-800 text-gray-400 hover:text-white'
                                 }`}
                         >
                             PROGRAMMING
@@ -101,8 +105,8 @@ const Progression = () => {
                         <button
                             onClick={() => setActiveTab('redteam')}
                             className={`px-4 py-2 rounded-lg font-mono text-sm transition-all ${activeTab === 'redteam'
-                                    ? 'bg-gradient-to-r from-red-500 to-orange-500 text-white'
-                                    : 'bg-gray-800 text-gray-400 hover:text-white'
+                                ? 'bg-gradient-to-r from-red-500 to-orange-500 text-white'
+                                : 'bg-gray-800 text-gray-400 hover:text-white'
                                 }`}
                         >
                             RED_TEAMING
@@ -177,6 +181,17 @@ const Progression = () => {
                                                 {node.year}
                                             </div>
 
+                                            {/* Image (if provided) */}
+                                            {node.image && (
+                                                <div className="mb-4 rounded-lg overflow-hidden border-2 border-gray-700">
+                                                    <img
+                                                        src={node.image}
+                                                        alt={node.title}
+                                                        className="w-full h-32 object-cover"
+                                                    />
+                                                </div>
+                                            )}
+
                                             {/* Icon */}
                                             <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${getNodeColor(node)} flex items-center justify-center mb-4 text-white text-xl`}>
                                                 {getNodeIcon(node)}
@@ -190,8 +205,8 @@ const Progression = () => {
                                             {node.type && (
                                                 <div className="mt-4">
                                                     <span className={`px-3 py-1 rounded-full text-xs font-mono ${node.type === 'cert' ? 'bg-purple-500/20 text-purple-300 border border-purple-400/30' :
-                                                            node.type === 'work' ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-400/30' :
-                                                                'bg-pink-500/20 text-pink-300 border border-pink-400/30'
+                                                        node.type === 'work' ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-400/30' :
+                                                            'bg-pink-500/20 text-pink-300 border border-pink-400/30'
                                                         }`}>
                                                         {node.type.toUpperCase()}
                                                     </span>
@@ -208,6 +223,59 @@ const Progression = () => {
                             ))}
                         </div>
                     </div>
+
+                    {/* Certifications Gallery */}
+                    {certifications.length > 0 && (
+                        <div className="mt-24 mb-16">
+                            <h2 className="text-4xl font-bold text-white mb-8 text-center">
+                                MY_CERTIFICATIONS
+                            </h2>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                {certifications.map((cert) => (
+                                    <div key={cert.id} className="group relative">
+                                        {/* Glow effect */}
+                                        <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl opacity-0 group-hover:opacity-75 blur-xl transition-all duration-500"></div>
+
+                                        {/* Cert Card */}
+                                        <div className="relative bg-black/60 backdrop-blur-xl border border-purple-400/30 rounded-2xl p-6 transition-all duration-300 group-hover:scale-105">
+                                            {/* Certificate Image */}
+                                            {cert.certImage ? (
+                                                <div className="mb-4 rounded-lg overflow-hidden border-2 border-purple-400/50">
+                                                    <img
+                                                        src={cert.certImage}
+                                                        alt={cert.title}
+                                                        className="w-full h-48 object-cover"
+                                                    />
+                                                </div>
+                                            ) : (
+                                                <div className="mb-4 rounded-lg overflow-hidden border-2 border-purple-400/50 bg-gradient-to-br from-purple-900/30 to-pink-900/30 h-48 flex items-center justify-center">
+                                                    <div className="text-center">
+                                                        <FaShieldAlt className="text-6xl text-purple-400 mb-2 mx-auto" />
+                                                        <p className="text-xs text-gray-500 font-mono">CERT_IMAGE_HERE</p>
+                                                    </div>
+                                                </div>
+                                            )}
+
+                                            {/* Year Badge */}
+                                            <div className="absolute -top-3 -right-3 w-12 h-12 rounded-full bg-gradient-to-br from-purple-400 to-pink-500 flex items-center justify-center font-bold text-sm border-4 border-black">
+                                                {cert.year}
+                                            </div>
+
+                                            {/* Content */}
+                                            <h3 className="text-xl font-bold text-white mb-2">{cert.title}</h3>
+                                            <p className="text-gray-400 text-sm mb-4">{cert.description}</p>
+
+                                            {/* Badge */}
+                                            <div className="flex items-center gap-2">
+                                                <FaShieldAlt className="text-purple-400" />
+                                                <span className="text-xs font-mono text-purple-300">CERTIFIED</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
 
                     {/* Legend */}
                     <div className="mt-16 flex justify-center gap-6 flex-wrap">
