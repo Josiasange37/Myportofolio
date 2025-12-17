@@ -18,11 +18,11 @@ const SocialLink = ({ icon: Icon, label, href, color, index }) => {
       <div className={`absolute -inset-0.5 bg-gradient-to-r ${color} rounded-2xl opacity-0 group-hover:opacity-75 blur-xl transition-all duration-500`}></div>
 
       {/* Button */}
-      <div className={`relative bg-black/60 backdrop-blur-xl border border-gray-700/50 rounded-2xl p-6 transition-all duration-300 group-hover:scale-110 group-hover:border-gray-500/50 flex flex-col items-center gap-3`}>
-        <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${color} flex items-center justify-center group-hover:rotate-12 transition-transform duration-500`}>
-          <Icon className="text-3xl text-white" />
+      <div className={`relative bg-black/60 backdrop-blur-xl border border-gray-700/50 rounded-2xl p-4 sm:p-6 transition-all duration-300 group-hover:scale-110 group-hover:border-gray-500/50 flex flex-col items-center gap-2 sm:gap-3`}>
+        <div className={`w-12 sm:w-16 h-12 sm:h-16 rounded-xl bg-gradient-to-br ${color} flex items-center justify-center group-hover:rotate-12 transition-transform duration-500`}>
+          <Icon className="text-2xl sm:text-3xl text-white" />
         </div>
-        <span className="text-white font-mono text-sm group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-cyan-400 group-hover:to-purple-400 transition-all duration-300">
+        <span className="text-white font-mono text-xs sm:text-sm group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-cyan-400 group-hover:to-purple-400 transition-all duration-300">
           {label}
         </span>
       </div>
@@ -101,10 +101,10 @@ const ContactBit = () => {
         {/* Header */}
         <div
           ref={headingRef}
-          className={`text-center mb-6 scroll-hidden ${headingVisible ? 'animate-fade-in-down' : ''
+          className={`text-center mb-4 sm:mb-6 scroll-hidden ${headingVisible ? 'animate-fade-in-down' : ''
             }`}
         >
-          <h2 className="text-5xl md:text-7xl font-black mb-4 text-white" style={{ textShadow: '0 0 40px rgba(6,182,212,0.5), 0 0 80px rgba(168,85,247,0.3)' }}>
+          <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-3 sm:mb-4 text-white px-4" style={{ textShadow: '0 0 40px rgba(6,182,212,0.5), 0 0 80px rgba(168,85,247,0.3)' }}>
             READY TO DEPLOY?
           </h2>
         </div>
@@ -112,21 +112,21 @@ const ContactBit = () => {
         {/* Subheading */}
         <div
           ref={subheadingRef}
-          className={`text-center mb-16 scroll-hidden ${subheadingVisible ? 'animate-scale-in' : ''
+          className={`text-center mb-12 sm:mb-16 scroll-hidden ${subheadingVisible ? 'animate-scale-in' : ''
             }`}
         >
-          <div className="inline-block bg-black/40 backdrop-blur-xl border border-cyan-400/30 rounded-full px-6 py-3">
-            <p className="text-cyan-400 font-mono text-sm md:text-base">
+          <div className="inline-block bg-black/40 backdrop-blur-xl border border-cyan-400/30 rounded-full px-4 sm:px-6 py-2 sm:py-3 mx-4">
+            <p className="text-cyan-400 font-mono text-xs sm:text-sm md:text-base">
               SYSTEM STATUS: <span className="text-green-400 animate-pulse">ONLINE_AND_WAITING</span>
             </p>
           </div>
-          <p className="mt-6 text-gray-400 text-lg max-w-2xl mx-auto">
+          <p className="mt-4 sm:mt-6 text-gray-400 text-sm sm:text-lg max-w-2xl mx-auto px-4">
             Let's build something amazing together. Choose your preferred channel to connect.
           </p>
         </div>
 
         {/* Social Links Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-16">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-6 mb-12 sm:mb-16">
           {socialLinks.map((link, index) => (
             <SocialLink
               key={index}
@@ -143,9 +143,9 @@ const ContactBit = () => {
         <div className="text-center">
           <a
             href="mailto:hello@xyberclan.com"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-cyan-500 to-purple-500 hover:from-cyan-400 hover:to-purple-400 text-white font-bold rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(6,182,212,0.5)] group text-lg"
+            className="inline-flex items-center gap-2 sm:gap-3 px-6 sm:px-8 py-2 sm:py-4 bg-gradient-to-r from-cyan-500 to-purple-500 hover:from-cyan-400 hover:to-purple-400 text-white font-bold rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(6,182,212,0.5)] group text-sm sm:text-lg"
           >
-            <FaEnvelope className="text-2xl group-hover:rotate-12 transition-transform" />
+            <FaEnvelope className="text-lg sm:text-2xl group-hover:rotate-12 transition-transform" />
             <span>INITIATE_CONTACT</span>
           </a>
         </div>

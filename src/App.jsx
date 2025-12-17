@@ -18,6 +18,7 @@ import PhilosophyBit from './sections/PhilosophyBit'
 import HobbiesBit from './sections/HobbiesBit'
 import ContactBit from './sections/ContactBit'
 
+
 import { Home, Cpu, Activity, FolderGit, Brain, Gamepad2, Mail, User } from 'lucide-react'
 import { FaShieldAlt } from 'react-icons/fa'
 
@@ -45,8 +46,8 @@ const NavDots = ({ activeSection, scrollTo }) => (
           key={item.name}
           onClick={() => scrollTo(idx)}
           className={`group relative flex items - center justify - center transition - all duration - 500 ${isActive
-              ? 'p-3 rounded-xl bg-cyan-500/20 border border-cyan-400 text-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.5)] scale-110'
-              : 'p-1 hover:scale-125'
+            ? 'p-3 rounded-xl bg-cyan-500/20 border border-cyan-400 text-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.5)] scale-110'
+            : 'p-1 hover:scale-125'
             } `}
           aria-label={`Scroll to ${item.name} `}
         >
@@ -72,7 +73,7 @@ const App = () => {
   const scrollProgress = useScrollProgress()
   const cursorPos = useCursorFlashlight()
 
-  const activeSection = Math.round(scrollProgress * 6)
+  const activeSection = Math.round(scrollProgress * (NAV_ITEMS.length - 1))
 
   const scrollTo = (index) => {
     window.scrollTo({

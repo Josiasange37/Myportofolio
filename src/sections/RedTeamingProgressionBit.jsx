@@ -277,13 +277,13 @@ const RedTeamingProgressionBit = () => {
             <div className="relative z-10 w-full max-w-6xl mx-auto px-8 py-20">
                 <div
                     ref={headerRef}
-                    className={`text-center mb-16 scroll-hidden ${headerVisible ? 'animate-fade-in-down' : ''
+                    className={`text-center mb-12 sm:mb-16 scroll-hidden ${headerVisible ? 'animate-fade-in-down' : ''
                         }`}
                 >
-                    <h2 className="text-5xl md:text-6xl font-black mb-4 text-white" style={{ textShadow: '0 0 40px rgba(239,68,68,0.5), 0 0 80px rgba(251,146,60,0.3)' }}>
+                    <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-2 sm:mb-4 text-white px-4" style={{ textShadow: '0 0 40px rgba(239,68,68,0.5), 0 0 80px rgba(251,146,60,0.3)' }}>
                         RED TEAMING PROGRESSION
                     </h2>
-                    <p className="text-gray-400 font-mono text-sm tracking-widest">
+                    <p className="text-gray-400 font-mono text-xs sm:text-sm tracking-widest px-4">
                         &lt; OFFENSIVE_SECURITY_MASTERY /&gt;
                     </p>
                 </div>

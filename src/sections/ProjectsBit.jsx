@@ -43,7 +43,7 @@ const ProjectCard = ({ project, index }) => {
         <div className={`absolute -inset-0.5 bg-gradient-to-r ${borderGradient} rounded-2xl opacity-0 group-hover:opacity-100 blur transition-all duration-500 group-hover:blur-md animate-gradient-xy`}></div>
 
         {/* Card content */}
-        <div className={`relative h-full bg-gradient-to-br ${gradient} backdrop-blur-xl border border-gray-700/50 rounded-2xl p-6 transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-2xl overflow-hidden`}>
+        <div className={`relative h-full bg-gradient-to-br ${gradient} backdrop-blur-xl border border-gray-700/50 rounded-2xl p-4 sm:p-6 transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-2xl overflow-hidden`}>
 
           {/* Background pattern */}
           <div className="absolute inset-0 opacity-5">
@@ -56,27 +56,27 @@ const ProjectCard = ({ project, index }) => {
           <div className="relative z-10 flex flex-col h-full">
 
             {/* Header */}
-            <div className="flex items-start justify-between mb-4">
-              <div className="flex-1">
-                <h3 className="text-xl font-bold text-white mb-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-cyan-400 group-hover:to-purple-400 transition-all duration-300 line-clamp-1">
+            <div className="flex items-start justify-between mb-3 sm:mb-4 gap-2">
+              <div className="flex-1 min-w-0">
+                <h3 className="text-lg sm:text-xl font-bold text-white mb-1 sm:mb-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-cyan-400 group-hover:to-purple-400 transition-all duration-300 line-clamp-1">
                   {project.name}
                 </h3>
                 {project.language && (
-                  <span className="inline-block px-3 py-1 text-xs font-mono bg-white/10 text-cyan-300 rounded-full border border-cyan-400/30">
+                  <span className="inline-block px-2 sm:px-3 py-0.5 sm:py-1 text-[10px] sm:text-xs font-mono bg-white/10 text-cyan-300 rounded-full border border-cyan-400/30">
                     {project.language}
                   </span>
                 )}
               </div>
-              <FaExternalLinkAlt className="text-gray-400 group-hover:text-cyan-400 transition-colors ml-2 flex-shrink-0" />
+              <FaExternalLinkAlt className="text-gray-400 group-hover:text-cyan-400 transition-colors flex-shrink-0 text-sm" />
             </div>
 
             {/* Description */}
-            <p className="text-gray-300 text-sm mb-4 line-clamp-3 flex-grow">
+            <p className="text-gray-300 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-3 flex-grow">
               {project.description || 'No description provided.'}
             </p>
 
             {/* Stats */}
-            <div className="flex items-center gap-4 text-sm">
+            <div className="flex items-center gap-3 sm:gap-4 text-xs sm:text-sm">
               <div className="flex items-center gap-1.5 text-yellow-400">
                 <FaStar className="text-xs" />
                 <span className="font-mono">{project.stargazers_count || 0}</span>
@@ -147,16 +147,16 @@ const ProjectsBit = ({ data }) => {
         {/* Header */}
         <div
           ref={headerRef}
-          className={`text-center mb-16 scroll-hidden ${headerVisible ? 'animate-fade-in-down' : ''
+          className={`text-center mb-12 sm:mb-16 scroll-hidden ${headerVisible ? 'animate-fade-in-down' : ''
             }`}
         >
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <FaGithub className="text-4xl text-cyan-400" />
-            <h2 className="text-5xl md:text-6xl font-black text-white" style={{ textShadow: '0 0 40px rgba(6,182,212,0.5), 0 0 80px rgba(168,85,247,0.3)' }}>
+          <div className="flex items-center justify-center gap-2 sm:gap-3 mb-3 sm:mb-4 flex-wrap">
+            <FaGithub className="text-3xl sm:text-4xl text-cyan-400" />
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white px-4" style={{ textShadow: '0 0 40px rgba(6,182,212,0.5), 0 0 80px rgba(168,85,247,0.3)' }}>
               PROJECTS
             </h2>
           </div>
-          <p className="text-gray-400 font-mono text-lg">
+          <p className="text-gray-400 font-mono text-xs sm:text-lg px-4">
             Featured Repositories • Click to Explore
           </p>
         </div>

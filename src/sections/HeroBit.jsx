@@ -171,7 +171,7 @@ const TypewriterText = () => {
   }, [text, isDeleting, loopNum, titles, typingSpeed])
 
   return (
-    <p className="text-xl md:text-2xl text-cyan-100 font-mono tracking-widest mb-8 border-r-2 border-pink-500 pr-4 inline-block bg-black/30 backdrop-blur-sm p-2 rounded h-[3rem]">
+    <p className="text-sm sm:text-lg md:text-xl lg:text-2xl text-cyan-100 font-mono tracking-widest mb-6 sm:mb-8 border-r-2 border-pink-500 pr-4 inline-block bg-black/30 backdrop-blur-sm p-2 rounded h-[2.5rem] sm:h-[3rem] px-4">
       {text}<span className="animate-pulse">_</span>
     </p>
   )
@@ -249,16 +249,6 @@ const HeroBit = ({ data }) => {
         <pointLight position={[10, 10, 10]} intensity={1} color="#06b6d4" />
         <pointLight position={[-10, -10, -10]} intensity={0.5} color="#ec4899" />
 
-        <group>
-          {/* DEBUG: Simple Box to test View rendering */}
-          <mesh rotation={[0.5, 0.5, 0]}>
-            <boxGeometry args={[2, 2, 2]} />
-            <meshStandardMaterial color="red" />
-          </mesh>
-          <ambientLight intensity={1} />
-        </group>
-
-        {/* 
         <Float speed={2} rotationIntensity={0.5} floatIntensity={0.5}>
           <DNAHelix />
         </Float>
@@ -268,8 +258,7 @@ const HeroBit = ({ data }) => {
           <group position={[0, -1.2, 0]}>
             <GlitchText text={pseudo} fontSize={1.2} />
           </group>
-        </group> 
-        */}
+        </group>
       </View>
 
       <div className="relative z-50 text-center pointer-events-none p-8 mt-40">
@@ -286,19 +275,19 @@ const HeroBit = ({ data }) => {
           <div className="absolute -inset-2 rounded-full border border-dashed border-pink-500/50 w-[calc(100%+16px)] h-[calc(100%+16px)] -left-2 -top-2 animate-spin-slow"></div>
         </div>
 
-        <h1 className="text-3xl md:text-5xl font-black mb-4 text-cyan-400 drop-shadow-[0_0_20px_rgba(6,182,212,0.8)] leading-tight tracking-wide animate-appear">
+        <h1 className="text-2xl sm:text-3xl md:text-5xl font-black mb-2 sm:mb-4 text-cyan-400 drop-shadow-[0_0_20px_rgba(6,182,212,0.8)] leading-tight tracking-wide animate-appear px-4">
           {displayName}
         </h1>
 
         {/* Pseudo Display */}
-        <div className="text-cyan-200 text-lg md:text-xl font-mono tracking-[0.5em] mb-6 opacity-0 animate-appear" style={{ animationDelay: '0.3s' }}>
+        <div className="text-cyan-200 text-sm sm:text-lg md:text-xl font-mono tracking-[0.5em] mb-4 sm:mb-6 opacity-0 animate-appear px-4" style={{ animationDelay: '0.3s' }}>
           &lt; {pseudo} /&gt;
         </div>
 
         <TypewriterText />
-        <div className="flex flex-col items-center mt-12 gap-2 opacity-60">
-          <Mouse className="w-6 h-6 animate-bounce text-purple-400" />
-          <span className="text-[10px] tracking-[0.3em] text-purple-300">INITIALIZE_SCROLL</span>
+        <div className="flex flex-col items-center mt-8 sm:mt-12 gap-2 opacity-60">
+          <Mouse className="w-5 h-5 sm:w-6 sm:h-6 animate-bounce text-purple-400" />
+          <span className="text-[8px] sm:text-[10px] tracking-[0.3em] text-purple-300">INITIALIZE_SCROLL</span>
         </div>
       </div>
     </section>

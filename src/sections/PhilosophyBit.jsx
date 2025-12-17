@@ -18,20 +18,20 @@ const PhilosophyCard = ({ icon: Icon, title, description, index, color }) => {
         <div className={`absolute -inset-0.5 bg-gradient-to-r ${color} rounded-2xl opacity-0 group-hover:opacity-75 blur-xl transition-all duration-500`}></div>
 
         {/* Card */}
-        <div className="relative h-full bg-black/60 backdrop-blur-xl border border-gray-700/50 rounded-2xl p-6 transition-all duration-300 group-hover:scale-105 group-hover:border-gray-500/50">
+        <div className="relative h-full bg-black/60 backdrop-blur-xl border border-gray-700/50 rounded-2xl p-4 sm:p-6 transition-all duration-300 group-hover:scale-105 group-hover:border-gray-500/50">
 
           {/* Icon */}
-          <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${color} flex items-center justify-center mb-4 group-hover:rotate-12 transition-transform duration-500`}>
-            <Icon className="text-3xl text-white" />
+          <div className={`w-12 sm:w-16 h-12 sm:h-16 rounded-xl bg-gradient-to-br ${color} flex items-center justify-center mb-3 sm:mb-4 group-hover:rotate-12 transition-transform duration-500`}>
+            <Icon className="text-2xl sm:text-3xl text-white" />
           </div>
 
           {/* Title */}
-          <h3 className="text-xl font-bold text-white mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-cyan-400 group-hover:to-purple-400 transition-all duration-300">
+          <h3 className="text-lg sm:text-xl font-bold text-white mb-2 sm:mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-cyan-400 group-hover:to-purple-400 transition-all duration-300">
             {title}
           </h3>
 
           {/* Description */}
-          <p className="text-gray-400 text-sm leading-relaxed">
+          <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
             {description}
           </p>
 
@@ -133,7 +133,17 @@ const PhilosophyBit = () => {
   ]
 
   return (
-    <section className="min-h-screen w-full relative flex items-center justify-center bg-gradient-to-b from-black via-purple-950/10 to-black py-20">
+    <section className="min-h-screen w-full relative flex items-center justify-center bg-gradient-to-b from-black via-purple-950/10 to-black py-20 overflow-hidden">
+      {/* Video Background */}
+      <video
+        autoPlay
+        muted
+        loop
+        className="absolute top-0 left-0 w-full h-full object-cover opacity-40"
+      >
+        <source src="/dynamic_blur.webm" type="video/webm" />
+      </video>
+
       {/* 3D Background */}
       <View className="absolute top-0 left-0 w-full h-full pointer-events-none">
         <PhilosophyScene />
@@ -147,10 +157,10 @@ const PhilosophyBit = () => {
         {/* Header */}
         <div
           ref={headerRef}
-          className={`text-center mb-12 scroll-hidden ${headerVisible ? 'animate-fade-in-down' : ''
+          className={`text-center mb-8 sm:mb-12 scroll-hidden ${headerVisible ? 'animate-fade-in-down' : ''
             }`}
         >
-          <h2 className="text-5xl md:text-6xl font-black mb-6 text-white" style={{ textShadow: '0 0 40px rgba(6,182,212,0.5), 0 0 80px rgba(168,85,247,0.3)' }}>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 sm:mb-6 text-white px-4" style={{ textShadow: '0 0 40px rgba(6,182,212,0.5), 0 0 80px rgba(168,85,247,0.3)' }}>
             PHILOSOPHY
           </h2>
         </div>
@@ -158,19 +168,19 @@ const PhilosophyBit = () => {
         {/* Quote */}
         <div
           ref={quoteRef}
-          className={`text-center mb-16 scroll-hidden ${quoteVisible ? 'animate-scale-in' : ''
+          className={`text-center mb-12 sm:mb-16 scroll-hidden ${quoteVisible ? 'animate-scale-in' : ''
             }`}
         >
           <div className="relative inline-block">
             <div className="absolute -inset-4 bg-gradient-to-r from-cyan-500/20 via-purple-500/20 to-pink-500/20 blur-2xl rounded-full"></div>
-            <div className="relative bg-black/40 backdrop-blur-xl border border-purple-500/30 rounded-2xl px-8 py-6 max-w-3xl">
-              <p className="text-2xl md:text-3xl font-light text-cyan-200 leading-relaxed font-mono mb-3">
+            <div className="relative bg-black/40 backdrop-blur-xl border border-purple-500/30 rounded-2xl px-4 sm:px-8 py-4 sm:py-6 max-w-3xl mx-4">
+              <p className="text-lg sm:text-2xl md:text-3xl font-light text-cyan-200 leading-relaxed font-mono mb-2 sm:mb-3">
                 "Humanity's superpower = "
               </p>
-              <p className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400">
+              <p className="text-xl sm:text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400">
                 Evolution + Adaptation + Imagination
               </p>
-              <p className="mt-6 text-gray-400 text-sm md:text-base">
+              <p className="mt-4 sm:mt-6 text-gray-400 text-xs sm:text-sm md:text-base px-2">
                 We build not just to solve problems, but to expand the boundaries of what's possible.
               </p>
             </div>

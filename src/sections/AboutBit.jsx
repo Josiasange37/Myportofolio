@@ -50,16 +50,16 @@ const TerminalWindow = () => {
   }, [])
 
   return (
-    <div className="w-full max-w-md bg-black/90 border border-purple-500/50 rounded-lg overflow-hidden shadow-[0_0_30px_rgba(168,85,247,0.3)] font-mono text-sm">
+    <div className="w-full max-w-md bg-black/90 border border-purple-500/50 rounded-lg overflow-hidden shadow-[0_0_30px_rgba(168,85,247,0.3)] font-mono text-xs sm:text-sm">
       {/* Terminal Header */}
-      <div className="bg-zinc-900 px-4 py-2 flex items-center gap-2 border-b border-purple-500/30">
-        <div className="w-3 h-3 rounded-full bg-red-500/50" />
-        <div className="w-3 h-3 rounded-full bg-yellow-500/50" />
-        <div className="w-3 h-3 rounded-full bg-green-500/50" />
-        <span className="ml-2 text-xs text-gray-500">root@josias-mainframe:~</span>
+      <div className="bg-zinc-900 px-3 sm:px-4 py-2 flex items-center gap-2 border-b border-purple-500/30">
+        <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-red-500/50" />
+        <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-yellow-500/50" />
+        <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-green-500/50" />
+        <span className="ml-2 text-[10px] sm:text-xs text-gray-500">root@josias-mainframe:~</span>
       </div>
       {/* Terminal Body */}
-      <div className="p-4 h-64 overflow-y-auto text-green-400">
+      <div className="p-3 sm:p-4 h-48 sm:h-64 overflow-y-auto text-green-400">
         {lines.map((line, i) => (
           <div key={i} className="mb-1">{line}</div>
         ))}
@@ -94,14 +94,14 @@ const AboutBit = () => {
           className={`text-left scroll-hidden ${bioVisible ? 'animate-fade-in-right' : ''
             }`}
         >
-          <h2 className="text-4xl font-black mb-6 text-white flex items-center gap-3">
-            <FaTerminal className="text-purple-500" />
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-black mb-4 sm:mb-6 text-white flex items-center gap-2 sm:gap-3">
+            <FaTerminal className="text-purple-500 text-lg sm:text-2xl" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">
               SYSTEM_IDENTITY
             </span>
           </h2>
 
-          <div className="space-y-6 text-gray-300 leading-relaxed font-light">
+          <div className="space-y-4 sm:space-y-6 text-gray-300 leading-relaxed font-light text-sm sm:text-base">
             <p>
               <strong className="text-cyan-400">TARGET:</strong> Almight.
               <br />
@@ -117,18 +117,18 @@ const AboutBit = () => {
             </p>
             <p>I constantly evolve and adapt that is my philosophy that is why i am ALMIGHT</p>
 
-            <div className="pt-4 flex flex-wrap gap-4 items-center">
-              <div className="px-4 py-2 border border-purple-500/50 rounded text-xs font-mono text-purple-300">
+            <div className="pt-4 flex flex-wrap gap-2 sm:gap-4 items-center">
+              <div className="px-3 sm:px-4 py-1 sm:py-2 border border-purple-500/50 rounded text-[10px] sm:text-xs font-mono text-purple-300">
                 STATUS: ONLINE
               </div>
-              <div className="px-4 py-2 border border-cyan-500/50 rounded text-xs font-mono text-cyan-300">
+              <div className="px-3 sm:px-4 py-1 sm:py-2 border border-cyan-500/50 rounded text-[10px] sm:text-xs font-mono text-cyan-300">
                 LOCATION: CLASSIFIED
               </div>
               <a
                 href="/resume"
-                className="px-6 py-2 bg-gradient-to-r from-cyan-500 to-purple-500 hover:from-cyan-400 hover:to-purple-400 text-white font-bold text-sm rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(6,182,212,0.5)] flex items-center gap-2"
+                className="px-4 sm:px-6 py-1 sm:py-2 bg-gradient-to-r from-cyan-500 to-purple-500 hover:from-cyan-400 hover:to-purple-400 text-white font-bold text-xs sm:text-sm rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(6,182,212,0.5)] flex items-center gap-2"
               >
-                <FaTerminal className="text-sm" />
+                <FaTerminal className="text-xs sm:text-sm" />
                 <span>VIEW_FULL_RESUME</span>
               </a>
             </div>

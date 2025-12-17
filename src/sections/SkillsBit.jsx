@@ -139,7 +139,7 @@ const SkillsBit = ({ data }) => {
         <p className="text-cyan-200 mb-12 font-mono text-sm tracking-widest">DETECTED LANGUAGES FROM GITHUB REPOS</p>
 
         {/* CSS 3D Fallback Cloud for No-WebGL */}
-        <div className="fallback-content hidden pointer-events-auto relative w-full h-[400px] items-center justify-center perspective-[1000px]">
+        <div className="fallback-content hidden pointer-events-auto relative w-full h-[400px] items-center justify-center perspective-1000">
           <div className="relative w-[1px] h-[1px] preserve-3d animate-spin-y mx-auto mt-32">
             {languages.map((lang, i) => {
               const phi = Math.acos(-1 + (2 * i) / languages.length)

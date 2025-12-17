@@ -30,7 +30,7 @@ const CommitGraph = ({ commitActivity }) => {
     return (
         <div className="w-full">
             {/* Graph */}
-            <div className="flex items-end justify-between gap-2 h-40 mb-4">
+            <div className="flex items-end justify-between gap-1 sm:gap-2 h-32 sm:h-40 mb-3 sm:mb-4">
                 {commitData.map((month, index) => {
                     const height = (month.commits / month.maxCommits) * 100
 
@@ -50,13 +50,13 @@ const CommitGraph = ({ commitActivity }) => {
                     }
 
                     return (
-                        <div key={index} className="flex-1 flex flex-col items-center gap-2 group">
+                        <div key={index} className="flex-1 flex flex-col items-center gap-1 sm:gap-2 group">
                             <div className="relative w-full">
                                 <div
                                     className="w-full rounded-t transition-all duration-300 group-hover:scale-110 relative overflow-hidden"
                                     style={{
                                         height: `${height}%`,
-                                        minHeight: '8px',
+                                        minHeight: '6px',
                                         backgroundColor: barColor,
                                         backgroundImage: `repeating-linear-gradient(
                                             0deg,
@@ -78,34 +78,34 @@ const CommitGraph = ({ commitActivity }) => {
                                     ></div>
                                 </div>
                                 {/* Tooltip */}
-                                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-black/90 border rounded text-xs font-mono opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-10"
+                                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-black/90 border rounded text-[10px] sm:text-xs font-mono opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-10"
                                     style={{ borderColor: barColor, color: barColor }}
                                 >
                                     {month.commits} commits
                                 </div>
                             </div>
-                            <span className="text-[10px] text-gray-500 font-mono">{month.month}</span>
+                            <span className="text-[8px] sm:text-[10px] text-gray-500 font-mono">{month.month}</span>
                         </div>
                     )
                 })}
             </div>
 
             {/* Stats */}
-            <div className="flex items-center justify-between text-sm">
-                <div className="flex items-center gap-2 text-cyan-400">
-                    <FaFire className="text-orange-500" />
+            <div className="flex items-center justify-between text-xs sm:text-sm gap-2">
+                <div className="flex items-center gap-1 sm:gap-2 text-cyan-400">
+                    <FaFire className="text-orange-500 text-sm sm:text-base" />
                     <span className="font-mono">{totalCommits} commits</span>
                 </div>
-                <div className="text-gray-500 font-mono text-xs">Last 12 months</div>
+                <div className="text-gray-500 font-mono text-[10px] sm:text-xs">Last 12 months</div>
             </div>
 
             {/* Total Contributions */}
-            <div className="mt-4 pt-4 border-t border-gray-800">
+            <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-gray-800">
                 <div className="text-center">
-                    <div className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">
+                    <div className="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">
                         448
                     </div>
-                    <div className="text-xs text-gray-500 font-mono mt-1">CONTRIBUTIONS IN THE LAST YEAR</div>
+                    <div className="text-[10px] sm:text-xs text-gray-500 font-mono mt-1">CONTRIBUTIONS IN THE LAST YEAR</div>
                 </div>
             </div>
         </div>
@@ -136,38 +136,38 @@ const GitHubActivityBit = ({ data }) => {
                     className={`space-y-6 scroll-hidden ${leftVisible ? 'animate-fade-in-left' : ''
                         }`}
                 >
-                    <div className="flex items-center gap-3 mb-4">
-                        <FaCode className="text-3xl text-cyan-400" />
-                        <h2 className="text-4xl font-black text-white" style={{ textShadow: '0 0 40px rgba(6,182,212,0.5), 0 0 80px rgba(168,85,247,0.3)' }}>
+                    <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4 flex-wrap">
+                        <FaCode className="text-2xl sm:text-3xl text-cyan-400" />
+                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-white" style={{ textShadow: '0 0 40px rgba(6,182,212,0.5), 0 0 80px rgba(168,85,247,0.3)' }}>
                             COMMIT_ACTIVITY
                         </h2>
                     </div>
 
-                    <p className="text-gray-300 leading-relaxed">
+                    <p className="text-gray-300 leading-relaxed text-sm sm:text-base">
                         Every line of code tells a story. My GitHub activity reflects a consistent commitment to
                         building, learning, and pushing boundaries.
                     </p>
 
-                    <div className="space-y-3">
-                        <div className="flex items-start gap-3">
-                            <div className="w-2 h-2 rounded-full bg-cyan-400 mt-2"></div>
+                    <div className="space-y-2 sm:space-y-3">
+                        <div className="flex items-start gap-2 sm:gap-3">
+                            <div className="w-2 h-2 rounded-full bg-cyan-400 mt-2 flex-shrink-0"></div>
                             <div>
-                                <p className="text-white font-semibold">Daily Contributions</p>
-                                <p className="text-sm text-gray-400">Consistent coding habits and continuous learning</p>
+                                <p className="text-white font-semibold text-sm sm:text-base">Daily Contributions</p>
+                                <p className="text-xs sm:text-sm text-gray-400">Consistent coding habits and continuous learning</p>
                             </div>
                         </div>
-                        <div className="flex items-start gap-3">
-                            <div className="w-2 h-2 rounded-full bg-purple-400 mt-2"></div>
+                        <div className="flex items-start gap-2 sm:gap-3">
+                            <div className="w-2 h-2 rounded-full bg-purple-400 mt-2 flex-shrink-0"></div>
                             <div>
-                                <p className="text-white font-semibold">Open Source</p>
-                                <p className="text-sm text-gray-400">Contributing to the developer community</p>
+                                <p className="text-white font-semibold text-sm sm:text-base">Open Source</p>
+                                <p className="text-xs sm:text-sm text-gray-400">Contributing to the developer community</p>
                             </div>
                         </div>
-                        <div className="flex items-start gap-3">
-                            <div className="w-2 h-2 rounded-full bg-pink-400 mt-2"></div>
+                        <div className="flex items-start gap-2 sm:gap-3">
+                            <div className="w-2 h-2 rounded-full bg-pink-400 mt-2 flex-shrink-0"></div>
                             <div>
-                                <p className="text-white font-semibold">Innovation</p>
-                                <p className="text-sm text-gray-400">Experimenting with cutting-edge technologies</p>
+                                <p className="text-white font-semibold text-sm sm:text-base">Innovation</p>
+                                <p className="text-xs sm:text-sm text-gray-400">Experimenting with cutting-edge technologies</p>
                             </div>
                         </div>
                     </div>
@@ -177,9 +177,9 @@ const GitHubActivityBit = ({ data }) => {
                         href={`https://github.com/${username}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-cyan-500 to-purple-500 hover:from-cyan-400 hover:to-purple-400 text-white font-bold rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(6,182,212,0.5)] pointer-events-auto group"
+                        className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-cyan-500 to-purple-500 hover:from-cyan-400 hover:to-purple-400 text-white font-bold rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(6,182,212,0.5)] pointer-events-auto group text-sm sm:text-base"
                     >
-                        <FaGithub className="text-2xl group-hover:rotate-12 transition-transform" />
+                        <FaGithub className="text-lg sm:text-2xl group-hover:rotate-12 transition-transform" />
                         <span>VIEW_GITHUB_PROFILE</span>
                     </a>
                 </div>
@@ -190,11 +190,11 @@ const GitHubActivityBit = ({ data }) => {
                     className={`scroll-hidden ${rightVisible ? 'animate-fade-in-right' : ''
                         }`}
                 >
-                    <div className="bg-black/60 backdrop-blur-sm border border-cyan-400/30 rounded-lg p-6 shadow-[0_0_30px_rgba(6,182,212,0.2)]">
-                        <div className="flex items-center justify-between mb-6">
-                            <h3 className="text-xl font-bold text-white font-mono">CONTRIBUTION_GRAPH</h3>
-                            <div className="flex items-center gap-2 text-xs text-gray-500 font-mono">
-                                <div className="w-3 h-3 bg-gradient-to-t from-cyan-500 to-purple-500 rounded"></div>
+                    <div className="bg-black/60 backdrop-blur-sm border border-cyan-400/30 rounded-lg p-4 sm:p-6 shadow-[0_0_30px_rgba(6,182,212,0.2)]">
+                        <div className="flex items-center justify-between mb-4 sm:mb-6 gap-2">
+                            <h3 className="text-lg sm:text-xl font-bold text-white font-mono">CONTRIBUTION_GRAPH</h3>
+                            <div className="flex items-center gap-2 text-xs text-gray-500 font-mono flex-shrink-0">
+                                <div className="w-2 h-2 sm:w-3 sm:h-3 bg-gradient-to-t from-cyan-500 to-purple-500 rounded"></div>
                                 <span>commits</span>
                             </div>
                         </div>
@@ -202,18 +202,18 @@ const GitHubActivityBit = ({ data }) => {
                         <CommitGraph commitActivity={commitActivity} />
 
                         {/* Additional Stats */}
-                        <div className="grid grid-cols-3 gap-4 mt-6 pt-6 border-t border-gray-800">
+                        <div className="grid grid-cols-3 gap-2 sm:gap-4 mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-gray-800">
                             <div className="text-center">
-                                <div className="text-2xl font-bold text-cyan-400">{repos}</div>
-                                <div className="text-xs text-gray-500 font-mono">REPOS</div>
+                                <div className="text-lg sm:text-2xl font-bold text-cyan-400">{repos}</div>
+                                <div className="text-[10px] sm:text-xs text-gray-500 font-mono">REPOS</div>
                             </div>
                             <div className="text-center">
-                                <div className="text-2xl font-bold text-purple-400">{followers}</div>
-                                <div className="text-xs text-gray-500 font-mono">FOLLOWERS</div>
+                                <div className="text-lg sm:text-2xl font-bold text-purple-400">{followers}</div>
+                                <div className="text-[10px] sm:text-xs text-gray-500 font-mono">FOLLOWERS</div>
                             </div>
                             <div className="text-center">
-                                <div className="text-2xl font-bold text-pink-400">{data?.stats?.totalStars || 8}</div>
-                                <div className="text-xs text-gray-500 font-mono">STARS</div>
+                                <div className="text-lg sm:text-2xl font-bold text-pink-400">{data?.stats?.totalStars || 8}</div>
+                                <div className="text-[10px] sm:text-xs text-gray-500 font-mono">STARS</div>
                             </div>
                         </div>
                     </div>

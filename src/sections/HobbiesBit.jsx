@@ -16,7 +16,7 @@ const HobbyCard = ({ icon: Icon, title, description, index, color, bgGradient })
         <div className={`absolute -inset-0.5 bg-gradient-to-r ${color} rounded-2xl opacity-0 group-hover:opacity-75 blur-xl transition-all duration-500 animate-gradient-xy`}></div>
 
         {/* Card */}
-        <div className={`relative h-full bg-gradient-to-br ${bgGradient} backdrop-blur-xl border border-gray-700/50 rounded-2xl p-6 transition-all duration-300 group-hover:scale-105 overflow-hidden`}>
+        <div className={`relative h-full bg-gradient-to-br ${bgGradient} backdrop-blur-xl border border-gray-700/50 rounded-2xl p-4 sm:p-6 transition-all duration-300 group-hover:scale-105 overflow-hidden`}>
 
           {/* Background pattern */}
           <div className="absolute inset-0 opacity-10">
@@ -29,23 +29,23 @@ const HobbyCard = ({ icon: Icon, title, description, index, color, bgGradient })
           {/* Content */}
           <div className="relative z-10">
             {/* Icon */}
-            <div className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${color} flex items-center justify-center mb-4 group-hover:rotate-12 group-hover:scale-110 transition-all duration-500 shadow-lg`}>
-              <Icon className="text-4xl text-white" />
+            <div className={`w-14 sm:w-20 h-14 sm:h-20 rounded-2xl bg-gradient-to-br ${color} flex items-center justify-center mb-3 sm:mb-4 group-hover:rotate-12 group-hover:scale-110 transition-all duration-500 shadow-lg`}>
+              <Icon className="text-3xl sm:text-4xl text-white" />
             </div>
 
             {/* Title */}
-            <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-orange-400 group-hover:to-pink-500 transition-all duration-300">
+            <h3 className="text-lg sm:text-2xl font-bold text-white mb-2 sm:mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-orange-400 group-hover:to-pink-500 transition-all duration-300">
               {title}
             </h3>
 
             {/* Description */}
-            <p className="text-gray-300 text-sm leading-relaxed">
+            <p className="text-gray-300 text-xs sm:text-sm leading-relaxed">
               {description}
             </p>
           </div>
 
           {/* Decorative corner */}
-          <div className={`absolute top-0 right-0 w-20 h-20 bg-gradient-to-br ${color} opacity-10 rounded-bl-full`}></div>
+          <div className={`absolute top-0 right-0 w-14 sm:w-20 h-14 sm:h-20 bg-gradient-to-br ${color} opacity-10 rounded-bl-full`}></div>
         </div>
       </div>
     </div>
@@ -102,13 +102,13 @@ const HobbiesBit = () => {
         {/* Header */}
         <div
           ref={headerRef}
-          className={`text-center mb-16 scroll-hidden ${headerVisible ? 'animate-fade-in-down' : ''
+          className={`text-center mb-12 sm:mb-16 scroll-hidden ${headerVisible ? 'animate-fade-in-down' : ''
             }`}
         >
-          <h2 className="text-5xl md:text-6xl font-black mb-4 text-white" style={{ textShadow: '0 0 40px rgba(251,146,60,0.5), 0 0 80px rgba(236,72,153,0.3)' }}>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-3 sm:mb-4 text-white px-4" style={{ textShadow: '0 0 40px rgba(251,146,60,0.5), 0 0 80px rgba(236,72,153,0.3)' }}>
             ORBITAL HOBBIES
           </h2>
-          <p className="text-gray-400 font-mono text-lg">
+          <p className="text-gray-400 font-mono text-sm sm:text-lg px-4">
             Beyond Code • Passions That Drive Me
           </p>
         </div>

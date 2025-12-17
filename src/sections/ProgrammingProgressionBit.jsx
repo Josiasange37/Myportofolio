@@ -20,7 +20,8 @@ const progressionData = [
         description: 'Foundation of programming - Memory management, pointers, low-level programming',
         level: 'Intermediate',
         why: 'Learned the fundamentals of how computers work at a low level',
-        project: 'Snake Game'
+        project: 'Snake Game',
+        image: 'https://placehold.co/600x400/101010/A8B9CC?text=C+Programming'
     },
     {
         id: 2,
@@ -32,7 +33,8 @@ const progressionData = [
         description: 'OOP Mastery - Game development with Unity',
         level: 'Intermediate',
         why: 'Needed for Unity game development with my remote team',
-        project: 'Call of Ngoa (Unity Game)'
+        project: 'Call of Ngoa (Unity Game)',
+        image: 'https://placehold.co/600x400/101010/239120?text=Unity+Game'
     },
     {
         id: 3,
@@ -44,7 +46,8 @@ const progressionData = [
         description: 'Scripting & Automation - AI and cybersecurity tools',
         level: 'Advanced',
         why: 'Perfect for rapid development and AI/ML applications',
-        project: 'Aegis (Cyber Blue Team AI Assistant)'
+        project: 'Aegis (Cyber Blue Team AI Assistant)',
+        image: 'https://placehold.co/600x400/101010/3776AB?text=Python+AI'
     },
     {
         id: 4,
@@ -56,7 +59,8 @@ const progressionData = [
         description: 'Enterprise Development - Backend systems',
         level: 'Intermediate',
         why: 'Enterprise-grade applications and Android development',
-        project: 'Banking Application'
+        project: 'Banking Application',
+        image: 'https://placehold.co/600x400/101010/007396?text=Java+Banking'
     },
     {
         id: 5,
@@ -68,7 +72,8 @@ const progressionData = [
         description: 'Shell Scripting - Automation and system administration',
         level: 'Advanced',
         why: 'Essential for Linux automation and penetration testing',
-        project: 'Almight Tracer (Tracking Tool with PHP)'
+        project: 'Almight Tracer (Tracking Tool with PHP)',
+        image: 'https://placehold.co/600x400/101010/4EAA25?text=Bash+Scripting'
     },
     {
         id: 6,
@@ -80,7 +85,8 @@ const progressionData = [
         description: 'Low-level Programming - Reverse engineering',
         level: 'Intermediate',
         why: 'Understanding binary exploitation and malware analysis',
-        project: 'Reverse Engineering Projects'
+        project: 'Reverse Engineering Projects',
+        image: 'https://placehold.co/600x400/101010/FF6600?text=Assembly'
     },
     {
         id: 7,
@@ -92,7 +98,8 @@ const progressionData = [
         description: 'Web Foundation - Frontend development',
         level: 'Advanced',
         why: 'Building modern web applications and interfaces',
-        project: 'XyberClan SaaS Website'
+        project: 'XyberClan SaaS Website',
+        image: 'https://placehold.co/600x400/101010/E34F26?text=Web+Dev'
     },
     {
         id: 8,
@@ -104,7 +111,8 @@ const progressionData = [
         description: 'Type-safe JavaScript - Scalable applications',
         level: 'Advanced',
         why: 'Better code quality and maintainability for large projects',
-        project: 'Enterprise Applications'
+        project: 'Enterprise Applications',
+        image: 'https://placehold.co/600x400/101010/3178C6?text=TypeScript'
     },
     {
         id: 9,
@@ -116,7 +124,8 @@ const progressionData = [
         description: 'Modern Frameworks - Full-stack development',
         level: 'Expert',
         why: 'Industry-standard for building scalable web applications',
-        project: 'NBDance Awards, XyberClan SaaS, Genesis Pool Party, Portfolio'
+        project: 'NBDance Awards, XyberClan SaaS, Genesis Pool Party, Portfolio',
+        image: 'https://placehold.co/600x400/101010/61DAFB?text=React+NextJS'
     },
     {
         id: 10,
@@ -128,7 +137,8 @@ const progressionData = [
         description: 'AI/LLM Mastery - Crafting effective prompts for AI systems',
         level: 'Expert',
         why: 'Essential for leveraging AI in development and automation',
-        project: 'Aegis AI Assistant, AI-powered tools, Automation workflows'
+        project: 'Aegis AI Assistant, AI-powered tools, Automation workflows',
+        image: 'https://placehold.co/600x400/101010/FF6B9D?text=Prompt+Engineering'
     }
 ]
 
@@ -285,13 +295,13 @@ const ProgrammingProgressionBit = () => {
             <div className="relative z-10 w-full max-w-6xl mx-auto px-8 py-20">
                 <div
                     ref={headerRef}
-                    className={`text-center mb-16 scroll-hidden ${headerVisible ? 'animate-fade-in-down' : ''
+                    className={`text-center mb-12 sm:mb-16 scroll-hidden ${headerVisible ? 'animate-fade-in-down' : ''
                         }`}
                 >
-                    <h2 className="text-5xl md:text-6xl font-black mb-4 text-white" style={{ textShadow: '0 0 40px rgba(6,182,212,0.5), 0 0 80px rgba(168,85,247,0.3)' }}>
+                    <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-2 sm:mb-4 text-white px-4" style={{ textShadow: '0 0 40px rgba(6,182,212,0.5), 0 0 80px rgba(168,85,247,0.3)' }}>
                         PROGRAMMING PROGRESSION
                     </h2>
-                    <p className="text-gray-400 font-mono text-sm tracking-widest">
+                    <p className="text-gray-400 font-mono text-xs sm:text-sm tracking-widest px-4">
                         &lt; FROM_FUNDAMENTALS_TO_FRAMEWORKS /&gt;
                     </p>
                 </div>
@@ -300,6 +310,16 @@ const ProgrammingProgressionBit = () => {
                 {hoveredNode && (
                     <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 pointer-events-none">
                         <div className="bg-black/90 backdrop-blur-xl border border-cyan-400/50 rounded-lg p-6 max-w-md shadow-[0_0_50px_rgba(6,182,212,0.3)] animate-appear">
+                            {hoveredNode.image && (
+                                <div className="w-full h-40 mb-4 rounded-lg overflow-hidden relative">
+                                    <img
+                                        src={hoveredNode.image}
+                                        alt={hoveredNode.name}
+                                        className="w-full h-full object-cover"
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+                                </div>
+                            )}
                             <div className="flex items-center gap-4 mb-4">
                                 <div
                                     className="w-12 h-12 rounded-full flex items-center justify-center text-2xl"
