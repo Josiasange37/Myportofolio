@@ -105,17 +105,17 @@ const AboutBit = () => {
             <p>
               <strong className="text-cyan-400">TARGET:</strong> Almight.
               <br />
-              <strong className="text-purple-400">ROLE:</strong>  Red Teamer & Full Stack Developer .
+              <strong className="text-purple-400">ROLE:</strong> Red Teamer | Full Stack Developer | <span className="text-pink-400">CTO @ XyberClan</span>
             </p>
             <p>
               I bridge the gap between <span className="text-white font-mono bg-purple-900/30 px-1">imagination</span> and <span className="text-white font-mono bg-cyan-900/30 px-1">execution</span>.
               My code isn't just syntax; it's a digital architecture designed to scale, perform, and mesmerize.
             </p>
             <p>
-              When I'm not orchestrating analysing system vulnerabilities or breaking security protocols (legally),
-              I am building immersive 3D game development and some time comptuer mentanace.
+              When I'm not analyzing system vulnerabilities or breaking security protocols (legally),
+              I am building immersive 3D game experiences, performing computer maintenance, or leading my startup.
             </p>
-            <p>I constantly evolve and adapt that is my philosophy that is why i am ALMIGHT</p>
+            <p>I constantly evolve and adapt — that is my philosophy. That is why I am <span className="text-cyan-400 font-bold">ALMIGHT</span>.</p>
 
             <div className="pt-4 flex flex-wrap gap-2 sm:gap-4 items-center">
               <div className="px-3 sm:px-4 py-1 sm:py-2 border border-purple-500/50 rounded text-[10px] sm:text-xs font-mono text-purple-300">

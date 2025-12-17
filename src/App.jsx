@@ -11,6 +11,9 @@ import CanvasErrorBoundary from './components/CanvasErrorBoundary'
 import HeroBit from './sections/HeroBit'
 import GitHubActivityBit from './sections/GitHubActivityBit'
 import AboutBit from './sections/AboutBit'
+import EducationStatusBit from './sections/EducationStatusBit'
+import XyberClanBit from './sections/XyberClanBit'
+import CertificationsBit from './sections/CertificationsBit'
 import ProgrammingProgressionBit from './sections/ProgrammingProgressionBit'
 import RedTeamingProgressionBit from './sections/RedTeamingProgressionBit'
 import ProjectsBit from './sections/ProjectsBit'
@@ -19,15 +22,16 @@ import HobbiesBit from './sections/HobbiesBit'
 import ContactBit from './sections/ContactBit'
 
 
-import { Home, Cpu, Activity, FolderGit, Brain, Gamepad2, Mail, User } from 'lucide-react'
+import { Home, Cpu, Activity, FolderGit, Brain, Gamepad2, Mail, User, Award, GraduationCap, Building2 } from 'lucide-react'
 import { FaShieldAlt } from 'react-icons/fa'
-
-// ... imports ...
 
 // Navigation Icons
 const NAV_ITEMS = [
   { name: 'Hero', icon: Home },
   { name: 'About', icon: User },
+  { name: 'XyberClan', icon: Building2 },
+  { name: 'Education', icon: GraduationCap },
+  { name: 'Certifications', icon: Award },
   { name: 'Programming', icon: Cpu },
   { name: 'Red Team', icon: FaShieldAlt },
   { name: 'Projects', icon: FolderGit },
@@ -136,6 +140,9 @@ const App = () => {
         <main className="relative z-10 w-full">
           <HeroBit data={githubData} />
           <AboutBit />
+          <XyberClanBit />
+          <EducationStatusBit />
+          <CertificationsBit />
           <ProgrammingProgressionBit />
           <RedTeamingProgressionBit />
           <GitHubActivityBit data={githubData} />

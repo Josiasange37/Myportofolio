@@ -1,8 +1,115 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { FaBrain, FaRocket, FaLightbulb, FaCode, FaShieldAlt, FaInfinity } from 'react-icons/fa'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
 import { View, Sphere, MeshDistortMaterial, Float, PerspectiveCamera } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
+
+// Animated typing component
+const TypeWriter = ({ text, speed = 50, onComplete }) => {
+  const [displayText, setDisplayText] = useState('')
+  const [currentIndex, setCurrentIndex] = useState(0)
+
+  useEffect(() => {
+    if (currentIndex < text.length) {
+      const timeout = setTimeout(() => {
+        setDisplayText(prev => prev + text[currentIndex])
+        setCurrentIndex(prev => prev + 1)
+      }, speed)
+      return () => clearTimeout(timeout)
+    } else if (onComplete) {
+      onComplete()
+    }
+  }, [currentIndex, text, speed, onComplete])
+
+  useEffect(() => {
+    setDisplayText('')
+    setCurrentIndex(0)
+  }, [text])
+
+  return (
+    <span>
+      {displayText}
+      <span className="animate-pulse text-cyan-400">|</span>
+    </span>
+  )
+}
+
+// Philosophy quotes cycling component
+const PhilosophyQuotes = () => {
+  const [phase, setPhase] = useState(0) // 0: first quote, 1: transition, 2: second quote
+  const [isTyping, setIsTyping] = useState(false)
+
+  const quotes = [
+    {
+      text: "A king never waves, a king never bends, a king never gives up.",
+      gradient: "from-cyan-400 via-purple-400 to-pink-400"
+    },
+    {
+      prefix: "Humanity's superpower = ",
+      formula: "Evolution + Adaptation + Imagination",
+      philosophy: "I constantly evolve and adapt — that is my philosophy. That is why I am ",
+      highlight: "ALMIGHT",
+      gradient: "from-purple-400 via-pink-400 to-purple-400"
+    }
+  ]
+
+  useEffect(() => {
+    // Show first quote for 3 seconds, then transition
+    if (phase === 0) {
+      const timer = setTimeout(() => {
+        setPhase(1)
+        setIsTyping(true)
+      }, 3000)
+      return () => clearTimeout(timer)
+    }
+  }, [phase])
+
+  return (
+    <div className="relative min-h-[180px] sm:min-h-[200px] flex items-center justify-center">
+      {/* First Quote - Fades out */}
+      <div
+        className={`absolute inset-0 flex items-center justify-center transition-all duration-1000 ${phase === 0 ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'
+          }`}
+      >
+        <p className={`text-lg sm:text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r ${quotes[0].gradient} text-center px-4`}>
+          "{quotes[0].text}"
+        </p>
+      </div>
+
+      {/* Second Quote - Types in */}
+      <div
+        className={`absolute inset-0 flex flex-col items-center justify-center transition-all duration-1000 ${phase >= 1 ? 'opacity-100 scale-100' : 'opacity-0 scale-105 pointer-events-none'
+          }`}
+      >
+        {isTyping ? (
+          <div className="text-center px-4">
+            <p className="text-base sm:text-xl md:text-2xl font-light text-cyan-200 leading-relaxed font-mono mb-2 sm:mb-3">
+              <TypeWriter
+                text={quotes[1].prefix}
+                speed={40}
+                onComplete={() => { }}
+              />
+            </p>
+            <p className={`text-lg sm:text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r ${quotes[1].gradient} mb-4`}>
+              {phase >= 1 && <TypeWriter text={quotes[1].formula} speed={30} />}
+            </p>
+            <div className="w-16 h-px bg-gradient-to-r from-transparent via-purple-500 to-transparent mx-auto my-4"></div>
+            <p className="text-gray-400 text-xs sm:text-sm md:text-base">
+              {quotes[1].philosophy}
+              <span className="text-cyan-400 font-bold">{quotes[1].highlight}</span>.
+            </p>
+          </div>
+        ) : null}
+      </div>
+
+      {/* Cycle indicator dots */}
+      <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-2">
+        <div className={`w-2 h-2 rounded-full transition-all duration-500 ${phase === 0 ? 'bg-cyan-400 scale-125' : 'bg-gray-600'}`}></div>
+        <div className={`w-2 h-2 rounded-full transition-all duration-500 ${phase >= 1 ? 'bg-purple-400 scale-125' : 'bg-gray-600'}`}></div>
+      </div>
+    </div>
+  )
+}
 
 const PhilosophyCard = ({ icon: Icon, title, description, index, color }) => {
   const [cardRef, cardVisible] = useScrollAnimation(0.1)
@@ -171,18 +278,10 @@ const PhilosophyBit = () => {
           className={`text-center mb-12 sm:mb-16 scroll-hidden ${quoteVisible ? 'animate-scale-in' : ''
             }`}
         >
-          <div className="relative inline-block">
+          <div className="relative inline-block w-full max-w-3xl mx-4">
             <div className="absolute -inset-4 bg-gradient-to-r from-cyan-500/20 via-purple-500/20 to-pink-500/20 blur-2xl rounded-full"></div>
-            <div className="relative bg-black/40 backdrop-blur-xl border border-purple-500/30 rounded-2xl px-4 sm:px-8 py-4 sm:py-6 max-w-3xl mx-4">
-              <p className="text-lg sm:text-2xl md:text-3xl font-light text-cyan-200 leading-relaxed font-mono mb-2 sm:mb-3">
-                "Humanity's superpower = "
-              </p>
-              <p className="text-xl sm:text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400">
-                Evolution + Adaptation + Imagination
-              </p>
-              <p className="mt-4 sm:mt-6 text-gray-400 text-xs sm:text-sm md:text-base px-2">
-                We build not just to solve problems, but to expand the boundaries of what's possible.
-              </p>
+            <div className="relative bg-black/40 backdrop-blur-xl border border-purple-500/30 rounded-2xl px-4 sm:px-8 py-6 sm:py-10">
+              <PhilosophyQuotes />
             </div>
           </div>
         </div>

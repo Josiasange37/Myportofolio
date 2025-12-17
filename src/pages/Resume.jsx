@@ -1,5 +1,5 @@
 import React from 'react'
-import { FaArrowLeft, FaDownload, FaGithub, FaLinkedin, FaEnvelope, FaLightbulb, FaRocket, FaHeart } from 'react-icons/fa'
+import { FaArrowLeft, FaDownload, FaGithub, FaLinkedin, FaEnvelope, FaLightbulb, FaRocket, FaHeart, FaCertificate, FaPrint } from 'react-icons/fa'
 
 const Resume = () => {
     return (
@@ -22,9 +22,12 @@ const Resume = () => {
                         <FaArrowLeft />
                         <span className="font-mono">BACK_TO_PORTFOLIO</span>
                     </a>
-                    <button className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-purple-500 hover:from-cyan-400 hover:to-purple-400 text-white font-bold text-sm rounded-lg transition-all duration-300 hover:scale-105 flex items-center gap-2">
-                        <FaDownload />
-                        <span>DOWNLOAD_PDF</span>
+                    <button
+                        onClick={() => window.print()}
+                        className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-purple-500 hover:from-cyan-400 hover:to-purple-400 text-white font-bold text-sm rounded-lg transition-all duration-300 hover:scale-105 flex items-center gap-2 print:hidden"
+                    >
+                        <FaPrint />
+                        <span>PRINT_RESUME</span>
                     </button>
                 </div>
             </header>
@@ -40,22 +43,13 @@ const Resume = () => {
                             {/* Animated gradient border */}
                             <div className="absolute -inset-1 bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 rounded-full opacity-75 group-hover:opacity-100 blur-lg transition-all duration-500 animate-gradient-xy"></div>
 
-                            {/* Photo container */}
+                            {/* Profile Photo */}
                             <div className="relative w-48 h-48 rounded-full overflow-hidden border-4 border-black bg-gradient-to-br from-cyan-500/20 to-purple-500/20 backdrop-blur-xl">
-                                {/* Placeholder - Replace with your photo */}
-                                <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900">
-                                    <div className="text-center">
-                                        <div className="text-6xl mb-2">👤</div>
-                                        <p className="text-xs text-gray-500 font-mono">YOUR_PHOTO</p>
-                                    </div>
-                                </div>
-
-                                {/* Uncomment and use this when you have a photo */}
-                                {/* <img 
-                  src="/path/to/your/photo.jpg" 
-                  alt="Josias Aaron" 
-                  className="w-full h-full object-cover"
-                /> */}
+                                <img
+                                    src="/profile.png"
+                                    alt="Josias Aaron"
+                                    className="w-full h-full object-cover"
+                                />
                             </div>
 
                             {/* Corner accent */}
@@ -65,20 +59,21 @@ const Resume = () => {
                     </div>
 
                     <h1 className="text-6xl font-black mb-4 text-white" style={{ textShadow: '0 0 40px rgba(6,182,212,0.5)' }}>
-                        JOSIAS AARON
+                        AKANA SIGNING JOSIAS AARON
                     </h1>
-                    <p className="text-2xl text-cyan-400 font-mono mb-4">ALMIGHT</p>
-                    <p className="text-xl text-gray-400 mb-6">Red Teamer & Full Stack Developer</p>
+                    <p className="text-2xl text-cyan-400 font-mono mb-2">ALMIGHT</p>
+                    <p className="text-xl text-gray-400 mb-2">Red Teamer | Full Stack Developer | <span className="text-pink-400">CTO @ XyberClan</span></p>
+                    <p className="text-sm text-gray-500 mb-6">University of Yaoundé I • Class of 2027</p>
 
                     {/* Contact Links */}
                     <div className="flex justify-center gap-4">
                         <a href="https://github.com/Josiasange37" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-cyan-400 transition-colors">
                             <FaGithub className="text-2xl" />
                         </a>
-                        <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-cyan-400 transition-colors">
+                        <a href="https://www.linkedin.com/in/thealmight/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-cyan-400 transition-colors">
                             <FaLinkedin className="text-2xl" />
                         </a>
-                        <a href="mailto:hello@xyberclan.com" className="text-gray-400 hover:text-cyan-400 transition-colors">
+                        <a href="mailto:josiasange37@gmail.com" className="text-gray-400 hover:text-cyan-400 transition-colors">
                             <FaEnvelope className="text-2xl" />
                         </a>
                     </div>

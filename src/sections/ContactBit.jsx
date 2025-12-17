@@ -45,31 +45,31 @@ const ContactBit = () => {
     {
       icon: FaLinkedin,
       label: 'LinkedIn',
-      href: 'https://linkedin.com/in/yourprofile',
+      href: 'https://www.linkedin.com/in/thealmight/',
       color: 'from-blue-500 to-blue-700'
     },
     {
       icon: FaTwitter,
-      label: 'Twitter',
-      href: 'https://twitter.com/yourhandle',
+      label: 'X',
+      href: 'https://x.com/AlmightJosias',
       color: 'from-cyan-400 to-blue-500'
     },
     {
       icon: FaEnvelope,
       label: 'Email',
-      href: 'mailto:hello@xyberclan.com',
+      href: 'mailto:josiasange37@gmail.com',
       color: 'from-purple-500 to-pink-500'
     },
     {
       icon: FaDiscord,
       label: 'Discord',
-      href: 'https://discord.gg/yourserver',
+      href: 'https://discord.com/users/almight_237',
       color: 'from-indigo-500 to-purple-600'
     },
     {
       icon: FaTelegram,
       label: 'Telegram',
-      href: 'https://t.me/yourusername',
+      href: 'https://t.me/+657375975',
       color: 'from-cyan-500 to-blue-600'
     }
   ]
@@ -142,7 +142,7 @@ const ContactBit = () => {
         {/* CTA Button */}
         <div className="text-center">
           <a
-            href="mailto:hello@xyberclan.com"
+            href="mailto:josiasange37@gmail.com"
             className="inline-flex items-center gap-2 sm:gap-3 px-6 sm:px-8 py-2 sm:py-4 bg-gradient-to-r from-cyan-500 to-purple-500 hover:from-cyan-400 hover:to-purple-400 text-white font-bold rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(6,182,212,0.5)] group text-sm sm:text-lg"
           >
             <FaEnvelope className="text-lg sm:text-2xl group-hover:rotate-12 transition-transform" />

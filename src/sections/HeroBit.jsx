@@ -141,7 +141,7 @@ const HolographicAvatar = () => {
 
 // Typing Animation Component
 const TypewriterText = () => {
-  const titles = ['FULL STACK DEVELOPER', 'GAME DEVELOPEMENT', 'COMPUTER MENTAINANCE', 'NETWORKING', 'RED TEAMER']
+  const titles = ['RED TEAMER', 'CTO @ XYBERCLAN', 'FULL STACK DEVELOPER', 'GAME DEVELOPMENT', 'COMPUTER MAINTENANCE', 'NETWORKING']
   const [text, setText] = useState('')
   const [isDeleting, setIsDeleting] = useState(false)
   const [loopNum, setLoopNum] = useState(0)

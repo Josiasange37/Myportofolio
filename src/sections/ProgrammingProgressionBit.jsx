@@ -1,12 +1,9 @@
-import React, { useRef, useState, useMemo } from 'react'
-import { View, PerspectiveCamera, Text, Float, Line } from '@react-three/drei'
-import { useFrame } from '@react-three/fiber'
-import * as THREE from 'three'
+import React, { useState } from 'react'
 import {
-    FaPython, FaJava, FaHtml5, FaCss3Alt, FaJs, FaReact, FaNodeJs, FaTerminal,
-    FaCode, FaBrain
+    FaPython, FaJava, FaHtml5, FaTerminal,
+    FaCode, FaBrain, FaReact, FaTimes, FaExternalLinkAlt
 } from 'react-icons/fa'
-import { SiTypescript, SiNextdotjs } from 'react-icons/si'
+import { SiTypescript, SiNextdotjs, SiDotnet } from 'react-icons/si'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
 
 const progressionData = [
@@ -16,38 +13,41 @@ const progressionData = [
         icon: FaCode,
         color: '#A8B9CC',
         year: 'School',
-        duration: 'Taught by teacher',
-        description: 'Foundation of programming - Memory management, pointers, low-level programming',
+        duration: 'Foundation',
+        description: 'Memory management, pointers, low-level programming fundamentals',
         level: 'Intermediate',
+        levelPercent: 65,
         why: 'Learned the fundamentals of how computers work at a low level',
         project: 'Snake Game',
-        image: 'https://placehold.co/600x400/101010/A8B9CC?text=C+Programming'
+        category: 'systems'
     },
     {
         id: 2,
         name: 'C#',
-        icon: FaCode,
+        icon: SiDotnet,
         color: '#239120',
         year: 'College',
         duration: '2 months',
-        description: 'OOP Mastery - Game development with Unity',
+        description: 'OOP Mastery - Game development with Unity engine',
         level: 'Intermediate',
+        levelPercent: 60,
         why: 'Needed for Unity game development with my remote team',
         project: 'Call of Ngoa (Unity Game)',
-        image: 'https://placehold.co/600x400/101010/239120?text=Unity+Game'
+        category: 'game'
     },
     {
         id: 3,
         name: 'Python',
         icon: FaPython,
         color: '#3776AB',
-        year: 'University of Yaoundé I',
+        year: 'University',
         duration: '2 months',
         description: 'Scripting & Automation - AI and cybersecurity tools',
         level: 'Advanced',
+        levelPercent: 85,
         why: 'Perfect for rapid development and AI/ML applications',
-        project: 'Aegis (Cyber Blue Team AI Assistant)',
-        image: 'https://placehold.co/600x400/101010/3776AB?text=Python+AI'
+        project: 'Aegis (Cyber Blue Team AI)',
+        category: 'ai'
     },
     {
         id: 4,
@@ -56,11 +56,12 @@ const progressionData = [
         color: '#007396',
         year: 'University',
         duration: '3 months',
-        description: 'Enterprise Development - Backend systems',
+        description: 'Enterprise Development - Backend systems & Android',
         level: 'Intermediate',
+        levelPercent: 55,
         why: 'Enterprise-grade applications and Android development',
         project: 'Banking Application',
-        image: 'https://placehold.co/600x400/101010/007396?text=Java+Banking'
+        category: 'enterprise'
     },
     {
         id: 5,
@@ -69,24 +70,26 @@ const progressionData = [
         color: '#4EAA25',
         year: 'Self-taught',
         duration: '2 months',
-        description: 'Shell Scripting - Automation and system administration',
+        description: 'Shell Scripting - Automation and red teaming',
         level: 'Advanced',
+        levelPercent: 80,
         why: 'Essential for Linux automation and penetration testing',
-        project: 'Almight Tracer (Tracking Tool with PHP)',
-        image: 'https://placehold.co/600x400/101010/4EAA25?text=Bash+Scripting'
+        project: 'Almight Tracer',
+        category: 'security'
     },
     {
         id: 6,
-        name: 'Assembler',
+        name: 'Assembly',
         icon: FaTerminal,
         color: '#FF6600',
         year: 'Self-taught',
         duration: '2 months',
-        description: 'Low-level Programming - Reverse engineering',
+        description: 'Low-level Programming - Reverse engineering & exploitation',
         level: 'Intermediate',
+        levelPercent: 50,
         why: 'Understanding binary exploitation and malware analysis',
-        project: 'Reverse Engineering Projects',
-        image: 'https://placehold.co/600x400/101010/FF6600?text=Assembly'
+        project: 'Reverse Engineering',
+        category: 'security'
     },
     {
         id: 7,
@@ -95,11 +98,12 @@ const progressionData = [
         color: '#E34F26',
         year: 'Self-taught',
         duration: '1 month',
-        description: 'Web Foundation - Frontend development',
+        description: 'Web Foundation - Frontend development essentials',
         level: 'Advanced',
+        levelPercent: 90,
         why: 'Building modern web applications and interfaces',
-        project: 'XyberClan SaaS Website',
-        image: 'https://placehold.co/600x400/101010/E34F26?text=Web+Dev'
+        project: 'XyberClan SaaS',
+        category: 'web'
     },
     {
         id: 8,
@@ -108,11 +112,12 @@ const progressionData = [
         color: '#3178C6',
         year: 'Self-taught',
         duration: '1 month',
-        description: 'Type-safe JavaScript - Scalable applications',
+        description: 'Type-safe JavaScript - Scalable enterprise applications',
         level: 'Advanced',
+        levelPercent: 85,
         why: 'Better code quality and maintainability for large projects',
-        project: 'Enterprise Applications',
-        image: 'https://placehold.co/600x400/101010/3178C6?text=TypeScript'
+        project: 'Enterprise Apps',
+        category: 'web'
     },
     {
         id: 9,
@@ -121,11 +126,12 @@ const progressionData = [
         color: '#61DAFB',
         year: 'Self-taught',
         duration: '4 months',
-        description: 'Modern Frameworks - Full-stack development',
+        description: 'Modern Frameworks - Full-stack development mastery',
         level: 'Expert',
+        levelPercent: 95,
         why: 'Industry-standard for building scalable web applications',
-        project: 'NBDance Awards, XyberClan SaaS, Genesis Pool Party, Portfolio',
-        image: 'https://placehold.co/600x400/101010/61DAFB?text=React+NextJS'
+        project: 'NBDance, XyberClan, Portfolio',
+        category: 'web'
     },
     {
         id: 10,
@@ -134,332 +140,310 @@ const progressionData = [
         color: '#FF6B9D',
         year: '2023-Present',
         duration: '2 years',
-        description: 'AI/LLM Mastery - Crafting effective prompts for AI systems',
+        description: 'AI/LLM Mastery - Leverage AI for development & automation',
         level: 'Expert',
+        levelPercent: 92,
         why: 'Essential for leveraging AI in development and automation',
-        project: 'Aegis AI Assistant, AI-powered tools, Automation workflows',
-        image: 'https://placehold.co/600x400/101010/FF6B9D?text=Prompt+Engineering'
+        project: 'Aegis AI, Automation',
+        category: 'ai'
     }
 ]
 
-const LanguageNode = ({ data, position, index, onHover }) => {
-    const meshRef = useRef()
-    const [hovered, setHovered] = useState(false)
-    const Icon = data.icon
+const SkillCard = ({ skill, index, onClick, isActive }) => {
+    const [cardRef, cardVisible] = useScrollAnimation(0.1)
+    const Icon = skill.icon
 
-    useFrame((state) => {
-        if (meshRef.current) {
-            const t = state.clock.getElapsedTime()
-            meshRef.current.rotation.y = t * 0.5
-            if (hovered) {
-                meshRef.current.scale.setScalar(1.3)
-            } else {
-                meshRef.current.scale.setScalar(1)
-            }
-        }
-    })
+    const getLevelColor = (percent) => {
+        if (percent >= 90) return 'from-green-400 to-emerald-500'
+        if (percent >= 75) return 'from-cyan-400 to-blue-500'
+        if (percent >= 60) return 'from-yellow-400 to-orange-500'
+        return 'from-purple-400 to-pink-500'
+    }
 
     return (
-        <group position={position}>
-            <Float speed={2} rotationIntensity={0.5} floatIntensity={0.5}>
-                <mesh
-                    ref={meshRef}
-                    onPointerOver={() => {
-                        setHovered(true)
-                        onHover(data)
+        <div
+            ref={cardRef}
+            onClick={() => onClick(skill)}
+            className={`scroll-hidden ${cardVisible ? 'animate-fade-in-up' : ''} cursor-pointer group`}
+            style={{ animationDelay: `${index * 0.1}s` }}
+        >
+            <div className={`relative bg-gradient-to-br from-gray-900/80 to-black/90 backdrop-blur-xl border rounded-2xl p-5 transition-all duration-500 h-full
+                ${isActive
+                    ? 'border-cyan-400 shadow-[0_0_30px_rgba(6,182,212,0.4)] scale-[1.02]'
+                    : 'border-gray-700/50 hover:border-cyan-400/50 hover:shadow-[0_0_20px_rgba(6,182,212,0.2)]'
+                }`}
+            >
+                {/* Glow effect on hover */}
+                <div
+                    className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                    style={{
+                        background: `radial-gradient(circle at center, ${skill.color}15, transparent 70%)`
                     }}
-                    onPointerOut={() => {
-                        setHovered(false)
-                        onHover(null)
-                    }}
+                />
+
+                {/* Skill Icon */}
+                <div className="relative flex items-start justify-between mb-4">
+                    <div
+                        className="w-14 h-14 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110"
+                        style={{
+                            background: `linear-gradient(135deg, ${skill.color}30, ${skill.color}10)`,
+                            boxShadow: `0 0 20px ${skill.color}30`
+                        }}
+                    >
+                        <Icon className="text-2xl" style={{ color: skill.color }} />
+                    </div>
+
+                    {/* Level badge */}
+                    <span
+                        className="px-3 py-1 text-xs font-bold rounded-full"
+                        style={{
+                            background: `${skill.color}20`,
+                            color: skill.color
+                        }}
+                    >
+                        {skill.level}
+                    </span>
+                </div>
+
+                {/* Skill Name */}
+                <h3 className="text-xl font-bold text-white mb-1 group-hover:text-cyan-400 transition-colors">
+                    {skill.name}
+                </h3>
+
+                {/* Year */}
+                <p className="text-gray-500 text-xs font-mono mb-3">{skill.year}</p>
+
+                {/* Description */}
+                <p className="text-gray-400 text-sm leading-relaxed mb-4 line-clamp-2">
+                    {skill.description}
+                </p>
+
+                {/* Progress Bar */}
+                <div className="mt-auto">
+                    <div className="flex justify-between text-xs mb-1">
+                        <span className="text-gray-500">Mastery</span>
+                        <span className="text-cyan-400 font-mono">{skill.levelPercent}%</span>
+                    </div>
+                    <div className="h-2 bg-gray-800 rounded-full overflow-hidden">
+                        <div
+                            className={`h-full bg-gradient-to-r ${getLevelColor(skill.levelPercent)} rounded-full transition-all duration-1000`}
+                            style={{ width: `${skill.levelPercent}%` }}
+                        />
+                    </div>
+                </div>
+
+                {/* Project tag */}
+                <div className="mt-4 pt-3 border-t border-gray-800">
+                    <span className="text-xs text-gray-500">KEY PROJECT:</span>
+                    <p className="text-sm text-gray-300 font-medium truncate">{skill.project}</p>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+const SkillModal = ({ skill, onClose }) => {
+    if (!skill) return null
+    const Icon = skill.icon
+
+    return (
+        <div
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/90 backdrop-blur-xl"
+            onClick={onClose}
+        >
+            <div
+                className="relative max-w-2xl w-full bg-gradient-to-br from-gray-900 via-black to-gray-900 border border-cyan-400/30 rounded-3xl p-8 shadow-[0_0_60px_rgba(6,182,212,0.3)] animate-appear"
+                onClick={(e) => e.stopPropagation()}
+            >
+                {/* Close button */}
+                <button
+                    onClick={onClose}
+                    className="absolute top-4 right-4 w-10 h-10 rounded-full bg-gray-800 border border-gray-700 flex items-center justify-center text-gray-400 hover:text-white hover:border-cyan-400 transition-colors"
                 >
-                    <sphereGeometry args={[0.3, 32, 32]} />
-                    <meshStandardMaterial
-                        color={data.color}
-                        emissive={data.color}
-                        emissiveIntensity={hovered ? 1.5 : 0.5}
-                        metalness={0.8}
-                        roughness={0.2}
-                    />
-                </mesh>
-                <pointLight
-                    color={data.color}
-                    intensity={hovered ? 2 : 0.5}
-                    distance={3}
-                />
-            </Float>
-        </group>
-    )
-}
+                    <FaTimes />
+                </button>
 
-const SpiralPath = ({ nodes }) => {
-    const points = useMemo(() => {
-        const pts = []
-        const radius = 3
-        const height = 8
-        const turns = 2
+                {/* Header */}
+                <div className="flex items-center gap-6 mb-6">
+                    <div
+                        className="w-20 h-20 rounded-2xl flex items-center justify-center"
+                        style={{
+                            background: `linear-gradient(135deg, ${skill.color}40, ${skill.color}10)`,
+                            boxShadow: `0 0 30px ${skill.color}40`
+                        }}
+                    >
+                        <Icon className="text-4xl" style={{ color: skill.color }} />
+                    </div>
+                    <div>
+                        <h3 className="text-3xl font-black text-white">{skill.name}</h3>
+                        <p className="text-gray-400">{skill.year} • {skill.duration}</p>
+                    </div>
+                </div>
 
-        for (let i = 0; i <= 100; i++) {
-            const t = i / 100
-            const angle = t * Math.PI * 2 * turns
-            const y = (t - 0.5) * height
-            const x = Math.cos(angle) * radius * (1 - t * 0.3)
-            const z = Math.sin(angle) * radius * (1 - t * 0.3)
-            pts.push(new THREE.Vector3(x, y, z))
-        }
-        return pts
-    }, [])
+                {/* Level indicator */}
+                <div className="mb-6">
+                    <div className="flex justify-between mb-2">
+                        <span className="text-gray-400">Mastery Level</span>
+                        <span className="text-cyan-400 font-bold">{skill.level} ({skill.levelPercent}%)</span>
+                    </div>
+                    <div className="h-3 bg-gray-800 rounded-full overflow-hidden">
+                        <div
+                            className="h-full bg-gradient-to-r from-cyan-500 to-purple-500 rounded-full"
+                            style={{ width: `${skill.levelPercent}%` }}
+                        />
+                    </div>
+                </div>
 
-    const lineRef = useRef()
+                {/* Description */}
+                <div className="mb-6">
+                    <h4 className="text-lg font-bold text-white mb-2">Description</h4>
+                    <p className="text-gray-300">{skill.description}</p>
+                </div>
 
-    useFrame((state) => {
-        if (lineRef.current) {
-            lineRef.current.material.dashOffset -= 0.01
-        }
-    })
+                {/* Why I learned */}
+                <div className="mb-6">
+                    <h4 className="text-lg font-bold text-white mb-2">Why I Learned This</h4>
+                    <p className="text-gray-300">{skill.why}</p>
+                </div>
 
-    return (
-        <Line
-            ref={lineRef}
-            points={points}
-            color="#06b6d4"
-            lineWidth={2}
-            dashed
-            dashScale={50}
-            dashSize={0.5}
-            gapSize={0.3}
-        />
-    )
-}
-
-const SpiralScene = ({ onHover }) => {
-    const groupRef = useRef()
-
-    useFrame((state) => {
-        if (groupRef.current) {
-            groupRef.current.rotation.y = state.clock.getElapsedTime() * 0.1
-        }
-    })
-
-    const nodePositions = useMemo(() => {
-        const positions = []
-        const radius = 3
-        const height = 8
-        const turns = 2
-
-        progressionData.forEach((_, index) => {
-            const t = index / (progressionData.length - 1)
-            const angle = t * Math.PI * 2 * turns
-            const y = (t - 0.5) * height
-            const x = Math.cos(angle) * radius * (1 - t * 0.3)
-            const z = Math.sin(angle) * radius * (1 - t * 0.3)
-            positions.push([x, y, z])
-        })
-        return positions
-    }, [])
-
-    return (
-        <group ref={groupRef}>
-            <SpiralPath nodes={progressionData} />
-            {progressionData.map((data, index) => (
-                <LanguageNode
-                    key={data.id}
-                    data={data}
-                    position={nodePositions[index]}
-                    index={index}
-                    onHover={onHover}
-                />
-            ))}
-        </group>
+                {/* Key Project */}
+                <div className="bg-gradient-to-r from-cyan-500/10 to-purple-500/10 rounded-xl p-4 border border-cyan-400/20">
+                    <h4 className="text-sm font-bold text-cyan-400 mb-1">KEY PROJECT</h4>
+                    <p className="text-white font-semibold">{skill.project}</p>
+                </div>
+            </div>
+        </div>
     )
 }
 
 const ProgrammingProgressionBit = () => {
-    const [hoveredNode, setHoveredNode] = useState(null)
     const [headerRef, headerVisible] = useScrollAnimation(0.2)
-    const [timelineRef, timelineVisible] = useScrollAnimation(0.2)
+    const [selectedSkill, setSelectedSkill] = useState(null)
+    const [filter, setFilter] = useState('all')
+
+    const categories = [
+        { id: 'all', name: 'All Skills', color: '#06b6d4' },
+        { id: 'web', name: 'Web Dev', color: '#61DAFB' },
+        { id: 'security', name: 'Security', color: '#ef4444' },
+        { id: 'ai', name: 'AI/ML', color: '#FF6B9D' },
+        { id: 'systems', name: 'Systems', color: '#A8B9CC' },
+    ]
+
+    const filteredSkills = filter === 'all'
+        ? progressionData
+        : progressionData.filter(s => s.category === filter)
+
+    // Calculate stats
+    const expertCount = progressionData.filter(s => s.level === 'Expert').length
+    const avgMastery = Math.round(progressionData.reduce((acc, s) => acc + s.levelPercent, 0) / progressionData.length)
 
     return (
-        <section className="min-h-screen w-full relative flex items-center justify-center overflow-hidden bg-gradient-to-b from-black via-zinc-900 to-black">
-            {/* 3D View */}
-            <View className="absolute top-0 left-0 w-full h-full">
-                <PerspectiveCamera makeDefault position={[0, 0, 12]} fov={60} />
-                <ambientLight intensity={0.3} />
-                <pointLight position={[10, 10, 10]} intensity={1} color="#06b6d4" />
-                <pointLight position={[-10, -10, -10]} intensity={0.5} color="#ec4899" />
+        <section className="min-h-screen w-full relative bg-black py-20 overflow-hidden">
+            {/* Background Effects */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,_rgba(6,182,212,0.08),_transparent_50%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,_rgba(168,85,247,0.08),_transparent_50%)]" />
 
-                <SpiralScene onHover={setHoveredNode} />
-            </View>
+            {/* Grid pattern */}
+            <div className="absolute inset-0 opacity-10">
+                <div className="absolute inset-0" style={{
+                    backgroundImage: `radial-gradient(circle, #06b6d4 1px, transparent 1px)`,
+                    backgroundSize: '40px 40px'
+                }} />
+            </div>
 
-            {/* UI Overlay */}
-            <div className="relative z-10 w-full max-w-6xl mx-auto px-8 py-20">
+            <div className="max-w-7xl mx-auto px-6 relative z-10">
+                {/* Header */}
                 <div
                     ref={headerRef}
-                    className={`text-center mb-12 sm:mb-16 scroll-hidden ${headerVisible ? 'animate-fade-in-down' : ''
-                        }`}
+                    className={`text-center mb-12 scroll-hidden ${headerVisible ? 'animate-fade-in-down' : ''}`}
                 >
-                    <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-2 sm:mb-4 text-white px-4" style={{ textShadow: '0 0 40px rgba(6,182,212,0.5), 0 0 80px rgba(168,85,247,0.3)' }}>
-                        PROGRAMMING PROGRESSION
+                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-cyan-500/10 border border-cyan-400/30 rounded-full mb-6">
+                        <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse" />
+                        <span className="text-cyan-400 font-mono text-sm">SKILL_TREE</span>
+                    </div>
+
+                    <h2
+                        className="text-3xl sm:text-5xl md:text-6xl font-black mb-4 text-white"
+                        style={{ textShadow: '0 0 40px rgba(6,182,212,0.5)' }}
+                    >
+                        PROGRAMMING <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">ARSENAL</span>
                     </h2>
-                    <p className="text-gray-400 font-mono text-xs sm:text-sm tracking-widest px-4">
-                        &lt; FROM_FUNDAMENTALS_TO_FRAMEWORKS /&gt;
+
+                    <p className="text-gray-400 max-w-2xl mx-auto mb-8">
+                        A decade of learning, from low-level systems to modern AI. Click any skill to explore deeper.
                     </p>
-                </div>
 
-                {/* Hover Tooltip */}
-                {hoveredNode && (
-                    <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 pointer-events-none">
-                        <div className="bg-black/90 backdrop-blur-xl border border-cyan-400/50 rounded-lg p-6 max-w-md shadow-[0_0_50px_rgba(6,182,212,0.3)] animate-appear">
-                            {hoveredNode.image && (
-                                <div className="w-full h-40 mb-4 rounded-lg overflow-hidden relative">
-                                    <img
-                                        src={hoveredNode.image}
-                                        alt={hoveredNode.name}
-                                        className="w-full h-full object-cover"
-                                    />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-                                </div>
-                            )}
-                            <div className="flex items-center gap-4 mb-4">
-                                <div
-                                    className="w-12 h-12 rounded-full flex items-center justify-center text-2xl"
-                                    style={{ backgroundColor: hoveredNode.color + '20', color: hoveredNode.color }}
-                                >
-                                    <hoveredNode.icon />
-                                </div>
-                                <div>
-                                    <h3 className="text-2xl font-bold text-white">{hoveredNode.name}</h3>
-                                    <p className="text-cyan-400 text-sm font-mono">{hoveredNode.year} • {hoveredNode.duration}</p>
-                                </div>
-                            </div>
-
-                            <div className="space-y-3 text-sm">
-                                <div>
-                                    <span className="text-purple-400 font-mono">Description:</span>
-                                    <p className="text-gray-300 mt-1">{hoveredNode.description}</p>
-                                </div>
-
-                                <div>
-                                    <span className="text-purple-400 font-mono">Level:</span>
-                                    <p className="text-gray-300 mt-1">{hoveredNode.level}</p>
-                                </div>
-
-                                <div>
-                                    <span className="text-purple-400 font-mono">Why I Learned It:</span>
-                                    <p className="text-gray-300 mt-1">{hoveredNode.why}</p>
-                                </div>
-
-                                <div>
-                                    <span className="text-purple-400 font-mono">Key Project:</span>
-                                    <p className="text-cyan-300 mt-1 font-semibold">{hoveredNode.project}</p>
-                                </div>
-                            </div>
+                    {/* Stats */}
+                    <div className="flex justify-center gap-8 mb-8">
+                        <div className="text-center">
+                            <div className="text-3xl font-black text-cyan-400">{progressionData.length}</div>
+                            <div className="text-xs text-gray-500 font-mono">LANGUAGES</div>
+                        </div>
+                        <div className="text-center">
+                            <div className="text-3xl font-black text-purple-400">{expertCount}</div>
+                            <div className="text-xs text-gray-500 font-mono">EXPERT_LEVEL</div>
+                        </div>
+                        <div className="text-center">
+                            <div className="text-3xl font-black text-pink-400">{avgMastery}%</div>
+                            <div className="text-xs text-gray-500 font-mono">AVG_MASTERY</div>
                         </div>
                     </div>
-                )}
 
-                {/* Timeline List with Connecting Lines */}
-                <div
-                    ref={timelineRef}
-                    className={`relative mt-20 scroll-hidden ${timelineVisible ? 'animate-fade-in-up' : ''
-                        }`}
-                >
-                    {/* Connecting dotted line */}
-                    <svg className="absolute top-0 left-0 w-full h-full pointer-events-none" style={{ zIndex: 0 }}>
-                        <defs>
-                            <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.3" />
-                                <stop offset="50%" stopColor="#a855f7" stopOpacity="0.3" />
-                                <stop offset="100%" stopColor="#ec4899" stopOpacity="0.3" />
-                            </linearGradient>
-                        </defs>
-                        {progressionData.slice(0, -1).map((_, index) => {
-                            const row = Math.floor(index / 3)
-                            const col = index % 3
-                            const nextRow = Math.floor((index + 1) / 3)
-                            const nextCol = (index + 1) % 3
-
-                            // Calculate approximate positions (adjust based on actual card positions)
-                            const x1 = `${(col + 0.5) * 33.33}%`
-                            const y1 = `${(row + 0.5) * 200}px`
-                            const x2 = `${(nextCol + 0.5) * 33.33}%`
-                            const y2 = `${(nextRow + 0.5) * 200}px`
-
-                            return (
-                                <line
-                                    key={`line-${index}`}
-                                    x1={x1}
-                                    y1={y1}
-                                    x2={x2}
-                                    y2={y2}
-                                    stroke="url(#lineGradient)"
-                                    strokeWidth="2"
-                                    strokeDasharray="5,5"
-                                    opacity="0.5"
-                                />
-                            )
-                        })}
-                    </svg>
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative" style={{ zIndex: 1 }}>
-                        {progressionData.map((item, index) => (
-                            <div
-                                key={item.id}
-                                className="bg-black/60 backdrop-blur-sm border border-gray-800 rounded-lg p-5 hover:border-cyan-400 transition-all duration-300 group hover-lift animate-slide-up cursor-pointer relative overflow-hidden"
-                                style={{ animationDelay: `${index * 0.1}s` }}
+                    {/* Filter Tabs */}
+                    <div className="flex flex-wrap justify-center gap-2">
+                        {categories.map(cat => (
+                            <button
+                                key={cat.id}
+                                onClick={() => setFilter(cat.id)}
+                                className={`px-4 py-2 rounded-full font-mono text-sm transition-all duration-300 ${filter === cat.id
+                                    ? 'bg-cyan-500 text-white shadow-[0_0_20px_rgba(6,182,212,0.5)]'
+                                    : 'bg-gray-800/50 text-gray-400 hover:bg-gray-700/50 border border-gray-700'
+                                    }`}
                             >
-                                {/* Number badge */}
-                                <div className="absolute top-2 right-2 w-6 h-6 rounded-full bg-cyan-500/20 border border-cyan-400/50 flex items-center justify-center text-xs font-mono text-cyan-400">
-                                    {index + 1}
-                                </div>
-
-                                <div className="flex items-center gap-3 mb-3">
-                                    <div
-                                        className="w-12 h-12 rounded-full flex items-center justify-center text-2xl group-hover:scale-110 transition-transform duration-300"
-                                        style={{ backgroundColor: item.color + '20', color: item.color }}
-                                    >
-                                        <item.icon />
-                                    </div>
-                                    <div className="flex-1">
-                                        <h4 className="text-white font-bold text-lg">{item.name}</h4>
-                                        <p className="text-xs text-gray-500 font-mono">{item.duration}</p>
-                                    </div>
-                                </div>
-
-                                {/* Compact info - always visible */}
-                                <p className="text-xs text-gray-400 mb-2">{item.description}</p>
-
-                                {/* Expanded info - visible on hover */}
-                                <div className="max-h-0 group-hover:max-h-96 overflow-hidden transition-all duration-500 ease-in-out">
-                                    <div className="pt-3 mt-3 border-t border-gray-700/50 space-y-2">
-                                        <div className="flex items-start gap-2">
-                                            <span className="text-xs text-purple-400 font-mono whitespace-nowrap">Year:</span>
-                                            <span className="text-xs text-gray-300">{item.year}</span>
-                                        </div>
-                                        <div className="flex items-start gap-2">
-                                            <span className="text-xs text-purple-400 font-mono whitespace-nowrap">Level:</span>
-                                            <span className="text-xs text-cyan-300 font-semibold">{item.level}</span>
-                                        </div>
-                                        <div className="flex items-start gap-2">
-                                            <span className="text-xs text-purple-400 font-mono whitespace-nowrap">Why:</span>
-                                            <span className="text-xs text-gray-300">{item.why}</span>
-                                        </div>
-                                        <div className="flex items-start gap-2">
-                                            <span className="text-xs text-purple-400 font-mono whitespace-nowrap">Project:</span>
-                                            <span className="text-xs text-pink-300 font-semibold">{item.project}</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/* Hover indicator */}
-                                <div className="absolute bottom-2 right-2 text-xs text-gray-600 group-hover:text-cyan-400 transition-colors font-mono">
-                                    hover_for_more
-                                </div>
-                            </div>
+                                {cat.name}
+                            </button>
                         ))}
                     </div>
                 </div>
+
+                {/* Skills Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+                    {filteredSkills.map((skill, index) => (
+                        <SkillCard
+                            key={skill.id}
+                            skill={skill}
+                            index={index}
+                            onClick={setSelectedSkill}
+                            isActive={selectedSkill?.id === skill.id}
+                        />
+                    ))}
+                </div>
+
+                {/* Legend */}
+                <div className="mt-12 flex flex-wrap justify-center gap-6 text-sm">
+                    <div className="flex items-center gap-2">
+                        <div className="w-3 h-3 rounded-full bg-gradient-to-r from-green-400 to-emerald-500" />
+                        <span className="text-gray-400">Expert (90%+)</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <div className="w-3 h-3 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500" />
+                        <span className="text-gray-400">Advanced (75-89%)</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <div className="w-3 h-3 rounded-full bg-gradient-to-r from-yellow-400 to-orange-500" />
+                        <span className="text-gray-400">Intermediate (60-74%)</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <div className="w-3 h-3 rounded-full bg-gradient-to-r from-purple-400 to-pink-500" />
+                        <span className="text-gray-400">Learning (&lt;60%)</span>
+                    </div>
+                </div>
             </div>
+
+            {/* Skill Detail Modal */}
+            {selectedSkill && (
+                <SkillModal skill={selectedSkill} onClose={() => setSelectedSkill(null)} />
+            )}
         </section>
     )
 }
