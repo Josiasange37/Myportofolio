@@ -5,7 +5,7 @@ import { View, Sphere, MeshDistortMaterial, Float, PerspectiveCamera } from '@re
 import { useFrame } from '@react-three/fiber'
 
 // Animated typing component
-const TypeWriter = ({ text, speed = 50, onComplete }) => {
+const TypeWriter = ({ text, speed = 50, onComplete, isActive = true }) => {
   const [displayText, setDisplayText] = useState('')
   const [currentIndex, setCurrentIndex] = useState(0)
 
@@ -29,15 +29,15 @@ const TypeWriter = ({ text, speed = 50, onComplete }) => {
   return (
     <span>
       {displayText}
-      <span className="animate-pulse text-cyan-400">|</span>
+      <span className={`${isActive ? 'opacity-100' : 'opacity-0'} animate-pulse text-cyan-400 ml-1`}>|</span>
     </span>
   )
 }
 
 // Philosophy quotes cycling component
 const PhilosophyQuotes = () => {
-  const [phase, setPhase] = useState(0) // 0: first quote, 1: transition, 2: second quote
-  const [isTyping, setIsTyping] = useState(false)
+  const [phase, setPhase] = useState(0) // 0: first quote, 1: second quote transition
+  const [typingStep, setTypingStep] = useState(0) // 0: none, 1: prefix, 2: formula, 3: done
 
   const quotes = [
     {
@@ -49,7 +49,7 @@ const PhilosophyQuotes = () => {
       formula: "Evolution + Adaptation + Imagination",
       philosophy: "I constantly evolve and adapt — that is my philosophy. That is why I am ",
       highlight: "ALMIGHT",
-      gradient: "from-purple-400 via-pink-400 to-purple-400"
+      gradient: "from-yellow-300 via-orange-400 to-yellow-300"
     }
   ]
 
@@ -58,7 +58,7 @@ const PhilosophyQuotes = () => {
     if (phase === 0) {
       const timer = setTimeout(() => {
         setPhase(1)
-        setIsTyping(true)
+        setTypingStep(1) // Start typing prefix
       }, 3000)
       return () => clearTimeout(timer)
     }
@@ -81,29 +81,43 @@ const PhilosophyQuotes = () => {
         className={`absolute inset-0 flex flex-col items-center justify-center transition-all duration-1000 ${phase >= 1 ? 'opacity-100 scale-100' : 'opacity-0 scale-105 pointer-events-none'
           }`}
       >
-        {isTyping ? (
+        {phase === 1 && (
           <div className="text-center px-4">
-            <p className="text-base sm:text-xl md:text-2xl font-light text-cyan-200 leading-relaxed font-mono mb-2 sm:mb-3">
-              <TypeWriter
-                text={quotes[1].prefix}
-                speed={40}
-                onComplete={() => { }}
-              />
+            <p className="text-base sm:text-xl md:text-2xl font-light text-cyan-200 leading-relaxed font-mono mb-2 sm:mb-3 min-h-[2rem]">
+              {typingStep >= 1 ? (
+                <TypeWriter
+                  text={quotes[1].prefix}
+                  speed={40}
+                  onComplete={() => setTypingStep(2)}
+                  isActive={typingStep === 1}
+                />
+              ) : null}
             </p>
-            <p className={`text-lg sm:text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r ${quotes[1].gradient} mb-4`}>
-              {phase >= 1 && <TypeWriter text={quotes[1].formula} speed={30} />}
+
+            <p className={`text-lg sm:text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r ${quotes[1].gradient} mb-4 min-h-[3rem]`}>
+              {typingStep >= 2 ? (
+                <TypeWriter
+                  text={quotes[1].formula}
+                  speed={30}
+                  onComplete={() => setTypingStep(3)}
+                  isActive={typingStep === 2}
+                />
+              ) : null}
             </p>
-            <div className="w-16 h-px bg-gradient-to-r from-transparent via-purple-500 to-transparent mx-auto my-4"></div>
-            <p className="text-gray-400 text-xs sm:text-sm md:text-base">
-              {quotes[1].philosophy}
-              <span className="text-cyan-400 font-bold">{quotes[1].highlight}</span>.
-            </p>
+
+            <div className={`transition-opacity duration-1000 ${typingStep === 3 ? 'opacity-100' : 'opacity-0'}`}>
+              <div className="w-16 h-px bg-gradient-to-r from-transparent via-purple-500 to-transparent mx-auto my-4"></div>
+              <p className="text-gray-400 text-xs sm:text-sm md:text-base">
+                {quotes[1].philosophy}
+                <span className="text-cyan-400 font-bold">{quotes[1].highlight}</span>.
+              </p>
+            </div>
           </div>
-        ) : null}
+        )}
       </div>
 
       {/* Cycle indicator dots */}
-      <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-2">
+      <div className="absolute -bottom-10 left-1/2 transform -translate-x-1/2 flex space-x-2">
         <div className={`w-2 h-2 rounded-full transition-all duration-500 ${phase === 0 ? 'bg-cyan-400 scale-125' : 'bg-gray-600'}`}></div>
         <div className={`w-2 h-2 rounded-full transition-all duration-500 ${phase >= 1 ? 'bg-purple-400 scale-125' : 'bg-gray-600'}`}></div>
       </div>
