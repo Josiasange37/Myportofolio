@@ -4,6 +4,8 @@ import { useScrollAnimation } from '../hooks/useScrollAnimation'
 import { View, Sphere, MeshDistortMaterial, Float, PerspectiveCamera } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 
+import { personalInfo } from '../config/siteConfig'
+
 // Animated typing component
 const TypeWriter = ({ text, speed = 50, onComplete, isActive = true }) => {
   const [displayText, setDisplayText] = useState('')
@@ -41,14 +43,15 @@ const PhilosophyQuotes = () => {
 
   const quotes = [
     {
-      text: "A king never waves, a king never bends, a king never gives up.",
+      text: personalInfo.philosophy,
       gradient: "from-cyan-400 via-purple-400 to-pink-400"
     },
     {
       prefix: "Humanity's superpower = ",
       formula: "Evolution + Adaptation + Imagination",
-      philosophy: "I constantly evolve and adapt — that is my philosophy. That is why I am ",
-      highlight: "ALMIGHT",
+      // Remove 'ALMIGHT' from the end of the quote for the highlight separation
+      philosophy: personalInfo.quote.replace(' ALMIGHT.', '').replace(' ALMIGHT', '') + ' ',
+      highlight: personalInfo.pseudo,
       gradient: "from-yellow-300 via-orange-400 to-yellow-300"
     }
   ]
