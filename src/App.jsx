@@ -20,6 +20,9 @@ import ProjectsBit from './sections/ProjectsBit'
 import PhilosophyBit from './sections/PhilosophyBit'
 import HobbiesBit from './sections/HobbiesBit'
 import ContactBit from './sections/ContactBit'
+import AlmightBot from './components/AlmightBot'
+
+
 
 
 import { Home, Cpu, Activity, FolderGit, Brain, Gamepad2, Mail, User, Award, GraduationCap, Building2 } from 'lucide-react'
@@ -172,25 +175,6 @@ const App = () => {
           <div id="certifications"><CertificationsBit /></div>
           <div id="programming"><ProgrammingProgressionBit /></div>
           <div id="red-team"><RedTeamingProgressionBit /></div>
-          <div id="projects"><GitHubActivityBit data={githubData} /><ProjectsBit data={githubData} /></div>
-          {/* Note: Merged Projects/Activity under 'projects' ID or verify split? The list has them separate but index matches. 
-              Wait, NAV_ITEMS has 'Projects' but code had separate GitHubActivityBit and ProjectsBit. 
-              Let me check indices. 
-              Hero(0), About(1), XyberClan(2), Education(3), Certifications(4), Programming(5), RedTeam(6), Projects(7).
-              Original code: 8 items before Projects? 
-              GitHubActivityBit was index 7? 
-              Let's align logic to original file order:
-              Hero, About, XyberClan, Education, Certifications, Programming, RedTeam, GitHub, Projects, Philosophy, Hobbies, Contact.
-              But NAV_ITEMS only had 11 items.
-              Nav Items: Hero, About, Xyber, Education, Certs, Prog, Red, Projects, Phil, Hobbies, Contact.
-              Components: Hero, About, Xyber, Edu, Certs, Prog, Red, GitHub, Projects, Phil, Hobbies, Contact.
-              So GitHubActivityBit was NOT in Nav? Or merged?
-              I'll wrap both GitHub and Projects in 'projects' ID for now to be safe, or just GitHub separated?
-              Let's look at previous list:
-              Hero, About, Xyber, Edu, Certs, Prog, Red, [GitHub...], Projects...
-              If I wrap GitHub in 'projects' section it might be fine.
-              Actually, let's keep it simple:
-          */}
           <div id="projects">
             <GitHubActivityBit data={githubData} />
             <ProjectsBit data={githubData} />
@@ -203,6 +187,7 @@ const App = () => {
         <div className="fixed bottom-4 right-4 z-50 font-mono text-xs text-gray-500 bg-black/50 px-2 py-1 rounded border border-gray-800 backdrop-blur-sm">
           BITS_ARCH_V1.1
         </div>
+        <AlmightBot />
       </div>
     </ErrorBoundary>
   )
