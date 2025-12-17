@@ -1,8 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { FaArrowLeft, FaGithub, FaLinkedin, FaTwitter, FaDiscord, FaEnvelope, FaLightbulb, FaRocket, FaHeart, FaCertificate, FaPrint, FaTelegram, FaCode, FaShieldAlt } from 'react-icons/fa'
 import { personalInfo, socialLinks, xyberclan, education, skills, certifications } from '../config/siteConfig'
 
+import { useBot } from '../context/BotContext';
+
 const Resume = () => {
+    const { setCurrentSection } = useBot();
+
+    useEffect(() => {
+        setCurrentSection('resume');
+    }, [setCurrentSection]);
+
     return (
         <div className="min-h-screen bg-black text-white print:bg-white print:text-black selection:bg-cyan-500/30">
             <style>{`

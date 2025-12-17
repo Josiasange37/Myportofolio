@@ -19,6 +19,8 @@ const AMBIENT_MESSAGES = [
     "Check out the GitHub stats!"
 ];
 
+import { useBot } from '../context/BotContext';
+
 const SECTION_MESSAGES = {
     'hero': "Welcome to the core. Connection established.",
     'about': "The man behind the keyboard. Josias is built different.",
@@ -30,10 +32,14 @@ const SECTION_MESSAGES = {
     'projects': "Proof of concept. All code is active.",
     'philosophy': "The mindset required to survive in cyberspace.",
     'hobbies': "Even hackers need downtime.",
-    'contact': "Ready to collaborate? Send a signal."
+    'contact': "Ready to collaborate? Send a signal.",
+    'resume': "Official credentials. Verified and secure.",
+    'progression': "The timeline of evolution. From Hello World to CTO.",
+    'cv': "Legacy format. Still valid."
 };
 
-const AlmightBot = ({ activeSectionId }) => {
+const AlmightBot = () => {
+    const { currentSection } = useBot();
     const [isOpen, setIsOpen] = useState(false);
     const [messages, setMessages] = useState([
         { id: 1, text: "Greetings! I am Mini-Almight. I know Josias better than he knows himself. Ask me anything about his Red Team escapades or code architecture!", sender: 'bot' }
@@ -96,9 +102,9 @@ const AlmightBot = ({ activeSectionId }) => {
 
     // Section Commentary Effect (Only runs after welcome sequence is done)
     useEffect(() => {
-        if (isWelcomeSequence || !activeSectionId) return;
+        if (isWelcomeSequence || !currentSection) return;
 
-        const msg = SECTION_MESSAGES[activeSectionId];
+        const msg = SECTION_MESSAGES[currentSection];
         if (msg) {
             setSpeechBubble(msg);
             setShowBubble(true);
@@ -111,7 +117,7 @@ const AlmightBot = ({ activeSectionId }) => {
             }, 5000);
             return () => clearTimeout(timer);
         }
-    }, [activeSectionId, isWelcomeSequence]);
+    }, [currentSection, isWelcomeSequence]);
 
     // Ambient chatter effect (Only runs if NO section commentary is active/welcome is done)
     useEffect(() => {
@@ -216,8 +222,8 @@ const AlmightBot = ({ activeSectionId }) => {
                         {messages.map((msg) => (
                             <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
                                 <div className={`max-w-[80%] p-2 rounded-lg text-sm ${msg.sender === 'user'
-                                        ? 'bg-cyan-900/50 text-white border border-cyan-500/30'
-                                        : 'bg-gray-800/80 text-gray-200 border border-white/10'
+                                    ? 'bg-cyan-900/50 text-white border border-cyan-500/30'
+                                    : 'bg-gray-800/80 text-gray-200 border border-white/10'
                                     }`}>
                                     {msg.text}
                                 </div>

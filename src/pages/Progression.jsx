@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { FaArrowLeft, FaGraduationCap, FaBriefcase, FaFlag, FaCode, FaShieldAlt, FaTrophy, FaRocket } from 'react-icons/fa'
 import { progression } from '../config/siteConfig'
+import { useBot } from '../context/BotContext';
 
 const Progression = () => {
+    const { setCurrentSection } = useBot();
+
+    useEffect(() => {
+        setCurrentSection('progression');
+    }, [setCurrentSection]);
+
     const [activeTab, setActiveTab] = useState('all')
     const [visibleItems, setVisibleItems] = useState([])
 
@@ -12,9 +19,6 @@ const Progression = () => {
         if (activeTab === 'both') return item.category === 'both' || item.category === 'redteam' || item.category === 'programming'
         return item.category === activeTab || item.category === 'both'
     })
-
-    // Sort by Date/Year (assuming ID roughly correlates or just using index order from config)
-    // You might want to sort by year if the order in config isn't strict, but config order is usually best.
 
     // Intersection Observer for scroll animations
     useEffect(() => {
@@ -41,16 +45,6 @@ const Progression = () => {
             case 'education': return 'green'
             default: return 'purple'
         }
-    }
-
-    const getIcon = (item) => {
-        if (item.type === 'cert') return <FaShieldAlt />
-        if (item.type === 'event') return <FaFlag />
-        if (item.type === 'work') return <FaBriefcase />
-        if (item.type === 'goal') return <FaRocket />
-        if (item.category === 'education') return <FaGraduationCap />
-        if (item.category === 'programming') return <FaCode />
-        return <FaTrophy />
     }
 
     return (
