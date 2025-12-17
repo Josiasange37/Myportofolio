@@ -261,10 +261,10 @@ const HeroBit = ({ data }) => {
         </group>
       </View>
 
-      <div className="relative z-50 text-center pointer-events-none p-8 mt-40">
+      <div className="relative z-50 text-center pointer-events-none p-8 mt-20 sm:mt-40">
 
-        {/* 2D Fallback Avatar - Hidden by default, shown via CSS if WebGL fails */}
-        <div className="fallback-avatar hidden mb-8 mx-auto relative w-48 h-48 group">
+        {/* 2D Avatar - Displayed on mobile and as fallback */}
+        <div className="mb-6 sm:mb-8 mx-auto relative w-32 sm:w-40 md:w-48 h-32 sm:h-40 md:h-48 group">
           <div className="absolute inset-0 rounded-full bg-cyan-500/20 blur-xl animate-pulse"></div>
           <img
             src="/profile.png"
