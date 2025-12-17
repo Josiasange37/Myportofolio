@@ -41,7 +41,7 @@ const NAV_ITEMS = [
 ]
 
 const NavDots = ({ activeSection, scrollTo }) => (
-  <div className="fixed right-8 top-1/2 transform -translate-y-1/2 z-50 flex flex-col items-center gap-6 pointer-events-auto">
+  <div className="fixed right-2 sm:right-8 top-1/2 transform -translate-y-1/2 z-50 flex flex-col items-center gap-6 pointer-events-auto">
     {NAV_ITEMS.map((item, idx) => {
       const Icon = item.icon
       const isActive = activeSection === idx
@@ -62,7 +62,7 @@ const NavDots = ({ activeSection, scrollTo }) => (
           )}
 
           {/* Tooltip */}
-          <span className="absolute right-full mr-4 top-1/2 -translate-y-1/2 px-2 py-1 bg-black/80 border border-white/10 rounded text-xs font-mono text-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+          <span className="absolute right-full mr-4 top-1/2 -translate-y-1/2 px-2 py-1 bg-black/80 border border-white/10 rounded text-xs font-mono text-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none hidden sm:block">
             {item.name}
           </span>
         </button>

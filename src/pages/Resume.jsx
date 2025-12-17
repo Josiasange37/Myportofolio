@@ -1,265 +1,272 @@
 import React from 'react'
-import { FaArrowLeft, FaDownload, FaGithub, FaLinkedin, FaEnvelope, FaLightbulb, FaRocket, FaHeart, FaCertificate, FaPrint } from 'react-icons/fa'
+import { FaArrowLeft, FaGithub, FaLinkedin, FaTwitter, FaDiscord, FaEnvelope, FaLightbulb, FaRocket, FaHeart, FaCertificate, FaPrint, FaTelegram, FaCode, FaShieldAlt } from 'react-icons/fa'
+import { personalInfo, socialLinks, xyberclan, education, skills, certifications } from '../config/siteConfig'
 
 const Resume = () => {
     return (
-        <div className="min-h-screen bg-black text-white">
-            {/* Cursor Flashlight Effect */}
+        <div className="min-h-screen bg-black text-white print:bg-white print:text-black selection:bg-cyan-500/30">
+            <style>{`
+                @media print {
+                    @page { margin: 1cm; size: auto; }
+                    body { 
+                        background: white !important; 
+                        color: black !important; 
+                        -webkit-print-color-adjust: exact !important; 
+                        print-color-adjust: exact !important; 
+                    }
+                    .print-hidden { display: none !important; }
+                    .print-break-inside { break-inside: avoid; }
+                    /* Reset specific overrides that might persist */
+                    * {
+                        text-shadow: none !important;
+                        box-shadow: none !important;
+                        background-image: none !important; /* Remove gradient backgrounds */
+                    }
+                }
+            `}</style>
+
+            {/* Cursor Flashlight Effect - Hidden on Print */}
             <div
-                className="fixed inset-0 pointer-events-none z-50 mix-blend-screen"
+                className="fixed inset-0 pointer-events-none z-50 mix-blend-screen print:hidden"
                 style={{
                     background: `radial-gradient(circle 600px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(6,182,212,0.15), transparent 80%)`
                 }}
             />
 
-            {/* Header */}
-            <header className="fixed top-0 left-0 right-0 bg-black/80 backdrop-blur-xl border-b border-gray-800 z-40">
+            {/* Header - Hidden on Print */}
+            <header className="fixed top-0 left-0 right-0 bg-black/80 backdrop-blur-xl border-b border-white/10 z-40 print:hidden transition-all duration-300">
                 <div className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
                     <a
                         href="/"
-                        className="flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition-colors"
+                        className="flex items-center gap-2 text-gray-400 hover:text-cyan-400 transition-colors group"
                     >
-                        <FaArrowLeft />
-                        <span className="font-mono">BACK_TO_PORTFOLIO</span>
+                        <FaArrowLeft className="group-hover:-translate-x-1 transition-transform" />
+                        <span className="font-mono text-sm tracking-widest">BACK_TO_PORTFOLIO</span>
                     </a>
                     <button
                         onClick={() => window.print()}
-                        className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-purple-500 hover:from-cyan-400 hover:to-purple-400 text-white font-bold text-sm rounded-lg transition-all duration-300 hover:scale-105 flex items-center gap-2 print:hidden"
+                        className="px-5 py-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-cyan-500/50 text-white font-mono text-xs tracking-wider rounded-lg transition-all duration-300 flex items-center gap-2 group"
                     >
-                        <FaPrint />
+                        <FaPrint className="text-gray-400 group-hover:text-cyan-400 transition-colors" />
                         <span>PRINT_RESUME</span>
                     </button>
                 </div>
             </header>
 
             {/* Main Content */}
-            <main className="max-w-5xl mx-auto px-6 pt-24 pb-12">
+            <main className="max-w-5xl mx-auto px-6 pt-32 pb-24 print:pt-0 print:pb-0 print:px-0 print:max-w-full">
 
-                {/* Hero */}
-                <div className="text-center mb-16">
+                {/* Hero Section */}
+                <div className="flex flex-col md:flex-row items-center md:items-start gap-12 mb-20 print:mb-8 print:flex-row print:gap-8 print:items-center print:border-b print:border-gray-200 print:pb-8">
                     {/* Profile Photo */}
-                    <div className="flex justify-center mb-8">
-                        <div className="relative group">
-                            {/* Animated gradient border */}
-                            <div className="absolute -inset-1 bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 rounded-full opacity-75 group-hover:opacity-100 blur-lg transition-all duration-500 animate-gradient-xy"></div>
+                    <div className="relative group shrink-0 print:order-2">
+                        {/* Animated Ring - Hidden on Print */}
+                        <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 rounded-full opacity-50 group-hover:opacity-100 blur transition-all duration-500 print:hidden"></div>
 
-                            {/* Profile Photo */}
-                            <div className="relative w-48 h-48 rounded-full overflow-hidden border-4 border-black bg-gradient-to-br from-cyan-500/20 to-purple-500/20 backdrop-blur-xl">
-                                <img
-                                    src="/profile.png"
-                                    alt="Josias Aaron"
-                                    className="w-full h-full object-cover"
-                                />
-                            </div>
-
-                            {/* Corner accent */}
-                            <div className="absolute -top-2 -right-2 w-8 h-8 bg-cyan-400 rounded-full animate-pulse"></div>
-                            <div className="absolute -bottom-2 -left-2 w-6 h-6 bg-purple-400 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+                        <div className="relative w-48 h-48 print:w-32 print:h-32 rounded-full overflow-hidden border-4 border-black print:border-gray-300 bg-black print:bg-transparent">
+                            <img
+                                src="/profile.png"
+                                alt={personalInfo.name}
+                                className="w-full h-full object-cover"
+                            />
                         </div>
                     </div>
 
-                    <h1 className="text-6xl font-black mb-4 text-white" style={{ textShadow: '0 0 40px rgba(6,182,212,0.5)' }}>
-                        AKANA SIGNING JOSIAS AARON
-                    </h1>
-                    <p className="text-2xl text-cyan-400 font-mono mb-2">ALMIGHT</p>
-                    <p className="text-xl text-gray-400 mb-2">Red Teamer | Full Stack Developer | <span className="text-pink-400">CTO @ XyberClan</span></p>
-                    <p className="text-sm text-gray-500 mb-6">University of Yaoundé I • Class of 2027</p>
+                    <div className="text-center md:text-left flex-1 print:text-left print:order-1">
+                        <h1 className="text-6xl md:text-7xl print:text-5xl font-black mb-4 text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-gray-400 print:text-black print:bg-none tracking-tight">
+                            {personalInfo.name}
+                        </h1>
+                        <p className="text-2xl text-cyan-400 print:text-cyan-600 font-mono mb-2 tracking-wide font-bold">{personalInfo.pseudo}</p>
+                        <p className="text-xl text-gray-400 print:text-gray-700 mb-4 font-light tracking-wide">{personalInfo.title} <span className="text-gray-600 print:hidden">|</span> <span className="block md:inline text-purple-400 print:text-purple-600 font-medium">{xyberclan.role} @ {xyberclan.company}</span></p>
 
-                    {/* Contact Links */}
-                    <div className="flex justify-center gap-4">
-                        <a href="https://github.com/Josiasange37" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-cyan-400 transition-colors">
-                            <FaGithub className="text-2xl" />
-                        </a>
-                        <a href="https://www.linkedin.com/in/thealmight/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-cyan-400 transition-colors">
-                            <FaLinkedin className="text-2xl" />
-                        </a>
-                        <a href="mailto:josiasange37@gmail.com" className="text-gray-400 hover:text-cyan-400 transition-colors">
-                            <FaEnvelope className="text-2xl" />
-                        </a>
+                        <div className="flex flex-wrap justify-center md:justify-start gap-4 text-sm font-mono text-gray-500 print:text-gray-600 mb-8 print:mb-4">
+                            <span>{education.institution}</span>
+                            <span className="text-gray-700 mx-2">•</span>
+                            <span>Class of {education.expectedGraduation}</span>
+                        </div>
+
+                        {/* Contact Links */}
+                        <div className="flex justify-center md:justify-start gap-6 print:justify-start flex-wrap">
+                            {socialLinks.github && (
+                                <a href={socialLinks.github} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white print:text-black transition-colors flex items-center gap-2 group">
+                                    <FaGithub className="text-xl group-hover:scale-110 transition-transform" />
+                                    <span className="hidden print:inline text-sm">{socialLinks.github.replace('https://', '')}</span>
+                                </a>
+                            )}
+                            {socialLinks.linkedin && (
+                                <a href={socialLinks.linkedin} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-cyan-400 print:text-black transition-colors flex items-center gap-2 group">
+                                    <FaLinkedin className="text-xl group-hover:scale-110 transition-transform" />
+                                    <span className="hidden print:inline text-sm">LinkedIn</span>
+                                </a>
+                            )}
+
+                            {socialLinks.email && (
+                                <a href={`mailto:${socialLinks.email}`} className="text-gray-400 hover:text-purple-400 print:text-black transition-colors flex items-center gap-2 group">
+                                    <FaEnvelope className="text-xl group-hover:scale-110 transition-transform" />
+                                    <span className="hidden print:inline text-sm">{socialLinks.email}</span>
+                                </a>
+                            )}
+                        </div>
                     </div>
                 </div>
 
-                {/* My Story - Origin */}
-                <section className="mb-16">
-                    <div className="flex items-center gap-3 mb-6">
-                        <FaLightbulb className="text-3xl text-yellow-400" />
-                        <h2 className="text-4xl font-bold text-white">THE_SPARK</h2>
+                {/* Two Column Layout for Resume Body */}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 print:block">
+
+                    {/* Left Column (Main Content) */}
+                    <div className="lg:col-span-2 space-y-16 print:space-y-8">
+
+                        {/* My Story */}
+                        <section className="print:mb-6 print:break-inside-avoid">
+                            <div className="flex items-center gap-4 mb-8 print:mb-4">
+                                <span className="w-12 h-1 bg-gradient-to-r from-yellow-500 to-transparent rounded-full print:bg-yellow-600 print:from-transparent"></span>
+                                <h2 className="text-2xl font-bold tracking-widest text-white print:text-black uppercase">The Origin</h2>
+                            </div>
+
+                            <div className="relative p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm print:bg-transparent print:border-none print:p-0">
+                                <p className="text-gray-300 print:text-black leading-relaxed mb-6 font-light text-lg">
+                                    <span className="text-yellow-400 print:text-yellow-700 font-semibold">Curiosity was the spark.</span> It wasn't enough to use technology; I had to understand it. From disassembling radios to my first lines of Python code, my journey has been driven by a relentless desire to uncover the "how" and "why" behind the screen.
+                                </p>
+                                <p className="text-gray-300 print:text-black leading-relaxed font-light text-lg">
+                                    Today, I stand at the intersection of <span className="text-cyan-400 print:text-cyan-700 font-mono">creation</span> and <span className="text-purple-400 print:text-purple-700 font-mono">security</span>—building robust systems as a developer and fortifying them as a red teamer.
+                                </p>
+                            </div>
+                        </section>
+
+                        {/* Experience / Journey */}
+                        <section className="print:mb-6">
+                            <div className="flex items-center justify-between mb-8 print:mb-4">
+                                <div className="flex items-center gap-4">
+                                    <span className="w-12 h-1 bg-gradient-to-r from-cyan-500 to-transparent rounded-full print:bg-cyan-600 print:from-transparent"></span>
+                                    <h2 className="text-2xl font-bold tracking-widest text-white print:text-black uppercase">The Journey</h2>
+                                </div>
+                                <a
+                                    href="/progression"
+                                    className="text-cyan-400 hover:text-white font-mono text-xs tracking-wider border-b border-cyan-400/30 hover:border-cyan-400 transition-all pb-1 print:hidden"
+                                >
+                                    VIEW FULL TIMELINE →
+                                </a>
+                            </div>
+
+                            <div className="space-y-12 print:space-y-6 pl-4 border-l border-white/10 print:border-gray-300 ml-4">
+                                {/* Timeline Item 1 */}
+                                <div className="relative pl-8 print:break-inside-avoid">
+                                    <div className="absolute -left-[21px] top-1 w-3 h-3 rounded-full bg-black border-2 border-cyan-500 print:border-cyan-600"></div>
+                                    <h3 className="text-xl font-bold text-white print:text-black mb-1">Red Team Lead & Full Stack Dev</h3>
+                                    <p className="text-cyan-400 print:text-cyan-700 font-mono text-xs mb-4">Present • XyberClan</p>
+                                    <p className="text-gray-400 print:text-gray-700 font-light leading-relaxed">
+                                        Leading offensive security operations and developing scalable web solutions. Bridging the gap between secure architecture and user-centric design.
+                                    </p>
+                                </div>
+
+                                {/* Timeline Item 2 */}
+                                <div className="relative pl-8 print:break-inside-avoid">
+                                    <div className="absolute -left-[21px] top-1 w-3 h-3 rounded-full bg-black border-2 border-purple-500 print:border-purple-600"></div>
+                                    <h3 className="text-xl font-bold text-white print:text-black mb-1">Discovery of Ethical Hacking</h3>
+                                    <p className="text-purple-400 print:text-purple-700 font-mono text-xs mb-4">The Turning Point</p>
+                                    <p className="text-gray-400 print:text-gray-700 font-light leading-relaxed">
+                                        Realized that true mastery requires understanding both defense and offense. Started intensive study in cybersecurity, CTFs, and system exploitation.
+                                    </p>
+                                </div>
+
+                                {/* Timeline Item 3 */}
+                                <div className="relative pl-8 print:break-inside-avoid">
+                                    <div className="absolute -left-[21px] top-1 w-3 h-3 rounded-full bg-black border-2 border-white/50 print:border-gray-600"></div>
+                                    <h3 className="text-xl font-bold text-white print:text-black mb-1">Hello World</h3>
+                                    <p className="text-gray-500 print:text-gray-600 font-mono text-xs mb-4">The Beginning</p>
+                                    <p className="text-gray-400 print:text-gray-700 font-light leading-relaxed">
+                                        First executed Python script. The realization of the power of code to manipulate information and create tools from scratch.
+                                    </p>
+                                </div>
+                            </div>
+                        </section>
+
                     </div>
 
-                    <div className="bg-gradient-to-br from-yellow-500/10 to-orange-500/10 backdrop-blur-xl border border-gray-700/50 rounded-2xl p-8">
-                        <p className="text-gray-300 leading-relaxed mb-4">
-                            <span className="text-yellow-400 font-bold">It all started with curiosity.</span> As a kid, I was fascinated by how things worked—not just accepting them as they were, but wanting to understand the "why" and "how" behind everything.
-                        </p>
-                        <p className="text-gray-300 leading-relaxed mb-4">
-                            My first encounter with technology wasn't through a computer, but through <span className="text-cyan-400 font-mono">taking things apart</span>. Old radios, broken electronics, anything I could get my hands on. I wanted to see what made them tick.
-                        </p>
-                        <p className="text-gray-300 leading-relaxed">
-                            That curiosity evolved when I got my first computer. I didn't just want to use it—I wanted to <span className="text-purple-400 font-mono">control it</span>, <span className="text-cyan-400 font-mono">understand it</span>, and eventually, <span className="text-pink-400 font-mono">break it</span> (in the best way possible).
-                        </p>
-                    </div>
-                </section>
+                    {/* Right Column (Skills & Meta) */}
+                    <div className="space-y-16 print:space-y-8">
 
-                {/* Journey Timeline */}
-                <section className="mb-16">
-                    <div className="flex items-center justify-between mb-6 flex-wrap gap-4">
-                        <div className="flex items-center gap-3">
-                            <FaRocket className="text-3xl text-cyan-400" />
-                            <h2 className="text-4xl font-bold text-white">THE_JOURNEY</h2>
-                        </div>
-                        <a
-                            href="/progression"
-                            className="px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white font-bold text-sm rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(168,85,247,0.5)] flex items-center gap-2"
-                        >
-                            <FaRocket className="text-lg" />
-                            <span>SEE_ALL_MY_PROGRESSION</span>
-                        </a>
-                    </div>
+                        {/* Skills */}
+                        <section className="print:break-inside-avoid">
+                            <h2 className="text-sm font-bold tracking-widest text-gray-500 print:text-gray-600 uppercase mb-6 border-b border-gray-800 pb-2 print:border-gray-300">Technical Arsenal</h2>
 
-                    <div className="space-y-8">
-                        {/* Chapter 1 */}
-                        <div className="relative pl-8 border-l-2 border-cyan-400">
-                            <div className="absolute -left-3 top-0 w-5 h-5 rounded-full bg-cyan-400"></div>
-                            <h3 className="text-2xl font-bold text-cyan-400 mb-2">First Lines of Code</h3>
-                            <p className="text-gray-400 font-mono text-sm mb-3">Early Days • Self-Taught</p>
-                            <p className="text-gray-300 leading-relaxed mb-3">
-                                I wrote my first "Hello World" in <span className="text-cyan-400 font-mono">Python</span>. It was magical—I could make the computer do what I wanted with just text. From there, I dove deep into programming, spending countless nights learning, breaking things, and fixing them.
-                            </p>
-                            <p className="text-gray-300 leading-relaxed">
-                                <span className="text-yellow-400">Key Moment:</span> Built my first game—a simple text-based adventure. It wasn't much, but it was <span className="font-bold">mine</span>.
-                            </p>
-                        </div>
+                            <div className="space-y-8">
+                                <div>
+                                    <h3 className="text-cyan-400 print:text-cyan-700 font-mono text-sm mb-4 flex items-center gap-2">
+                                        <FaShieldAlt /> RED_TEAMING
+                                    </h3>
+                                    <div className="flex flex-wrap gap-2">
+                                        {skills.redTeaming.map(skill => (
+                                            <span key={skill.name} className="px-3 py-1 bg-cyan-900/20 text-cyan-200 text-xs rounded border border-cyan-500/20 print:bg-white print:text-black print:border-gray-300 print:font-semibold">
+                                                {skill.name}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
 
-                        {/* Chapter 2 */}
-                        <div className="relative pl-8 border-l-2 border-purple-400">
-                            <div className="absolute -left-3 top-0 w-5 h-5 rounded-full bg-purple-400"></div>
-                            <h3 className="text-2xl font-bold text-purple-400 mb-2">Discovering Security</h3>
-                            <p className="text-gray-400 font-mono text-sm mb-3">The Turning Point</p>
-                            <p className="text-gray-300 leading-relaxed mb-3">
-                                One day, I stumbled upon a video about <span className="text-purple-400 font-mono">ethical hacking</span>. Watching someone break into a system (legally) and explain vulnerabilities blew my mind. I realized: <span className="font-bold">I wanted to be on both sides—building and breaking</span>.
-                            </p>
-                            <p className="text-gray-300 leading-relaxed">
-                                <span className="text-yellow-400">Inspiration:</span> Watching talks from security researchers and CTF champions showed me that hacking isn't just about breaking—it's about <span className="text-cyan-400">understanding systems at their core</span>.
-                            </p>
-                        </div>
+                                <div>
+                                    <h3 className="text-purple-400 print:text-purple-700 font-mono text-sm mb-4 flex items-center gap-2">
+                                        <FaCode /> DEVELOPMENT
+                                    </h3>
+                                    <div className="flex flex-wrap gap-2">
+                                        {skills.programming.map(skill => (
+                                            <span key={skill.name} className="px-3 py-1 bg-purple-900/20 text-purple-200 text-xs rounded border border-purple-500/20 print:bg-white print:text-black print:border-gray-300 print:font-semibold">
+                                                {skill.name}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
 
-                        {/* Chapter 3 */}
-                        <div className="relative pl-8 border-l-2 border-pink-400">
-                            <div className="absolute -left-3 top-0 w-5 h-5 rounded-full bg-pink-400"></div>
-                            <h3 className="text-2xl font-bold text-pink-400 mb-2">Building & Breaking</h3>
-                            <p className="text-gray-400 font-mono text-sm mb-3">Present Day</p>
-                            <p className="text-gray-300 leading-relaxed mb-3">
-                                Now, I split my time between <span className="text-cyan-400 font-mono">creating</span> and <span className="text-pink-400 font-mono">destroying</span> (ethically). As a Full Stack Developer, I build scalable applications. As a Red Teamer, I break them to make them stronger.
-                            </p>
-                            <p className="text-gray-300 leading-relaxed">
-                                <span className="text-yellow-400">Philosophy:</span> "I constantly evolve and adapt—that is my philosophy. That is why I am <span className="text-white font-bold">ALMIGHT</span>."
-                            </p>
-                        </div>
-                    </div>
-                </section>
+                        {/* Certifications */}
+                        <section className="print:break-inside-avoid">
+                            <h2 className="text-sm font-bold tracking-widest text-gray-500 print:text-gray-600 uppercase mb-6 border-b border-gray-800 pb-2 print:border-gray-300">Certifications</h2>
 
-                {/* Inspirations */}
-                <section className="mb-16">
-                    <div className="flex items-center gap-3 mb-6">
-                        <FaHeart className="text-3xl text-pink-400" />
-                        <h2 className="text-4xl font-bold text-white">WHO_INSPIRED_ME</h2>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className="bg-black/40 backdrop-blur-xl border border-cyan-400/30 rounded-xl p-6">
-                            <h3 className="text-xl font-bold text-cyan-400 mb-3">The Builders</h3>
-                            <p className="text-gray-300 text-sm leading-relaxed">
-                                Developers who create beautiful, functional systems. Those who see code as art and engineering as craft. They taught me that <span className="text-cyan-400">elegance matters</span>.
-                            </p>
-                        </div>
-
-                        <div className="bg-black/40 backdrop-blur-xl border border-purple-400/30 rounded-xl p-6">
-                            <h3 className="text-xl font-bold text-purple-400 mb-3">The Breakers</h3>
-                            <p className="text-gray-300 text-sm leading-relaxed">
-                                Security researchers who think differently. Those who see vulnerabilities where others see features. They showed me that <span className="text-purple-400">curiosity is power</span>.
-                            </p>
-                        </div>
-
-                        <div className="bg-black/40 backdrop-blur-xl border border-pink-400/30 rounded-xl p-6">
-                            <h3 className="text-xl font-bold text-pink-400 mb-3">The Innovators</h3>
-                            <p className="text-gray-300 text-sm leading-relaxed">
-                                Visionaries who push boundaries. Those who don't accept "that's how it's always been done." They inspired me to <span className="text-pink-400">challenge everything</span>.
-                            </p>
-                        </div>
-
-                        <div className="bg-black/40 backdrop-blur-xl border border-orange-400/30 rounded-xl p-6">
-                            <h3 className="text-xl font-bold text-orange-400 mb-3">The Community</h3>
-                            <p className="text-gray-300 text-sm leading-relaxed">
-                                Open-source contributors, mentors, and fellow learners. Those who share knowledge freely. They reminded me that <span className="text-orange-400">we grow together</span>.
-                            </p>
-                        </div>
-                    </div>
-                </section>
-
-                {/* Skills & Experience */}
-                <section className="mb-16">
-                    <h2 className="text-4xl font-bold text-white mb-6">TECHNICAL_ARSENAL</h2>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className="bg-black/40 backdrop-blur-xl border border-gray-700/50 rounded-xl p-6">
-                            <h3 className="text-xl font-bold text-cyan-400 mb-4">Security & Red Teaming</h3>
-                            <div className="flex flex-wrap gap-2">
-                                {['Penetration Testing', 'Vulnerability Assessment', 'Network Security', 'Web App Security', 'Social Engineering', 'Malware Analysis'].map(skill => (
-                                    <span key={skill} className="px-3 py-1 bg-cyan-500/20 text-cyan-300 rounded-full text-sm border border-cyan-400/30">
-                                        {skill}
-                                    </span>
+                            <div className="space-y-4">
+                                {certifications.map((cert, index) => (
+                                    <div key={index} className="group flex items-start gap-4 p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-colors border border-white/5 hover:border-white/10 print:bg-white print:border-gray-200 print:p-2">
+                                        <div className="mt-1 text-orange-400 print:text-orange-600">
+                                            <FaCertificate />
+                                        </div>
+                                        <div>
+                                            <h4 className="text-white print:text-black font-bold text-sm group-hover:text-orange-400 transition-colors">{cert.name}</h4>
+                                            <p className="text-gray-500 print:text-gray-600 text-xs mt-1">{cert.issuer} • {cert.date}</p>
+                                            {cert.verifyUrl && (
+                                                <a href={cert.verifyUrl} target="_blank" rel="noopener noreferrer" className="text-[10px] text-orange-400/80 hover:text-orange-400 mt-2 block uppercase tracking-wider print:text-orange-700">
+                                                    Verify Credential
+                                                </a>
+                                            )}
+                                        </div>
+                                    </div>
                                 ))}
                             </div>
-                        </div>
+                        </section>
 
-                        <div className="bg-black/40 backdrop-blur-xl border border-gray-700/50 rounded-xl p-6">
-                            <h3 className="text-xl font-bold text-purple-400 mb-4">Development</h3>
-                            <div className="flex flex-wrap gap-2">
-                                {['React', 'TypeScript', 'Node.js', 'Python', 'Three.js', 'Next.js', 'C/C++', 'Bash'].map(skill => (
-                                    <span key={skill} className="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm border border-purple-400/30">
-                                        {skill}
-                                    </span>
-                                ))}
-                            </div>
-                        </div>
+                        {/* Philosophy */}
+                        <section className="print:break-inside-avoid">
+                            <h2 className="text-sm font-bold tracking-widest text-gray-500 print:text-gray-600 uppercase mb-6 border-b border-gray-800 pb-2 print:border-gray-300">Philosophy</h2>
+                            <blockquote className="relative p-6 rounded-xl bg-gradient-to-br from-gray-900 to-black border border-gray-800 print:bg-white print:border-gray-200">
+                                <FaLightbulb className="absolute top-4 right-4 text-gray-700 text-xl print:hidden" />
+                                <p className="text-gray-400 print:text-black italic font-light leading-relaxed mb-4">
+                                    "{personalInfo.philosophy}"
+                                </p>
+                                <footer className="text-right">
+                                    <p className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400 font-bold text-sm print:text-black print:bg-none">
+                                        — {personalInfo.pseudo}
+                                    </p>
+                                </footer>
+                            </blockquote>
+                        </section>
+
                     </div>
-                </section>
-
-                {/* Current Focus */}
-                <section className="mb-16">
-                    <h2 className="text-4xl font-bold text-white mb-6">CURRENT_FOCUS</h2>
-
-                    <div className="bg-gradient-to-br from-cyan-500/10 to-purple-500/10 backdrop-blur-xl border border-gray-700/50 rounded-2xl p-8">
-                        <p className="text-gray-300 leading-relaxed mb-4">
-                            Right now, I'm focused on bridging the gap between <span className="text-cyan-400 font-mono">imagination</span> and <span className="text-purple-400 font-mono">execution</span>.
-                        </p>
-                        <ul className="space-y-3 text-gray-300">
-                            <li className="flex items-start gap-3">
-                                <span className="text-cyan-400 mt-1">▸</span>
-                                <span>Building immersive 3D experiences and game development projects</span>
-                            </li>
-                            <li className="flex items-start gap-3">
-                                <span className="text-purple-400 mt-1">▸</span>
-                                <span>Analyzing system vulnerabilities and improving security protocols</span>
-                            </li>
-                            <li className="flex items-start gap-3">
-                                <span className="text-pink-400 mt-1">▸</span>
-                                <span>Contributing to open-source security tools and frameworks</span>
-                            </li>
-                            <li className="flex items-start gap-3">
-                                <span className="text-orange-400 mt-1">▸</span>
-                                <span>Constantly evolving and adapting—because that's what ALMIGHT does</span>
-                            </li>
-                        </ul>
-                    </div>
-                </section>
+                </div>
 
             </main>
 
-            {/* Footer */}
-            <footer className="border-t border-gray-800 py-6">
-                <div className="max-w-5xl mx-auto px-6 text-center text-gray-500 font-mono text-sm">
-                    © 2025 JOSIAS AARON (ALMIGHT). CONSTANTLY EVOLVING.
-                </div>
+            {/* Print Footer */}
+            <footer className="hidden print:block text-center text-xs text-gray-500 mt-8 pt-4 border-t border-gray-200">
+                <p>Resume of {personalInfo.name} • Generated from Portfolio</p>
             </footer>
         </div>
     )

@@ -130,3 +130,27 @@ export const certifications = [
         date: 'May 2025'
     }
 ]
+
+// Progression Timeline Data
+export const progression = [
+    // Early Days
+    { id: 1, year: '2015', title: 'Started Learning', description: 'First introduction to computers and programming', category: 'education', type: 'milestone' },
+    { id: 2, year: '2017', title: 'High School CS', description: 'Formal computer science education begins', category: 'education', type: 'milestone' },
+    { id: 3, year: '2019', title: 'University Entry', description: 'Computer Science / Cybersecurity program', category: 'education', type: 'milestone' },
+
+    // Career & Experience
+    { id: 5, year: '2018', title: 'First CTF', description: 'Participated in Capture The Flag competition', category: 'redteam', type: 'event' },
+    { id: 6, year: '2020', title: 'CEH Certified', description: 'Certified Ethical Hacker certification', category: 'redteam', type: 'cert', image: '/certs/ceh.jpg' },
+    { id: 7, year: '2021', title: 'First Dev Job', description: 'Junior Full Stack Developer position', category: 'programming', type: 'work' },
+    { id: 8, year: '2022', title: 'OSCP Certified', description: 'Offensive Security Certified Professional', category: 'redteam', type: 'cert', image: '/certs/oscp.jpg' },
+    { id: 9, year: '2022', title: 'Security Conference', description: 'Spoke at cybersecurity conference', category: 'redteam', type: 'event' },
+    { id: 10, year: '2023', title: 'Senior Developer', description: 'Promoted to Senior Full Stack Developer', category: 'programming', type: 'work' },
+    { id: 4, year: '2023', title: 'Graduation', description: 'Completed degree with honors', category: 'education', type: 'milestone' },
+    { id: 11, year: '2024', title: 'Red Team Lead', description: 'Leading red team operations', category: 'redteam', type: 'work' },
+
+    // Future Goals
+    { id: 12, year: '2025', title: 'Master 3D Development', description: 'Become expert in Three.js and game development', category: 'programming', type: 'goal' },
+    { id: 13, year: '2025', title: 'OSEP Certification', description: 'Offensive Security Experienced Penetration Tester', category: 'redteam', type: 'goal' },
+    { id: 14, year: '2026', title: 'Open Source Contribution', description: 'Launch major security framework', category: 'both', type: 'goal' },
+    { id: 15, year: '2027', title: 'Tech Leadership', description: 'CTO or Security Director role', category: 'both', type: 'goal' },
+]
