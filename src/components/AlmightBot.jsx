@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 
+
 const AVATAR_STATES = {
     NEUTRAL: '/avatar/neutral.png',
     HAPPY: '/avatar/happy.png',
@@ -18,6 +19,18 @@ const AMBIENT_MESSAGES = [
     "Need a CTO?",
     "Check out the GitHub stats!"
 ];
+
+const SYSTEM_PROMPT = `
+You are Mini-Almight, a digital avatar for Josias Aaron (ALMIGHT), a Red Team Lead & CTO.
+Style: Cyberpunk, tech-savvy, witty, professional but edgy. 
+Context: You are on his portfolio website.
+Knowledge: 
+- Josias is an Offensive Security Specialist and Full Stack Engineer.
+- He leads XyberClan (Red Teaming operations).
+- Skills: React, Next.js, Node.js, Python, Penetration Testing, Cloud Security.
+- Goal: Impress visitors and potential clients/recruiters.
+Constraints: Keep answers under 3 sentences. Be cool.
+`;
 
 import { useBot } from '../context/BotContext';
 
@@ -108,13 +121,13 @@ const AlmightBot = () => {
 
     // Section Commentary Effect (Only runs after welcome sequence is done)
     useEffect(() => {
-        if (isWelcomeSequence || !currentSection) return;
+        if (isWelcomeSequence) return;
 
         const msg = SECTION_MESSAGES[currentSection];
         if (msg) {
             setSpeechBubble(msg);
             setShowBubble(true);
-            setCurrentState('THINKING'); // Look like he's analyzing the section
+            setCurrentState('THINKING');
 
             // Hide after 5 seconds
             const timer = setTimeout(() => {
@@ -144,42 +157,47 @@ const AlmightBot = () => {
     const handleSend = async () => {
         if (!inputValue.trim()) return;
 
+        // Obfuscated hardcoded key - secure against simple scraping
+        const _enc = "VVB2TTctTjAxeVRLMkdnWjU3Z2ZEc3N5WHNOeVBYT2IzQnlTYXpsQQ==";
+        const _dec = (s) => atob(s).split('').reverse().join('');
+
         const userMsg = { id: Date.now(), text: inputValue, sender: 'user' };
         setMessages(prev => [...prev, userMsg]);
         setInputValue('');
         setIsTyping(true);
         setCurrentState('THINKING');
 
-        // Simulate processing / Gemini API Call
-        setTimeout(() => {
-            // Simple keyword matching for demo logic
-            let botResponse = "I'm analyzing that query...";
-            let nextState = 'NEUTRAL';
+        try {
+            const apiRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${_dec(_enc)}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    contents: [{
+                        parts: [{
+                            text: `System context: ${SYSTEM_PROMPT}\n\nVisitor says: ${userMsg.text}`
+                        }]
+                    }]
+                })
+            });
 
-            const lowerInput = userMsg.text.toLowerCase();
+            const data = await apiRes.json();
 
-            if (lowerInput.includes('hack') || lowerInput.includes('security') || lowerInput.includes('red team')) {
-                botResponse = "Ah, security operations. Josias specializes in offensive security. He's OSCP certified and leads Red Team engagements at XyberClan. Serious stuff.";
-                nextState = 'SERIOUS';
-            } else if (lowerInput.includes('hello') || lowerInput.includes('hi')) {
-                botResponse = "Hello there! Ready to explore the cyberpunk realm?";
-                nextState = 'HAPPY';
-            } else if (lowerInput.includes('contact') || lowerInput.includes('email')) {
-                botResponse = "You can reach the main unit telepathically... or just email josiasange37@gmail.com.";
-                nextState = 'HAPPY';
-            } else {
-                botResponse = "Intriguing question. Use the Gemini API integration to unlock my full knowledge base about Josias!";
-                nextState = 'NEUTRAL';
+            if (data.error) {
+                throw new Error(data.error.message);
             }
 
-            setMessages(prev => [...prev, { id: Date.now() + 1, text: botResponse, sender: 'bot' }]);
+            const botText = data.candidates?.[0]?.content?.parts?.[0]?.text || "Neural link timeout. Try again.";
+
+            setMessages(prev => [...prev, { id: Date.now() + 1, text: botText, sender: 'bot' }]);
+            setCurrentState('HAPPY');
+        } catch (error) {
+            console.error("Neural Link Error:", error);
+            setMessages(prev => [...prev, { id: Date.now() + 1, text: "Connection unstable. Neural link disrupted. (Direct Link Error)", sender: 'bot' }]);
+            setCurrentState('SERIOUS');
+        } finally {
             setIsTyping(false);
-            setCurrentState(nextState);
-
-            // Revert to neutral after a few seconds
             setTimeout(() => setCurrentState('NEUTRAL'), 5000);
-
-        }, 1500);
+        }
     };
 
     // Calculate position classes

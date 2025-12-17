@@ -64,7 +64,7 @@ const GlitchText = ({ text, position = [0, 0, 0], fontSize = 1 }) => {
   })
 
   return (
-    <Text ref={textRef} position={position} fontSize={fontSize} font="https://fonts.gstatic.com/s/pressstart2p/v14/e3t4euO8T-267oIAQAu6jDQyK3nVivM.woff" anchorX="center" anchorY="middle">
+    <Text ref={textRef} position={position} fontSize={fontSize} anchorX="center" anchorY="middle">
       {text}
       <meshStandardMaterial color="#ffffff" emissive="#06b6d4" emissiveIntensity={0.5} toneMapped={false} />
     </Text>

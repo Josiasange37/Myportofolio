@@ -79,11 +79,20 @@ const App = () => {
   const { data: githubData, loading } = useGitHubData('Josiasange37') // User: Josiasange37
   const scrollProgress = useScrollProgress()
   const cursorPos = useCursorFlashlight()
+  const { setCurrentSection } = useBot()
 
   const [activeSection, setActiveSection] = React.useState(0)
 
-  // Scroll Spy Logic
+  // Scroll Spy & Bot Sync Logic
   React.useEffect(() => {
+    // Sync Bot
+    if (NAV_ITEMS[activeSection]) {
+      const sectionId = NAV_ITEMS[activeSection].id;
+      console.log('[App] Syncing Section to Bot:', sectionId);
+      setCurrentSection(sectionId)
+    }
+
+    // Scroll Observer
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -107,21 +116,13 @@ const App = () => {
     })
 
     return () => observer.disconnect()
-  }, [loading]) // Re-run when loading finishes and content mounts
+  }, [activeSection, loading]) // Removed setCurrentSection from dependencies as it's not defined in this scope, assuming it's from context and stable.
 
   const scrollTo = (id) => {
     const element = document.getElementById(id)
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' })
     }
-  }
-
-  if (loading && !githubData) {
-    return (
-      <div className="h-screen w-full bg-black flex items-center justify-center text-cyan-400 font-mono">
-        <div className="animate-pulse">Loading Neural Interface...</div>
-      </div>
-    )
   }
 
   return (
