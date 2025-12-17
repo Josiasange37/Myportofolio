@@ -15,7 +15,7 @@ export const useScrollAnimation = (threshold = 0.1) => {
             },
             {
                 threshold,
-                rootMargin: '0px 0px -100px 0px' // Trigger slightly before element enters viewport
+                rootMargin: '0px' // Trigger as soon as element enters viewport
             }
         )
 

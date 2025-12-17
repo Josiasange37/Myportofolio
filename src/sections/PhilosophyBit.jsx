@@ -6,123 +6,87 @@ import { useFrame } from '@react-three/fiber'
 
 import { personalInfo } from '../config/siteConfig'
 
-// Animated typing component
-const TypeWriter = ({ text, speed = 50, onComplete, isActive = true }) => {
-  const [displayText, setDisplayText] = useState('')
-  const [currentIndex, setCurrentIndex] = useState(0)
-
-  useEffect(() => {
-    if (currentIndex < text.length) {
-      const timeout = setTimeout(() => {
-        setDisplayText(prev => prev + text[currentIndex])
-        setCurrentIndex(prev => prev + 1)
-      }, speed)
-      return () => clearTimeout(timeout)
-    } else if (onComplete) {
-      onComplete()
-    }
-  }, [currentIndex, text, speed, onComplete])
-
-  useEffect(() => {
-    setDisplayText('')
-    setCurrentIndex(0)
-  }, [text])
-
-  return (
-    <span>
-      {displayText}
-      <span className={`${isActive ? 'opacity-100' : 'opacity-0'} animate-pulse text-cyan-400 ml-1`}>|</span>
-    </span>
-  )
-}
-
 // Philosophy quotes cycling component
 const PhilosophyQuotes = () => {
-  const [phase, setPhase] = useState(0) // 0: first quote, 1: second quote transition
-  const [typingStep, setTypingStep] = useState(0) // 0: none, 1: prefix, 2: formula, 3: done
+  const [activeQuote, setActiveQuote] = useState(0)
 
   const quotes = [
     {
       text: personalInfo.philosophy,
-      gradient: "from-cyan-400 via-purple-400 to-pink-400"
+      gradient: "from-amber-300 via-yellow-400 to-amber-300",
+      highlight: ""
     },
     {
-      prefix: "Humanity's superpower = ",
-      formula: "Evolution + Adaptation + Imagination",
-      // Remove 'ALMIGHT' from the end of the quote for the highlight separation
-      philosophy: personalInfo.quote.replace(' ALMIGHT.', '').replace(' ALMIGHT', '') + ' ',
+      text: personalInfo.quote.replace(' ALMIGHT.', '').replace(' ALMIGHT', ''),
       highlight: personalInfo.pseudo,
-      gradient: "from-yellow-300 via-orange-400 to-yellow-300"
+      gradient: "from-cyan-300 via-blue-400 to-cyan-300"
     }
   ]
 
   useEffect(() => {
-    // Show first quote for 3 seconds, then transition
-    if (phase === 0) {
-      const timer = setTimeout(() => {
-        setPhase(1)
-        setTypingStep(1) // Start typing prefix
-      }, 3000)
-      return () => clearTimeout(timer)
-    }
-  }, [phase])
+    const timer = setInterval(() => {
+      setActiveQuote((prev) => (prev + 1) % quotes.length)
+    }, 6000) // Switch every 6 seconds
+    return () => clearInterval(timer)
+  }, [])
 
   return (
-    <div className="relative min-h-[180px] sm:min-h-[200px] flex items-center justify-center">
-      {/* First Quote - Fades out */}
-      <div
-        className={`absolute inset-0 flex items-center justify-center transition-all duration-1000 ${phase === 0 ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'
-          }`}
-      >
-        <p className={`text-lg sm:text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r ${quotes[0].gradient} text-center px-4`}>
-          "{quotes[0].text}"
-        </p>
+    <div className="relative min-h-[220px] sm:min-h-[240px] flex items-center justify-center p-6 sm:p-8">
+      {/* Holographic Container */}
+      <div className="absolute inset-0 bg-black/40 backdrop-blur-xl border border-cyan-500/30 rounded-xl overflow-hidden shadow-[0_0_30px_rgba(6,182,212,0.15)]">
+        {/* Scanlines */}
+        <div className="absolute inset-0 bg-[linear-gradient(transparent_50%,_rgba(6,182,212,0.05)_50%)] bg-[length:100%_4px] pointer-events-none"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/5 to-purple-500/5 pointer-events-none"></div>
+
+        {/* Corner Accents */}
+        <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-cyan-400 rounded-tl-lg"></div>
+        <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-cyan-400 rounded-tr-lg"></div>
+        <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-purple-400 rounded-bl-lg"></div>
+        <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-purple-400 rounded-br-lg"></div>
       </div>
 
-      {/* Second Quote - Types in */}
-      <div
-        className={`absolute inset-0 flex flex-col items-center justify-center transition-all duration-1000 ${phase >= 1 ? 'opacity-100 scale-100' : 'opacity-0 scale-105 pointer-events-none'
-          }`}
-      >
-        {phase === 1 && (
-          <div className="text-center px-4">
-            <p className="text-base sm:text-xl md:text-2xl font-light text-cyan-200 leading-relaxed font-mono mb-2 sm:mb-3 min-h-[2rem]">
-              {typingStep >= 1 ? (
-                <TypeWriter
-                  text={quotes[1].prefix}
-                  speed={40}
-                  onComplete={() => setTypingStep(2)}
-                  isActive={typingStep === 1}
-                />
-              ) : null}
-            </p>
+      {/* Quote Display */}
+      <div className="relative z-10 w-full flex items-center justify-center p-4">
+        {quotes.map((quote, index) => (
+          <div
+            key={index}
+            className={`absolute inset-0 flex flex-col items-center justify-center transition-all duration-1000 ease-in-out ${activeQuote === index
+              ? 'opacity-100 scale-100 translate-y-0 blur-0'
+              : 'opacity-0 scale-95 translate-y-8 blur-sm pointer-events-none'
+              }`}
+          >
+            <div className="text-center max-w-3xl mx-auto">
+              {/* Main Text */}
+              <div className="mb-4">
+                <p className={`text-lg sm:text-2xl md:text-3xl font-bold leading-relaxed text-transparent bg-clip-text bg-gradient-to-r ${quote.gradient} drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]`}>
+                  "{quote.text}"
+                </p>
+              </div>
 
-            <p className={`text-lg sm:text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r ${quotes[1].gradient} mb-4 min-h-[3rem]`}>
-              {typingStep >= 2 ? (
-                <TypeWriter
-                  text={quotes[1].formula}
-                  speed={30}
-                  onComplete={() => setTypingStep(3)}
-                  isActive={typingStep === 2}
-                />
-              ) : null}
-            </p>
-
-            <div className={`transition-opacity duration-1000 ${typingStep === 3 ? 'opacity-100' : 'opacity-0'}`}>
-              <div className="w-16 h-px bg-gradient-to-r from-transparent via-purple-500 to-transparent mx-auto my-4"></div>
-              <p className="text-gray-400 text-xs sm:text-sm md:text-base">
-                {quotes[1].philosophy}
-                <span className="text-cyan-400 font-bold">{quotes[1].highlight}</span>.
-              </p>
+              {/* Highlight (only for 2nd quote) */}
+              {quote.highlight && activeQuote === index && (
+                <div className="mt-4 animate-fade-in delay-300">
+                  <div className="w-24 h-px bg-gradient-to-r from-transparent via-cyan-500 to-transparent mx-auto my-4 shadow-[0_0_10px_cyan]"></div>
+                  <p className="text-gray-300 font-mono text-sm tracking-wider">
+                    That is why I am <span className="text-cyan-400 font-bold bg-cyan-950/50 px-3 py-1 rounded border border-cyan-500/40 shadow-[0_0_15px_rgba(6,182,212,0.4)]">{quote.highlight}</span>
+                  </p>
+                </div>
+              )}
             </div>
           </div>
-        )}
+        ))}
       </div>
 
-      {/* Cycle indicator dots */}
-      <div className="absolute -bottom-10 left-1/2 transform -translate-x-1/2 flex space-x-2">
-        <div className={`w-2 h-2 rounded-full transition-all duration-500 ${phase === 0 ? 'bg-cyan-400 scale-125' : 'bg-gray-600'}`}></div>
-        <div className={`w-2 h-2 rounded-full transition-all duration-500 ${phase >= 1 ? 'bg-purple-400 scale-125' : 'bg-gray-600'}`}></div>
+      {/* Progress Bar/Indicators */}
+      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
+        {quotes.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setActiveQuote(index)}
+            className={`h-1.5 rounded-full transition-all duration-500 ${activeQuote === index ? 'w-12 bg-cyan-400 shadow-[0_0_10px_cyan]' : 'w-2 bg-gray-700 hover:bg-gray-600'
+              }`}
+          />
+        ))}
       </div>
     </div>
   )

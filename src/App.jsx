@@ -27,17 +27,17 @@ import { FaShieldAlt } from 'react-icons/fa'
 
 // Navigation Icons
 const NAV_ITEMS = [
-  { name: 'Hero', icon: Home },
-  { name: 'About', icon: User },
-  { name: 'XyberClan', icon: Building2 },
-  { name: 'Education', icon: GraduationCap },
-  { name: 'Certifications', icon: Award },
-  { name: 'Programming', icon: Cpu },
-  { name: 'Red Team', icon: FaShieldAlt },
-  { name: 'Projects', icon: FolderGit },
-  { name: 'Philosophy', icon: Brain },
-  { name: 'Hobbies', icon: Gamepad2 },
-  { name: 'Contact', icon: Mail }
+  { name: 'Hero', icon: Home, id: 'hero' },
+  { name: 'About', icon: User, id: 'about' },
+  { name: 'XyberClan', icon: Building2, id: 'xyberclan' },
+  { name: 'Education', icon: GraduationCap, id: 'education' },
+  { name: 'Certifications', icon: Award, id: 'certifications' },
+  { name: 'Programming', icon: Cpu, id: 'programming' },
+  { name: 'Red Team', icon: FaShieldAlt, id: 'red-team' },
+  { name: 'Projects', icon: FolderGit, id: 'projects' },
+  { name: 'Philosophy', icon: Brain, id: 'philosophy' },
+  { name: 'Hobbies', icon: Gamepad2, id: 'hobbies' },
+  { name: 'Contact', icon: Mail, id: 'contact' }
 ]
 
 const NavDots = ({ activeSection, scrollTo }) => (
@@ -48,12 +48,12 @@ const NavDots = ({ activeSection, scrollTo }) => (
       return (
         <button
           key={item.name}
-          onClick={() => scrollTo(idx)}
-          className={`group relative flex items - center justify - center transition - all duration - 500 ${isActive
+          onClick={() => scrollTo(item.id)}
+          className={`group relative flex items-center justify-center transition-all duration-500 ${isActive
             ? 'p-3 rounded-xl bg-cyan-500/20 border border-cyan-400 text-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.5)] scale-110'
             : 'p-1 hover:scale-125'
             } `}
-          aria-label={`Scroll to ${item.name} `}
+          aria-label={`Scroll to ${item.name}`}
         >
           {isActive ? (
             <Icon size={20} strokeWidth={2.5} />
@@ -77,13 +77,40 @@ const App = () => {
   const scrollProgress = useScrollProgress()
   const cursorPos = useCursorFlashlight()
 
-  const activeSection = Math.round(scrollProgress * (NAV_ITEMS.length - 1))
+  const [activeSection, setActiveSection] = React.useState(0)
 
-  const scrollTo = (index) => {
-    window.scrollTo({
-      top: index * window.innerHeight,
-      behavior: 'smooth'
+  // Scroll Spy Logic
+  React.useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const index = NAV_ITEMS.findIndex(item => item.id === entry.target.id)
+            if (index !== -1) {
+              setActiveSection(index)
+            }
+          }
+        })
+      },
+      {
+        threshold: 0.2, // Trigger when 20% visible
+        rootMargin: '-20% 0px -20% 0px' // Center bias
+      }
+    )
+
+    NAV_ITEMS.forEach(item => {
+      const element = document.getElementById(item.id)
+      if (element) observer.observe(element)
     })
+
+    return () => observer.disconnect()
+  }, [loading]) // Re-run when loading finishes and content mounts
+
+  const scrollTo = (id) => {
+    const element = document.getElementById(id)
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' })
+    }
   }
 
   if (loading && !githubData) {
@@ -102,7 +129,7 @@ const App = () => {
         <div
           className="fixed inset-0 pointer-events-none z-50 mix-blend-screen"
           style={{
-            background: `radial - gradient(circle 600px at ${cursorPos.x}px ${cursorPos.y}px, rgba(6, 182, 212, 0.15), transparent 80 %)`
+            background: `radial-gradient(circle 600px at ${cursorPos.x}px ${cursorPos.y}px, rgba(6, 182, 212, 0.15), transparent 80%)`
           }}
         />
 
@@ -133,27 +160,48 @@ const App = () => {
         {/* Progress Bar */}
         <div
           className="fixed top-0 left-0 h-1 bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 z-50 transition-all duration-100 ease-out"
-          style={{ width: `${scrollProgress * 100}% ` }}
+          style={{ width: `${scrollProgress * 100}%` }}
         />
 
         {/* Sections */}
         <main className="relative z-10 w-full">
-          <HeroBit data={githubData} />
-          <AboutBit />
-          <XyberClanBit />
-          <EducationStatusBit />
-          <CertificationsBit />
-          <ProgrammingProgressionBit />
-          <RedTeamingProgressionBit />
-          <GitHubActivityBit data={githubData} />
-          <ProjectsBit data={githubData} />
-          <PhilosophyBit />
-          <HobbiesBit />
-          <ContactBit />
+          <div id="hero"><HeroBit data={githubData} /></div>
+          <div id="about"><AboutBit /></div>
+          <div id="xyberclan"><XyberClanBit /></div>
+          <div id="education"><EducationStatusBit /></div>
+          <div id="certifications"><CertificationsBit /></div>
+          <div id="programming"><ProgrammingProgressionBit /></div>
+          <div id="red-team"><RedTeamingProgressionBit /></div>
+          <div id="projects"><GitHubActivityBit data={githubData} /><ProjectsBit data={githubData} /></div>
+          {/* Note: Merged Projects/Activity under 'projects' ID or verify split? The list has them separate but index matches. 
+              Wait, NAV_ITEMS has 'Projects' but code had separate GitHubActivityBit and ProjectsBit. 
+              Let me check indices. 
+              Hero(0), About(1), XyberClan(2), Education(3), Certifications(4), Programming(5), RedTeam(6), Projects(7).
+              Original code: 8 items before Projects? 
+              GitHubActivityBit was index 7? 
+              Let's align logic to original file order:
+              Hero, About, XyberClan, Education, Certifications, Programming, RedTeam, GitHub, Projects, Philosophy, Hobbies, Contact.
+              But NAV_ITEMS only had 11 items.
+              Nav Items: Hero, About, Xyber, Education, Certs, Prog, Red, Projects, Phil, Hobbies, Contact.
+              Components: Hero, About, Xyber, Edu, Certs, Prog, Red, GitHub, Projects, Phil, Hobbies, Contact.
+              So GitHubActivityBit was NOT in Nav? Or merged?
+              I'll wrap both GitHub and Projects in 'projects' ID for now to be safe, or just GitHub separated?
+              Let's look at previous list:
+              Hero, About, Xyber, Edu, Certs, Prog, Red, [GitHub...], Projects...
+              If I wrap GitHub in 'projects' section it might be fine.
+              Actually, let's keep it simple:
+          */}
+          <div id="projects">
+            <GitHubActivityBit data={githubData} />
+            <ProjectsBit data={githubData} />
+          </div>
+          <div id="philosophy"><PhilosophyBit /></div>
+          <div id="hobbies"><HobbiesBit /></div>
+          <div id="contact"><ContactBit /></div>
         </main>
 
         <div className="fixed bottom-4 right-4 z-50 font-mono text-xs text-gray-500 bg-black/50 px-2 py-1 rounded border border-gray-800 backdrop-blur-sm">
-          BITS_ARCH_V1.0
+          BITS_ARCH_V1.1
         </div>
       </div>
     </ErrorBoundary>
