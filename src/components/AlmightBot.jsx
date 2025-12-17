@@ -51,7 +51,10 @@ const AlmightBot = () => {
     const [showBubble, setShowBubble] = useState(false);
 
     // Welcome Sequence State
-    const [isWelcomeSequence, setIsWelcomeSequence] = useState(true);
+    const [isWelcomeSequence, setIsWelcomeSequence] = useState(() => {
+        // Only show welcome if not seen in this session
+        return !sessionStorage.getItem('intro_seen');
+    });
 
     const messagesEndRef = useRef(null);
 
@@ -65,6 +68,8 @@ const AlmightBot = () => {
 
     // Welcome Sequence Effect
     useEffect(() => {
+        if (!isWelcomeSequence) return; // Skip if already seen
+
         // Prevent scroll interpretation during welcome
         const steps = [
             { msg: "Initializing connection...", delay: 2000, state: 'SERIOUS' },
@@ -80,6 +85,7 @@ const AlmightBot = () => {
             if (currentStep >= steps.length) {
                 setIsWelcomeSequence(false);
                 setShowBubble(false);
+                sessionStorage.setItem('intro_seen', 'true');
                 return;
             }
 
@@ -98,7 +104,7 @@ const AlmightBot = () => {
         runSequence();
 
         return () => clearTimeout(timeout);
-    }, []);
+    }, [isWelcomeSequence]);
 
     // Section Commentary Effect (Only runs after welcome sequence is done)
     useEffect(() => {
