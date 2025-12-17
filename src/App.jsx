@@ -187,7 +187,7 @@ const App = () => {
         <div className="fixed bottom-4 right-4 z-50 font-mono text-xs text-gray-500 bg-black/50 px-2 py-1 rounded border border-gray-800 backdrop-blur-sm">
           BITS_ARCH_V1.1
         </div>
-        <AlmightBot />
+        <AlmightBot activeSectionId={NAV_ITEMS[activeSection]?.id} />
       </div>
     </ErrorBoundary>
   )

@@ -19,7 +19,21 @@ const AMBIENT_MESSAGES = [
     "Check out the GitHub stats!"
 ];
 
-const AlmightBot = () => {
+const SECTION_MESSAGES = {
+    'hero': "Welcome to the core. Connection established.",
+    'about': "The man behind the keyboard. Josias is built different.",
+    'xyberclan': "XyberClan... his masterpiece. Leading offensive security operations.",
+    'education': "Knowledge is power. Formal training downloads complete.",
+    'certifications': "Certified to break things. And fix them.",
+    'programming': "Building secure infrastructure from the ground up.",
+    'red-team': "The fun part. Breaking into systems (ethically, of course).",
+    'projects': "Proof of concept. All code is active.",
+    'philosophy': "The mindset required to survive in cyberspace.",
+    'hobbies': "Even hackers need downtime.",
+    'contact': "Ready to collaborate? Send a signal."
+};
+
+const AlmightBot = ({ activeSectionId }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [messages, setMessages] = useState([
         { id: 1, text: "Greetings! I am Mini-Almight. I know Josias better than he knows himself. Ask me anything about his Red Team escapades or code architecture!", sender: 'bot' }
@@ -29,6 +43,10 @@ const AlmightBot = () => {
     const [isTyping, setIsTyping] = useState(false);
     const [speechBubble, setSpeechBubble] = useState(null);
     const [showBubble, setShowBubble] = useState(false);
+
+    // Welcome Sequence State
+    const [isWelcomeSequence, setIsWelcomeSequence] = useState(true);
+
     const messagesEndRef = useRef(null);
 
     const scrollToBottom = () => {
@@ -39,19 +57,77 @@ const AlmightBot = () => {
         scrollToBottom();
     }, [messages]);
 
-    // Ambient chatter effect
+    // Welcome Sequence Effect
     useEffect(() => {
+        // Prevent scroll interpretation during welcome
+        const steps = [
+            { msg: "Initializing connection...", delay: 2000, state: 'SERIOUS' },
+            { msg: "System Online.", delay: 4000, state: 'NEUTRAL' },
+            { msg: "Welcome to the Neural Interface.", delay: 6000, state: 'HAPPY' },
+            { msg: "I am Mini-Almight. I will be your guide.", delay: 9000, state: 'NEUTRAL' }
+        ];
+
+        let currentStep = 0;
+        let timeout;
+
+        const runSequence = () => {
+            if (currentStep >= steps.length) {
+                setIsWelcomeSequence(false);
+                setShowBubble(false);
+                return;
+            }
+
+            const step = steps[currentStep];
+            setCurrentState(step.state);
+            setSpeechBubble(step.msg);
+            setShowBubble(true);
+
+            timeout = setTimeout(() => {
+                currentStep++;
+                runSequence();
+            }, 3000); // Display time for each message
+        };
+
+        // Start sequence
+        runSequence();
+
+        return () => clearTimeout(timeout);
+    }, []);
+
+    // Section Commentary Effect (Only runs after welcome sequence is done)
+    useEffect(() => {
+        if (isWelcomeSequence || !activeSectionId) return;
+
+        const msg = SECTION_MESSAGES[activeSectionId];
+        if (msg) {
+            setSpeechBubble(msg);
+            setShowBubble(true);
+            setCurrentState('THINKING'); // Look like he's analyzing the section
+
+            // Hide after 5 seconds
+            const timer = setTimeout(() => {
+                setShowBubble(false);
+                setCurrentState('NEUTRAL');
+            }, 5000);
+            return () => clearTimeout(timer);
+        }
+    }, [activeSectionId, isWelcomeSequence]);
+
+    // Ambient chatter effect (Only runs if NO section commentary is active/welcome is done)
+    useEffect(() => {
+        if (isWelcomeSequence) return;
+
         const interval = setInterval(() => {
-            if (Math.random() > 0.6) { // Ambient messages now happen regardless of chat state
+            if (Math.random() > 0.7 && !showBubble) {
                 const randomMsg = AMBIENT_MESSAGES[Math.floor(Math.random() * AMBIENT_MESSAGES.length)];
                 setSpeechBubble(randomMsg);
                 setShowBubble(true);
                 setTimeout(() => setShowBubble(false), 4000);
             }
-        }, 8000); // Check every 8s for more frequent chatter
+        }, 12000);
 
         return () => clearInterval(interval);
-    }, [isOpen]);
+    }, [isOpen, isWelcomeSequence, showBubble]);
 
     const handleSend = async () => {
         if (!inputValue.trim()) return;
@@ -94,26 +170,41 @@ const AlmightBot = () => {
         }, 1500);
     };
 
-    return (
-        <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end pointer-events-none">
+    // Calculate position classes
+    const containerClasses = isWelcomeSequence
+        ? "fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-[100] flex flex-col items-center scale-150 transition-all duration-1000 ease-in-out"
+        : "fixed bottom-6 right-6 z-50 flex flex-col items-end pointer-events-none transition-all duration-1000 ease-in-out";
 
-            {/* Ambient Speech Bubble */}
+    return (
+        <div className={containerClasses}>
+
+            {/* Ambient/Section Speech Bubble */}
             {showBubble && (
-                <div className={`absolute ${isOpen ? 'bottom-[28rem]' : 'bottom-32'} right-8 w-48 bg-black/90 border border-cyan-500/50 rounded-xl p-3 shadow-[0_0_20px_rgba(6,182,212,0.2)] animate-pulse pointer-events-none z-50 transition-all duration-500`}>
-                    <div className="relative">
+                <div className={`absolute ${isWelcomeSequence ? '-top-24 w-64' : (isOpen ? 'bottom-[28rem] right-8 w-48' : 'bottom-32 right-8 w-48')} bg-black/90 border border-cyan-500/50 rounded-xl p-3 shadow-[0_0_20px_rgba(6,182,212,0.2)] animate-pulse ${isWelcomeSequence ? '' : 'pointer-events-none'} z-50 transition-all duration-500`}>
+                    <div className="relative text-center">
                         <p className="text-cyan-300 text-xs font-mono">
                             {speechBubble}
                         </p>
-                        {/* Triangular Tip */}
-                        <div className="absolute -bottom-5 right-8 w-0 h-0 border-l-[10px] border-l-transparent border-t-[10px] border-t-cyan-500/50 border-r-[10px] border-r-transparent"></div>
-                        <div className="absolute -bottom-4 right-8 w-0 h-0 border-l-[10px] border-l-transparent border-t-[10px] border-t-black border-r-[10px] border-r-transparent"></div>
+                        {/* Triangular Tip - adjusted for welcome vs corner */}
+                        {!isWelcomeSequence && (
+                            <>
+                                <div className="absolute -bottom-5 right-8 w-0 h-0 border-l-[10px] border-l-transparent border-t-[10px] border-t-cyan-500/50 border-r-[10px] border-r-transparent"></div>
+                                <div className="absolute -bottom-4 right-8 w-0 h-0 border-l-[10px] border-l-transparent border-t-[10px] border-t-black border-r-[10px] border-r-transparent"></div>
+                            </>
+                        )}
+                        {isWelcomeSequence && (
+                            <>
+                                <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[10px] border-l-transparent border-t-[10px] border-t-cyan-500/50 border-r-[10px] border-r-transparent"></div>
+                                <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[10px] border-l-transparent border-t-[10px] border-t-black border-r-[10px] border-r-transparent"></div>
+                            </>
+                        )}
                     </div>
                 </div>
             )}
 
-            {/* Chat Interface */}
-            {isOpen && (
-                <div className="pointer-events-auto bg-black/80 backdrop-blur-md border border-cyan-500/50 rounded-2xl p-4 w-80 h-96 mb-4 shadow-[0_0_30px_rgba(6,182,212,0.3)] flex flex-col transition-all duration-300">
+            {/* Chat Interface (Hidden during welcome) */}
+            {!isWelcomeSequence && isOpen && (
+                <div className="pointer-events-auto bg-black/80 backdrop-blur-md border border-cyan-500/50 rounded-2xl p-4 w-80 h-96 mb-4 shadow-[0_0_30px_rgba(6,182,212,0.3)] flex flex-col transition-all duration-300 animate-in fade-in slide-in-from-bottom-10">
                     {/* Header */}
                     <div className="flex items-center justify-between border-b border-white/10 pb-2 mb-2">
                         <span className="text-cyan-400 font-mono text-sm tracking-wider">MINI-ALMIGHT v1.0</span>
@@ -125,8 +216,8 @@ const AlmightBot = () => {
                         {messages.map((msg) => (
                             <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
                                 <div className={`max-w-[80%] p-2 rounded-lg text-sm ${msg.sender === 'user'
-                                    ? 'bg-cyan-900/50 text-white border border-cyan-500/30'
-                                    : 'bg-gray-800/80 text-gray-200 border border-white/10'
+                                        ? 'bg-cyan-900/50 text-white border border-cyan-500/30'
+                                        : 'bg-gray-800/80 text-gray-200 border border-white/10'
                                     }`}>
                                     {msg.text}
                                 </div>
@@ -170,8 +261,13 @@ const AlmightBot = () => {
                 }
             `}</style>
 
+            {/* Overlay background during welcome to dim site */}
+            {isWelcomeSequence && (
+                <div className="fixed inset-0 bg-black/80 z-[-1] backdrop-blur-sm transition-opacity duration-1000"></div>
+            )}
+
             {/* Avatar Button */}
-            <div className="pointer-events-auto relative group cursor-pointer w-32 h-32 flex items-center justify-center" onClick={() => setIsOpen(!isOpen)}>
+            <div className={`pointer-events-auto relative group cursor-pointer w-32 h-32 flex items-center justify-center ${isWelcomeSequence ? 'pointer-events-none' : ''}`} onClick={() => !isWelcomeSequence && setIsOpen(!isOpen)}>
                 {/* Glow Effect - Subtler behind the character */}
                 <div className="absolute inset-0 bg-cyan-500/20 blur-2xl rounded-full scale-0 group-hover:scale-75 transition-transform duration-500"></div>
 
