@@ -120,15 +120,15 @@ const Resume = () => {
                         <section className="print:mb-6 print:break-inside-avoid">
                             <div className="flex items-center gap-4 mb-8 print:mb-4">
                                 <span className="w-12 h-1 bg-gradient-to-r from-yellow-500 to-transparent rounded-full print:bg-yellow-600 print:from-transparent"></span>
-                                <h2 className="text-2xl font-bold tracking-widest text-white print:text-black uppercase">The Origin</h2>
+                                <h2 className="text-2xl font-bold tracking-widest text-white print:text-black uppercase">The Executive Summary</h2>
                             </div>
 
                             <div className="relative p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm print:bg-transparent print:border-none print:p-0">
                                 <p className="text-gray-300 print:text-black leading-relaxed mb-6 font-light text-lg">
-                                    <span className="text-yellow-400 print:text-yellow-700 font-semibold">Curiosity was the spark.</span> It wasn't enough to use technology; I had to understand it. From disassembling radios to my first lines of Python code, my journey has been driven by a relentless desire to uncover the "how" and "why" behind the screen.
+                                    <span className="text-yellow-400 print:text-yellow-700 font-semibold">Driven by innovation and security.</span> My career is built on the convergence of offensive security operations and scalable software architecture. I don't just build systems; I engineer them to withstand modern threats while delivering exceptional user experiences.
                                 </p>
                                 <p className="text-gray-300 print:text-black leading-relaxed font-light text-lg">
-                                    Today, I stand at the intersection of <span className="text-cyan-400 print:text-cyan-700 font-mono">creation</span> and <span className="text-purple-400 print:text-purple-700 font-mono">security</span>—building robust systems as a developer and fortifying them as a red teamer.
+                                    Currently acting as <span className="text-purple-400 print:text-purple-700 font-mono">CTO of XyberClan</span>, I lead technical strategy and red team operations, bridging the critical gap between business objectives and secure technical execution.
                                 </p>
                             </div>
                         </section>
@@ -138,7 +138,7 @@ const Resume = () => {
                             <div className="flex items-center justify-between mb-8 print:mb-4">
                                 <div className="flex items-center gap-4">
                                     <span className="w-12 h-1 bg-gradient-to-r from-cyan-500 to-transparent rounded-full print:bg-cyan-600 print:from-transparent"></span>
-                                    <h2 className="text-2xl font-bold tracking-widest text-white print:text-black uppercase">The Journey</h2>
+                                    <h2 className="text-2xl font-bold tracking-widest text-white print:text-black uppercase">Professional Trajectory</h2>
                                 </div>
                                 <a
                                     href="/progression"
@@ -152,30 +152,30 @@ const Resume = () => {
                                 {/* Timeline Item 1 */}
                                 <div className="relative pl-8 print:break-inside-avoid">
                                     <div className="absolute -left-[21px] top-1 w-3 h-3 rounded-full bg-black border-2 border-cyan-500 print:border-cyan-600"></div>
-                                    <h3 className="text-xl font-bold text-white print:text-black mb-1">Red Team Lead & Full Stack Dev</h3>
-                                    <p className="text-cyan-400 print:text-cyan-700 font-mono text-xs mb-4">Present • XyberClan</p>
+                                    <h3 className="text-xl font-bold text-white print:text-black mb-1">CTO & Red Team Lead</h3>
+                                    <p className="text-cyan-400 print:text-cyan-700 font-mono text-xs mb-4">2024 - Present • XyberClan</p>
                                     <p className="text-gray-400 print:text-gray-700 font-light leading-relaxed">
-                                        Leading offensive security operations and developing scalable web solutions. Bridging the gap between secure architecture and user-centric design.
+                                        Spearheading technical direction and security posture. Leading red team engagements (penetration testing, social engineering) and overseeing the development of secure SaaS products.
                                     </p>
                                 </div>
 
                                 {/* Timeline Item 2 */}
                                 <div className="relative pl-8 print:break-inside-avoid">
                                     <div className="absolute -left-[21px] top-1 w-3 h-3 rounded-full bg-black border-2 border-purple-500 print:border-purple-600"></div>
-                                    <h3 className="text-xl font-bold text-white print:text-black mb-1">Discovery of Ethical Hacking</h3>
-                                    <p className="text-purple-400 print:text-purple-700 font-mono text-xs mb-4">The Turning Point</p>
+                                    <h3 className="text-xl font-bold text-white print:text-black mb-1">Senior Full Stack Developer</h3>
+                                    <p className="text-purple-400 print:text-purple-700 font-mono text-xs mb-4">2023 • Freelance / Contract</p>
                                     <p className="text-gray-400 print:text-gray-700 font-light leading-relaxed">
-                                        Realized that true mastery requires understanding both defense and offense. Started intensive study in cybersecurity, CTFs, and system exploitation.
+                                        Architected cloud-native web applications using Next.js and AWS. Implemented CI/CD pipelines and mentored junior developers in clean code practices.
                                     </p>
                                 </div>
 
                                 {/* Timeline Item 3 */}
                                 <div className="relative pl-8 print:break-inside-avoid">
                                     <div className="absolute -left-[21px] top-1 w-3 h-3 rounded-full bg-black border-2 border-white/50 print:border-gray-600"></div>
-                                    <h3 className="text-xl font-bold text-white print:text-black mb-1">Hello World</h3>
-                                    <p className="text-gray-500 print:text-gray-600 font-mono text-xs mb-4">The Beginning</p>
+                                    <h3 className="text-xl font-bold text-white print:text-black mb-1">Ethical Hacking Immersion</h3>
+                                    <p className="text-gray-500 print:text-gray-600 font-mono text-xs mb-4">2020 • Independent Researcher</p>
                                     <p className="text-gray-400 print:text-gray-700 font-light leading-relaxed">
-                                        First executed Python script. The realization of the power of code to manipulate information and create tools from scratch.
+                                        Transitioned focus to offensive security. Conducted vulnerability assessments and participated in competitive CTFs, refining skills in network exploitation and web app security.
                                     </p>
                                 </div>
                             </div>

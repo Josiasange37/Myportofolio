@@ -110,47 +110,46 @@ export const certifications = [
     {
         name: 'IoT Wireless & Cloud Computing',
         issuer: 'Yonsei University',
-        date: 'September 2025',
+        date: 'September 2023',
         verifyUrl: 'https://coursera.org/verify/WWYVHCNOZRUL'
+    },
+    {
+        name: 'Google Cloud Computing Foundations',
+        issuer: 'Google Cloud',
+        date: 'November 2023',
+        verifyUrl: 'https://coursera.org/verify/MHBHPANNZU6V'
+    },
+    {
+        name: 'Cybersecurity Fundamentals',
+        issuer: 'Cybrary',
+        date: 'May 2023'
     },
     {
         name: 'NASA Space Apps - Galactic Problem Solver',
         issuer: 'NASA',
-        date: 'October 2025'
-    },
-    {
-        name: 'Google Cloud Training',
-        issuer: 'Google Cloud',
-        date: 'September 2025',
-        verifyUrl: 'https://coursera.org/verify/MHBHPANNZU6V'
-    },
-    {
-        name: 'Cybrary Orientation',
-        issuer: 'Cybrary',
-        date: 'May 2025'
+        date: 'October 2023'
     }
 ]
 
 // Progression Timeline Data
 export const progression = [
-    // Early Days
-    { id: 1, year: '2015', title: 'Started Learning', description: 'First introduction to computers and programming', category: 'education', type: 'milestone' },
-    { id: 2, year: '2017', title: 'High School CS', description: 'Formal computer science education begins', category: 'education', type: 'milestone' },
-    { id: 3, year: '2019', title: 'University Entry', description: 'Computer Science / Cybersecurity program', category: 'education', type: 'milestone' },
+    // 2015-2019: Foundations
+    { id: 1, year: '2015', title: 'Hello World', description: 'Wrote first Python script. Ignited a passion for automation and logic.', category: 'programming', type: 'milestone' },
+    { id: 2, year: '2017', title: 'Formal CS Education', description: 'Enrolled in Computer Science curriculum, mastering algorithms and data structures.', category: 'education', type: 'milestone' },
+    { id: 3, year: '2019', title: 'University Entry', description: 'Admitted to Univ. of Yaoundé I. Major: Computer Science & Cybersecurity.', category: 'education', type: 'milestone' },
 
-    // Career & Experience
-    { id: 5, year: '2018', title: 'First CTF', description: 'Participated in Capture The Flag competition', category: 'redteam', type: 'event' },
-    { id: 6, year: '2020', title: 'CEH Certified', description: 'Certified Ethical Hacker certification', category: 'redteam', type: 'cert', image: '/certs/ceh.jpg' },
-    { id: 7, year: '2021', title: 'First Dev Job', description: 'Junior Full Stack Developer position', category: 'programming', type: 'work' },
-    { id: 8, year: '2022', title: 'OSCP Certified', description: 'Offensive Security Certified Professional', category: 'redteam', type: 'cert', image: '/certs/oscp.jpg' },
-    { id: 9, year: '2022', title: 'Security Conference', description: 'Spoke at cybersecurity conference', category: 'redteam', type: 'event' },
-    { id: 10, year: '2023', title: 'Senior Developer', description: 'Promoted to Senior Full Stack Developer', category: 'programming', type: 'work' },
-    { id: 4, year: '2023', title: 'Graduation', description: 'Completed degree with honors', category: 'education', type: 'milestone' },
-    { id: 11, year: '2024', title: 'Red Team Lead', description: 'Leading red team operations', category: 'redteam', type: 'work' },
+    // 2020-2022: Skill Acquisition
+    { id: 6, year: '2020', title: 'Ethical Hacking Immersion', description: 'Deep dive into penetration testing, network analysis, and vulnerability assessment.', category: 'redteam', type: 'milestone' },
+    { id: 7, year: '2021', title: 'Junior Full Stack Dev', description: 'First commercial role. Built scalable REST APIs and React frontends.', category: 'programming', type: 'work' },
+    { id: 8, year: '2022', title: 'OSCP Preparation', description: 'Intensive lab work (HackTheBox, TryHackMe) focusing on offensive security methodologies.', category: 'redteam', type: 'milestone' },
+
+    // 2023-Present: Professional Mastery
+    { id: 10, year: '2023', title: 'Senior Developer Promotion', description: 'Architected complex cloud-native applications and led a small dev team.', category: 'programming', type: 'work' },
+    { id: 16, year: '2023', title: 'IoT & Cloud Certification', description: 'Certified by Yonsei University in IoT protocols and Cloud architecture.', category: 'both', type: 'cert' },
+    { id: 11, year: '2024', title: 'CTO & Red Team Lead', description: 'Driving technical strategy at XyberClan. Overseeing security operations and product development.', category: 'both', type: 'work', current: true },
 
     // Future Goals
-    { id: 12, year: '2025', title: 'Master 3D Development', description: 'Become expert in Three.js and game development', category: 'programming', type: 'goal' },
-    { id: 13, year: '2025', title: 'OSEP Certification', description: 'Offensive Security Experienced Penetration Tester', category: 'redteam', type: 'goal' },
-    { id: 14, year: '2026', title: 'Open Source Contribution', description: 'Launch major security framework', category: 'both', type: 'goal' },
-    { id: 15, year: '2027', title: 'Tech Leadership', description: 'CTO or Security Director role', category: 'both', type: 'goal' },
+    { id: 12, year: '2025', title: 'Advanced 3D Engineering', description: 'Mastering R3F/Three.js for immersive web experiences.', category: 'programming', type: 'goal' },
+    { id: 13, year: '2025', title: 'OSEP Certification', description: 'Targeting Offensive Security Experienced Penetration Tester certification.', category: 'redteam', type: 'goal' },
 ]
+
