@@ -34,7 +34,7 @@ const CV = () => {
                         {/* Photo */}
                         <div className="w-28 h-28 rounded-full overflow-hidden border-2 border-cyan-500 flex-shrink-0 print:w-24 print:h-24">
                             <img
-                                src="/profile.png"
+                                src="/profile.webp"
                                 alt="Josias Aaron"
                                 className="w-full h-full object-cover"
                             />

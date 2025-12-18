@@ -73,7 +73,7 @@ const Resume = () => {
 
                         <div className="relative w-48 h-48 print:w-32 print:h-32 rounded-full overflow-hidden border-4 border-black print:border-gray-300 bg-black print:bg-transparent">
                             <img
-                                src="/profile.png"
+                                src="/profile.webp"
                                 alt={personalInfo.name}
                                 className="w-full h-full object-cover"
                             />

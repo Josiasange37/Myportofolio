@@ -73,7 +73,7 @@ const GlitchText = ({ text, position = [0, 0, 0], fontSize = 1 }) => {
 
 // Separate component for Texture loading to isolate Suspense
 const AvatarInner = () => {
-  const texture = useTexture('profile.png')
+  const texture = useTexture('profile.webp')
   const meshRef = useRef()
   const ringRef = useRef()
   const [hovered, setHovered] = useState(false)
@@ -267,7 +267,7 @@ const HeroBit = ({ data }) => {
         <div className="mb-6 sm:mb-8 mx-auto relative w-32 sm:w-40 md:w-48 h-32 sm:h-40 md:h-48 group">
           <div className="absolute inset-0 rounded-full bg-cyan-500/20 blur-xl animate-pulse"></div>
           <img
-            src="/profile.png"
+            src="/profile.webp"
             alt="Profile"
             className="relative w-full h-full object-cover rounded-full border-4 border-cyan-400 shadow-[0_0_50px_rgba(6,182,212,0.5)] bg-zinc-900"
           />

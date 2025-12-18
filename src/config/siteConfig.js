@@ -23,7 +23,7 @@ export const xyberclan = {
     role: "CTO",
     company: "XyberClan",
     website: "https://xyberclan-saas-website.vercel.app/",
-    logo: "/xyberclan-logo.png",
+    logo: "/xyberclan-logo.webp",
     description: "Professional digital solutions for ambitious businesses. Web development, mobile apps, graphic design, cybersecurity, and tech education in Cameroon."
 }
 

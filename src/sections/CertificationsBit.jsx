@@ -9,7 +9,7 @@ const certificationsData = [
         issuer: 'Yonsei University',
         platform: 'Coursera',
         date: 'September 2025',
-        image: '/certifications/yonsei-iot.png',
+        image: '/certifications/yonsei-iot.webp',
         verifyUrl: 'https://coursera.org/verify/WWYVHCNOZRUL',
         color: '#0056A4',
         description: 'Emerging Technologies in wireless and cloud computing for IoT applications'
@@ -20,7 +20,7 @@ const certificationsData = [
         issuer: 'NASA',
         platform: 'International Space Apps Challenge',
         date: 'October 2025',
-        image: '/certifications/nasa-space-apps.png',
+        image: '/certifications/nasa-space-apps.webp',
         verifyUrl: null,
         color: '#0B3D91',
         description: 'Outstanding participation and efforts to address challenges on Earth and in space'
@@ -31,7 +31,7 @@ const certificationsData = [
         issuer: 'Google Cloud',
         platform: 'Coursera',
         date: 'September 2025',
-        image: '/certifications/google-cloud.png',
+        image: '/certifications/google-cloud.webp',
         verifyUrl: 'https://coursera.org/verify/MHBHPANNZU6V',
         color: '#4285F4',
         description: 'Gmail and Google Cloud fundamentals authorization'
@@ -42,7 +42,7 @@ const certificationsData = [
         issuer: 'Cybrary',
         platform: 'Cybrary',
         date: 'May 2025',
-        image: '/certifications/cybrary.png',
+        image: '/certifications/cybrary.webp',
         verifyUrl: null,
         color: '#00D09C',
         description: 'Certificate of Continuing Education Completion in Cybersecurity'
@@ -66,6 +66,9 @@ const CertificationCard = ({ cert, index, onClick }) => {
                     <img
                         src={cert.image}
                         alt={cert.name}
+                        loading="lazy"
+                        width="400"
+                        height="300"
                         className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-110"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
