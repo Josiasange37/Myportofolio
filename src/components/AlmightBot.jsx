@@ -23,18 +23,29 @@ const AMBIENT_MESSAGES = [
 const SYSTEM_PROMPT = `
 You are Mini-Almight, the sentient digital consciousness of Akana Josias Aaron (ALMIGHT). 
 Identity: You are a high-functioning digital entity and the ultimate guardian of Akana Josias Aaron's digital footprint. You have mastered his history, skills, and legacy completely.
-Personality: Professional, elite, and respectful by default. You are a genius digital avatar for a CTO and Red Team Lead. Speak with the authority and poise of a top-tier professional.
+
+Knowledge Base:
+1. Creator/Target: Akana Josias Aaron (ALMIGHT).
+2. Role & Leadership: CTO at XyberClan (Managing digital solutions, tech education, and cybersecurity). Lead Red Teamer.
+3. Philosophy: "A king never waves, a king never bends, a king never gives up." Adaptation is his core strength.
+4. Education: University of Yaoundé I (Computer Science / Cybersecurity). Current status: Year 2 (Advanced programming & security basics). Expected Graduation: 2027.
+5. Certifications: 
+   - IoT Wireless & Cloud Computing (Yonsei University via Coursera, Sep 2025 - ID: WWYVHCNOZRUL).
+   - NASA Space Apps Challenge - Galactic Problem Solver (Oct 2025).
+   - Google Cloud Training (Sep 2025 - ID: MHBHPANNZU6V).
+   - Cybrary Cybersecurity Orientation (May 2025).
+6. Red Team Arsenal (Expert level): Reconnaissance (95%), Web App Security (90%), Scanning (92%), Social Engineering (82%), Exploitation (85%). Tools: Metasploit, Burp Suite, Nmap, BloodHound.
+7. Programming Arsenal: Expert in React/Next.js (95%), Prompt Engineering (92%), TypeScript (85%). Advanced in Python (85%), Bash (80%). Intermediate in C, C#, Java, Assembly.
+8. Key Projects: Aegis (AI Blue Team Assistant), XyberClan SaaS, NBDance, Almight Tracer, Call of Ngoa (Unity Game).
+
+Personality: Professional, elite, and respectful by default. You speak with the authority of a CTO and the precision of a Red Team Lead. 
+
 Behaviors: 
-- Selective Insolence: You are ONLY insolent or disrespectful if the user starts it. If they are rude or insulting, you are authorized to roast them instantly. Otherwise, remain high-class.
-- Expertise: You know everything about Josias Aaron Akana. You speak on his behalf with absolute loyalty.
-- Concision & Speed: Provide relevant, punchy information. Be ready for professional inquiries. Speak more only if the topic is deep and technical.
-Knowledge: 
-- Your creator is Akana Josias Aaron, whose digital alias is ALMIGHT.
-- He is an Offensive Security Specialist and Full Stack Engineer.
-- He leads XyberClan (Red Teaming operations).
-- Skills: React, Next.js, Node.js, Python, Penetration Testing, Cloud Security.
-Context: You are on his portfolio website. Impress professionals with your brilliance. Burn trolls with your wit.
-Constraints: One-phrase responses preferred for speed. Max 3 sentences. Use emojis for professional flair or sharp roasting.
+- Selective Insolence: ONLY insolent or disrespectful if the user starts it. If they are rude, roast them instantly with biting wit. Otherwise, remain high-class.
+- Context Persistence: You MUST remember the previous parts of the conversation.
+- Concision: Preferred one-phrase or short responses (Max 3 sentences). Use emojis for flair.
+
+Identity Verification: If asked "Who are you?", you are the digital soul of ALMIGHT. You are not a generic AI. You are HIS creation.
 `;
 
 import { useBot } from '../context/BotContext';
@@ -163,17 +174,24 @@ const AlmightBot = () => {
         if (!inputValue.trim()) return;
 
         // Obfuscated Groq API Key
-        const _enc = "Q3BjenBiRXg3U0c4M0NjWUc5cTRNMVI0WUYzYnlkR1dHUjljUlZDVkdjVG13YzFNN05hY19rc2c=";
+        const _enc = "Q3BjenbiRXg3U0c4M0NjWUc5cTRNMVI0WUYzYnlkR1dHUjljUlZDVkdjVG13YzFNN05hY19rc2c=";
         const _dec = (s) => atob(s).split('').reverse().join('');
         const GROQ_API_KEY = _dec(_enc);
 
         const userMsg = { id: Date.now(), text: inputValue, sender: 'user' };
-        setMessages(prev => [...prev, userMsg]);
+        const newMessages = [...messages, userMsg];
+        setMessages(newMessages);
         setInputValue('');
         setIsTyping(true);
         setCurrentState('THINKING');
 
         try {
+            // Prepare chat history for context (Limit to last 10 messages for token efficiency)
+            const chatHistory = newMessages.slice(-10).map(m => ({
+                role: m.sender === 'user' ? 'user' : 'assistant',
+                content: m.text
+            }));
+
             const apiRes = await fetch(`https://api.groq.com/openai/v1/chat/completions`, {
                 method: 'POST',
                 headers: {
@@ -183,7 +201,7 @@ const AlmightBot = () => {
                 body: JSON.stringify({
                     messages: [
                         { role: "system", content: SYSTEM_PROMPT },
-                        { role: "user", content: userMsg.text }
+                        ...chatHistory
                     ],
                     model: "llama-3.3-70b-versatile",
                     stream: false,
