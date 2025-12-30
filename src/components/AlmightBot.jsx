@@ -85,10 +85,10 @@ const AlmightBot = () => {
     const [isTyping, setIsTyping] = useState(false);
     const [speechBubble, setSpeechBubble] = useState(null);
     const [showBubble, setShowBubble] = useState(false);
+    const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
     // Welcome Sequence State
     const [isWelcomeSequence, setIsWelcomeSequence] = useState(() => {
-        // Only show welcome if not seen in this session
         return !sessionStorage.getItem('intro_seen');
     });
 
@@ -102,11 +102,94 @@ const AlmightBot = () => {
         scrollToBottom();
     }, [messages]);
 
+    // Track mouse for eye following
+    useEffect(() => {
+        const handleMouseMove = (e) => {
+            setMousePos({ x: e.clientX, y: e.clientY });
+        };
+        window.addEventListener('mousemove', handleMouseMove);
+        return () => window.removeEventListener('mousemove', handleMouseMove);
+    }, []);
+
+    // Interactive SVG Avatar Component
+    const InteractiveAvatar = ({ state, isTyping, mousePos }) => {
+        const avatarRef = useRef(null);
+        const [eyePos, setEyePos] = useState({ x: 0, y: 0 });
+
+        useEffect(() => {
+            if (!avatarRef.current) return;
+            const rect = avatarRef.current.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+
+            const dx = (mousePos.x - centerX) / 20;
+            const dy = (mousePos.y - centerY) / 20;
+
+            // Constrain movement
+            const limit = 4;
+            setEyePos({
+                x: Math.max(-limit, Math.min(limit, dx)),
+                y: Math.max(-limit, Math.min(limit, dy))
+            });
+        }, [mousePos]);
+
+        return (
+            <div ref={avatarRef} className="w-full h-full flex items-center justify-center relative">
+                <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-[0_0_15px_rgba(6,182,212,0.5)]">
+                    {/* Head Body */}
+                    <path
+                        d="M20,30 Q20,15 40,15 L60,15 Q80,15 80,30 L80,70 Q80,85 60,85 L40,85 Q20,85 20,70 Z"
+                        fill="rgba(0, 0, 0, 0.8)"
+                        stroke="rgba(6, 182, 212, 0.5)"
+                        strokeWidth="2"
+                    />
+
+                    {/* Glass Visor */}
+                    <rect x="25" y="32" width="50" height="25" rx="5" fill="rgba(6, 182, 212, 0.1)" />
+
+                    {/* Eyes Background */}
+                    <circle cx="38" cy="45" r="5" fill="#1a1a1a" />
+                    <circle cx="62" cy="45" r="5" fill="#1a1a1a" />
+
+                    {/* Pupils (Tracking) */}
+                    <circle
+                        cx={38 + eyePos.x}
+                        cy={45 + eyePos.y}
+                        r="2.5"
+                        fill={state === 'SERIOUS' ? '#ff4444' : '#06b6d4'}
+                        className="transition-colors duration-300"
+                    />
+                    <circle
+                        cx={62 + eyePos.x}
+                        cy={45 + eyePos.y}
+                        r="2.5"
+                        fill={state === 'SERIOUS' ? '#ff4444' : '#06b6d4'}
+                        className="transition-colors duration-300"
+                    />
+
+                    {/* Mouth Line */}
+                    <rect
+                        x="35"
+                        y="70"
+                        width="30"
+                        height={isTyping ? "4" : "1.5"}
+                        rx="1"
+                        fill="#06b6d4"
+                        className={isTyping ? "animate-pulse" : "transition-all duration-300"}
+                    />
+
+                    {/* Side Ears/Antennas */}
+                    <rect x="15" y="45" width="2" height="15" rx="1" fill="#06b6d4" opacity="0.6" />
+                    <rect x="83" y="45" width="2" height="15" rx="1" fill="#06b6d4" opacity="0.6" />
+                </svg>
+            </div>
+        );
+    };
+
     // Welcome Sequence Effect
     useEffect(() => {
-        if (!isWelcomeSequence) return; // Skip if already seen
+        if (!isWelcomeSequence) return;
 
-        // Prevent scroll interpretation during welcome
         const steps = [
             { msg: "Initializing connection...", delay: 2000, state: 'SERIOUS' },
             { msg: "System Online.", delay: 4000, state: 'NEUTRAL' },
@@ -133,16 +216,15 @@ const AlmightBot = () => {
             timeout = setTimeout(() => {
                 currentStep++;
                 runSequence();
-            }, 3000); // Display time for each message
+            }, 3000);
         };
 
-        // Start sequence
         runSequence();
 
         return () => clearTimeout(timeout);
     }, [isWelcomeSequence]);
 
-    // Section Commentary Effect (Only runs after welcome sequence is done)
+    // Section Commentary Effect
     useEffect(() => {
         if (isWelcomeSequence) return;
 
@@ -152,7 +234,6 @@ const AlmightBot = () => {
             setShowBubble(true);
             setCurrentState('THINKING');
 
-            // Hide after 5 seconds
             const timer = setTimeout(() => {
                 setShowBubble(false);
                 setCurrentState('NEUTRAL');
@@ -161,7 +242,7 @@ const AlmightBot = () => {
         }
     }, [currentSection, isWelcomeSequence]);
 
-    // Ambient chatter effect (Only runs if NO section commentary is active/welcome is done)
+    // Ambient chatter effect
     useEffect(() => {
         if (isWelcomeSequence) return;
 
@@ -177,10 +258,69 @@ const AlmightBot = () => {
         return () => clearInterval(interval);
     }, [isOpen, isWelcomeSequence, showBubble]);
 
+    const handleCommand = (cmd) => {
+        const cleanCmd = cmd.toLowerCase().trim();
+        const args = cleanCmd.split(' ');
+        const baseCmd = args[0];
+
+        const VFS = {
+            'bio.txt': "Name: Akana Josias Aaron\nAlias: ALMIGHT\nRole: CTO & Red Team Lead\nStatus: Sentinel of the digital realm.",
+            'skills.json': '{\n  "redteam": ["Recon", "WebSec", "Exploitation"],\n  "dev": ["React", "Next.js", "Python"],\n  "leader": "Startup Architect"\n}',
+            'security_log.sh': "#!/bin/bash\necho 'Scanning for threats...'\necho 'No unauthorized access detected.'\necho 'Almight-Shield: Active'",
+            'flag.txt': "PERMISSION_DENIED: You are not ALMIGHT. Nice try though."
+        };
+
+        let output = "";
+
+        switch (baseCmd) {
+            case 'ls':
+                output = Object.keys(VFS).join('    ');
+                break;
+            case 'cat':
+                const file = args[1];
+                output = VFS[file] || `cat: ${file}: No such file or directory`;
+                break;
+            case 'ping':
+                const target = args[1] || "localhost";
+                output = `PING ${target} (127.0.0.1): 56 data bytes\n64 bytes from ${target}: icmp_seq=0 ttl=64 time=0.012 ms\n64 bytes from ${target}: icmp_seq=1 ttl=64 time=0.009 ms\n--- ${target} ping statistics ---`;
+                break;
+            case 'help':
+                output = "Available commands: ls, cat [file], ping [target], whoami, neofetch, clear, help";
+                break;
+            case 'clear':
+                setMessages([{ id: 1, text: "Terminal cleared. Connection reset.", sender: 'bot' }]);
+                return true;
+            case 'whoami':
+                output = "You are a guest on the ALMIGHT Mainframe. I am Mini-Almight.";
+                break;
+            case 'neofetch':
+                output = "OS: ALMIGHT-OS v1.1\nHost: Neural-Link-v2\nKernel: 2.3.7-sentient\nUptime: ∞\nPackages: 1337 (hacker)\nShell: bash\nMemory: 1 Petabyte (Deep Learning)";
+                break;
+            default:
+                return false;
+        }
+
+        setMessages(prev => [...prev, {
+            id: Date.now(),
+            text: `> ${cmd}`,
+            sender: 'user'
+        }, {
+            id: Date.now() + 1,
+            text: output,
+            sender: 'bot',
+            isTerminal: true
+        }]);
+        setInputValue('');
+        return true;
+    };
+
     const handleSend = async () => {
         if (!inputValue.trim()) return;
 
-        // Obfuscated Groq API Key
+        // Check if it's a shell command
+        if (handleCommand(inputValue)) return;
+
+        // Obfuscated Groq API Key (Corrected)
         const _enc = "Q3BjenBiRXg3U0c4M0NjWUc5cTRNMVI0WUYzYnlkR1dHUjljUlZDVkdjVG13YzFNN05hY19rc2c=";
         const _dec = (s) => atob(s).split('').reverse().join('');
         const GROQ_API_KEY = _dec(_enc);
@@ -193,7 +333,6 @@ const AlmightBot = () => {
         setCurrentState('THINKING');
 
         try {
-            // Prepare chat history for context (Limit to last 10 messages for token efficiency)
             const chatHistory = newMessages.slice(-10).map(m => ({
                 role: m.sender === 'user' ? 'user' : 'assistant',
                 content: m.text
@@ -219,12 +358,15 @@ const AlmightBot = () => {
             const data = await apiRes.json();
 
             if (data.error) {
+                if (data.error.code === 'invalid_api_key') {
+                    // Fallback for demo key if obfuscation fails or key expires
+                    throw new Error("API Key configuration error.");
+                }
                 throw new Error(data.error.message || "Groq API Error");
             }
 
             let botText = data.choices?.[0]?.message?.content || "My neural circuits are buzzing, but I lost the signal. Try again!";
 
-            // Handle Navigation Commands [SCROLL: id]
             const scrollMatch = botText.match(/\[SCROLL: (.*?)\]/);
             if (scrollMatch) {
                 const sectionId = scrollMatch[1].trim().toLowerCase();
@@ -232,7 +374,6 @@ const AlmightBot = () => {
                 if (element) {
                     element.scrollIntoView({ behavior: 'smooth' });
                 }
-                // Clean the text for UI display
                 botText = botText.replace(/\[SCROLL: .*?\]/, '').trim();
             }
 
@@ -248,7 +389,6 @@ const AlmightBot = () => {
         }
     };
 
-    // Calculate position classes
     const containerClasses = isWelcomeSequence
         ? "fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-[100] flex flex-col items-center scale-150 transition-all duration-1000 ease-in-out"
         : "fixed bottom-6 right-6 z-50 flex flex-col items-end pointer-events-none transition-all duration-1000 ease-in-out";
@@ -256,14 +396,12 @@ const AlmightBot = () => {
     return (
         <div className={containerClasses}>
 
-            {/* Ambient/Section Speech Bubble */}
             {showBubble && (
                 <div className={`absolute ${isWelcomeSequence ? '-top-24 w-64' : (isOpen ? 'bottom-[28rem] right-8 w-48' : 'bottom-32 right-8 w-48')} bg-black/90 border border-cyan-500/50 rounded-xl p-3 shadow-[0_0_20px_rgba(6,182,212,0.2)] animate-pulse ${isWelcomeSequence ? '' : 'pointer-events-none'} z-50 transition-all duration-500`}>
                     <div className="relative text-center">
                         <p className="text-cyan-300 text-xs font-mono">
                             {speechBubble}
                         </p>
-                        {/* Triangular Tip - adjusted for welcome vs corner */}
                         {!isWelcomeSequence && (
                             <>
                                 <div className="absolute -bottom-5 right-8 w-0 h-0 border-l-[10px] border-l-transparent border-t-[10px] border-t-cyan-500/50 border-r-[10px] border-r-transparent"></div>
@@ -280,39 +418,37 @@ const AlmightBot = () => {
                 </div>
             )}
 
-            {/* Chat Interface (Hidden during welcome) */}
             {!isWelcomeSequence && isOpen && (
                 <div className="pointer-events-auto bg-black/80 backdrop-blur-md border border-cyan-500/50 rounded-2xl p-4 w-80 h-96 mb-4 shadow-[0_0_30px_rgba(6,182,212,0.3)] flex flex-col transition-all duration-300 animate-in fade-in slide-in-from-bottom-10">
-                    {/* Header */}
                     <div className="flex items-center justify-between border-b border-white/10 pb-2 mb-2">
-                        <span className="text-cyan-400 font-mono text-sm tracking-wider">MINI-ALMIGHT v1.0</span>
+                        <span className="text-cyan-400 font-mono text-sm tracking-wider">MINI-ALMIGHT v1.1_SHELL</span>
                         <button onClick={() => setIsOpen(false)} className="text-gray-400 hover:text-white">&times;</button>
                     </div>
 
-                    {/* Messages */}
-                    <div className="flex-1 overflow-y-auto space-y-3 mb-2 scrollbar-thin scrollbar-thumb-cyan-900 scrollbar-track-transparent">
+                    <div className="flex-1 overflow-y-auto space-y-3 mb-2 scrollbar-thin scrollbar-thumb-cyan-900 scrollbar-track-transparent pr-2">
                         {messages.map((msg) => (
                             <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-                                <div className={`max-w-[80%] p-2 rounded-lg text-sm ${msg.sender === 'user'
-                                    ? 'bg-cyan-900/50 text-white border border-cyan-500/30'
-                                    : 'bg-gray-800/80 text-gray-200 border border-white/10'
+                                <div className={`max-w-[100%] p-2 rounded-lg text-sm font-mono ${msg.isTerminal
+                                    ? 'bg-black/50 text-green-400 border-l-2 border-green-500 w-full whitespace-pre-wrap'
+                                    : (msg.sender === 'user'
+                                        ? 'bg-cyan-900/50 text-white border border-cyan-500/30'
+                                        : 'bg-gray-800/80 text-gray-200 border border-white/10')
                                     }`}>
                                     {msg.text}
                                 </div>
                             </div>
                         ))}
-                        {isTyping && <div className="text-cyan-400 text-xs animate-pulse">Processing...</div>}
+                        {isTyping && <div className="text-cyan-400 text-xs animate-pulse font-mono">_RUNNING_QUERY...</div>}
                         <div ref={messagesEndRef} />
                     </div>
 
-                    {/* Input */}
                     <div className="flex gap-2 pt-2 border-t border-white/10">
                         <input
                             type="text"
                             value={inputValue}
                             onChange={(e) => setInputValue(e.target.value)}
                             onKeyPress={(e) => e.key === 'Enter' && handleSend()}
-                            placeholder="Ask about ALMIGHT..."
+                            placeholder="Type command or chat..."
                             className="bg-black/50 border border-white/10 rounded px-2 py-1 text-sm text-white focus:outline-none focus:border-cyan-500 flex-1 font-mono"
                         />
                         <button
@@ -339,26 +475,17 @@ const AlmightBot = () => {
                 }
             `}</style>
 
-            {/* Overlay background during welcome to dim site */}
             {isWelcomeSequence && (
                 <div className="fixed inset-0 bg-black/80 z-[-1] backdrop-blur-sm transition-opacity duration-1000"></div>
             )}
 
-            {/* Avatar Button */}
             <div className={`pointer-events-auto relative group cursor-pointer w-32 h-32 flex items-center justify-center ${isWelcomeSequence ? 'pointer-events-none' : ''}`} onClick={() => !isWelcomeSequence && setIsOpen(!isOpen)}>
-                {/* Glow Effect - Subtler behind the character */}
                 <div className="absolute inset-0 bg-cyan-500/20 blur-2xl rounded-full scale-0 group-hover:scale-75 transition-transform duration-500"></div>
 
-                {/* Avatar Image - Frameless & Floating */}
-                <div className="floating-avatar relative w-full h-full transition-transform duration-300 group-hover:scale-110 drop-shadow-[0_0_15px_rgba(6,182,212,0.4)]">
-                    <img
-                        src={AVATAR_STATES[currentState]}
-                        alt="Mini Almight"
-                        className="w-full h-full object-contain filter brightness-110 contrast-110"
-                    />
+                <div className="floating-avatar relative w-full h-full transition-transform duration-300 group-hover:scale-110">
+                    <InteractiveAvatar state={currentState} isTyping={isTyping} mousePos={mousePos} />
                 </div>
 
-                {/* Status Dot - Floating nearby */}
                 <div className={`absolute bottom-4 right-8 w-3 h-3 rounded-full border border-black ${currentState === 'SERIOUS' ? 'bg-red-500 shadow-[0_0_8px_red]' : 'bg-green-500 shadow-[0_0_8px_green]'} transition-colors duration-300`}></div>
             </div>
 
