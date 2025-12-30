@@ -4,9 +4,10 @@ const BotContext = createContext();
 
 export const BotProvider = ({ children }) => {
     const [currentSection, setCurrentSection] = useState('hero');
+    const [githubData, setGithubData] = useState(null);
 
     return (
-        <BotContext.Provider value={{ currentSection, setCurrentSection }}>
+        <BotContext.Provider value={{ currentSection, setCurrentSection, githubData, setGithubData }}>
             {children}
         </BotContext.Provider>
     );

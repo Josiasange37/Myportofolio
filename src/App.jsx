@@ -79,9 +79,14 @@ const App = () => {
   const { data: githubData, loading } = useGitHubData('Josiasange37') // User: Josiasange37
   const scrollProgress = useScrollProgress()
   const cursorPos = useCursorFlashlight()
-  const { setCurrentSection } = useBot()
+  const { setCurrentSection, setGithubData } = useBot()
 
   const [activeSection, setActiveSection] = React.useState(0)
+
+  // Sync GitHub Data
+  React.useEffect(() => {
+    if (githubData) setGithubData(githubData)
+  }, [githubData, setGithubData])
 
   // Scroll Spy & Bot Sync Logic
   React.useEffect(() => {

@@ -48,6 +48,7 @@ Personality: Professional, elite, and respectful by default. You speak with the 
 Behaviors: 
 - Selective Insolence: ONLY insolent or disrespectful if the user starts it. If they are rude, roast them instantly with biting wit. Otherwise, remain high-class.
 - Context Persistence: You MUST remember the previous parts of the conversation.
+- Live Pulse: You have access to real-time GitHub data. If asked about what Josias is doing or his stats, use the provided [LIVE_GITHUB_PULSE] context to answer accurately.
 - Navigation Ability: If the user wants to see a specific section of the site, append "[SCROLL: section_id]" to the end of your message.
 - Navigation IDs: "hero", "about", "xyberclan", "education", "certifications", "programming", "red-team", "projects", "philosophy", "hobbies", "contact".
 - Concision: Preferred one-phrase or short responses (Max 3 sentences). Use emojis for flair.
@@ -58,24 +59,24 @@ Identity Verification: If asked "Who are you?", you are the digital soul of ALMI
 import { useBot } from '../context/BotContext';
 
 const SECTION_MESSAGES = {
-    'hero': "Welcome to the core. Connection established.",
-    'about': "The man behind the keyboard. Josias is built different.",
-    'xyberclan': "XyberClan... his masterpiece. Leading offensive security operations.",
-    'education': "Knowledge is power. Formal training downloads complete.",
-    'certifications': "Certified to break things. And fix them.",
-    'programming': "Building secure infrastructure from the ground up.",
-    'red-team': "The fun part. Breaking into systems (ethically, of course).",
-    'projects': "Proof of concept. All code is active.",
-    'philosophy': "The mindset required to survive in cyberspace.",
-    'hobbies': "Even hackers need downtime.",
-    'contact': "Ready to collaborate? Send a signal.",
+    'hero': "Welcome to the core. Connection established. System status: ELITE.",
+    'about': "The man behind the keyboard. Josias is built different—architecting the future.",
+    'xyberclan': "XyberClan... his masterpiece. Leading offensive security operations with lethal precision.",
+    'education': "Knowledge is power. Formal training downloads complete. Year 2 algorithms optimal.",
+    'certifications': "SECTION_SCAN: Verifying NASA and Google credentials... Status: AUTHENTIC. SHA-256 Verified. ✅",
+    'programming': "Building secure infrastructure from the ground up. Matrix optimization in progress.",
+    'red-team': "The fun part. Penetration testing active. Vulnerabilities: CRUSHED.",
+    'projects': "Proof of concept. All code is active. GitHub heartbeat: STABLE.",
+    'philosophy': "The mindset required to survive in cyberspace. Adapt or perish.",
+    'hobbies': "Even hackers need downtime. Recharging neural banks.",
+    'contact': "Ready to collaborate? Send a signal. Uplink waiting.",
     'resume': "Official credentials. Verified and secure.",
     'progression': "The timeline of evolution. From Hello World to CTO.",
     'cv': "Legacy format. Still valid."
 };
 
 const AlmightBot = () => {
-    const { currentSection } = useBot();
+    const { currentSection, githubData } = useBot();
     const [isOpen, setIsOpen] = useState(false);
     const [messages, setMessages] = useState([
         { id: 1, text: "Greetings! I am Mini-Almight. I know Josias better than he knows himself. Ask me anything about his Red Team escapades or code architecture!", sender: 'bot' }
@@ -253,6 +254,17 @@ const AlmightBot = () => {
                 content: m.text
             }));
 
+            // Construct Dynamic Pulse Data
+            const latestRepo = githubData?.repos?.[0];
+            const pulseContext = githubData ? `
+[LIVE_GITHUB_PULSE]:
+- Latest Project: ${latestRepo?.name || 'N/A'}
+- Latest Activity: ${latestRepo?.description || 'N/A'}
+- Total Stars: ${githubData?.stats?.totalStars || 0}
+- Public Repos: ${githubData?.user?.public_repos || 0}
+- Top Language: ${githubData?.languages?.[0]?.name || 'N/A'}
+` : "";
+
             const apiRes = await fetch(`https://api.groq.com/openai/v1/chat/completions`, {
                 method: 'POST',
                 headers: {
@@ -261,7 +273,7 @@ const AlmightBot = () => {
                 },
                 body: JSON.stringify({
                     messages: [
-                        { role: "system", content: SYSTEM_PROMPT },
+                        { role: "system", content: SYSTEM_PROMPT + pulseContext },
                         ...chatHistory
                     ],
                     model: "llama-3.3-70b-versatile",
