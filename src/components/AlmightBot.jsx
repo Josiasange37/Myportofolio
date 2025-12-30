@@ -85,7 +85,6 @@ const AlmightBot = () => {
     const [isTyping, setIsTyping] = useState(false);
     const [speechBubble, setSpeechBubble] = useState(null);
     const [showBubble, setShowBubble] = useState(false);
-    const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
     // Welcome Sequence State
     const [isWelcomeSequence, setIsWelcomeSequence] = useState(() => {
@@ -101,90 +100,6 @@ const AlmightBot = () => {
     useEffect(() => {
         scrollToBottom();
     }, [messages]);
-
-    // Track mouse for eye following
-    useEffect(() => {
-        const handleMouseMove = (e) => {
-            setMousePos({ x: e.clientX, y: e.clientY });
-        };
-        window.addEventListener('mousemove', handleMouseMove);
-        return () => window.removeEventListener('mousemove', handleMouseMove);
-    }, []);
-
-    // Interactive SVG Avatar Component
-    const InteractiveAvatar = ({ state, isTyping, mousePos }) => {
-        const avatarRef = useRef(null);
-        const [eyePos, setEyePos] = useState({ x: 0, y: 0 });
-
-        useEffect(() => {
-            if (!avatarRef.current) return;
-            const rect = avatarRef.current.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-
-            const dx = (mousePos.x - centerX) / 20;
-            const dy = (mousePos.y - centerY) / 20;
-
-            // Constrain movement
-            const limit = 4;
-            setEyePos({
-                x: Math.max(-limit, Math.min(limit, dx)),
-                y: Math.max(-limit, Math.min(limit, dy))
-            });
-        }, [mousePos]);
-
-        return (
-            <div ref={avatarRef} className="w-full h-full flex items-center justify-center relative">
-                <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-[0_0_15px_rgba(6,182,212,0.5)]">
-                    {/* Head Body */}
-                    <path
-                        d="M20,30 Q20,15 40,15 L60,15 Q80,15 80,30 L80,70 Q80,85 60,85 L40,85 Q20,85 20,70 Z"
-                        fill="rgba(0, 0, 0, 0.8)"
-                        stroke="rgba(6, 182, 212, 0.5)"
-                        strokeWidth="2"
-                    />
-
-                    {/* Glass Visor */}
-                    <rect x="25" y="32" width="50" height="25" rx="5" fill="rgba(6, 182, 212, 0.1)" />
-
-                    {/* Eyes Background */}
-                    <circle cx="38" cy="45" r="5" fill="#1a1a1a" />
-                    <circle cx="62" cy="45" r="5" fill="#1a1a1a" />
-
-                    {/* Pupils (Tracking) */}
-                    <circle
-                        cx={38 + eyePos.x}
-                        cy={45 + eyePos.y}
-                        r="2.5"
-                        fill={state === 'SERIOUS' ? '#ff4444' : '#06b6d4'}
-                        className="transition-colors duration-300"
-                    />
-                    <circle
-                        cx={62 + eyePos.x}
-                        cy={45 + eyePos.y}
-                        r="2.5"
-                        fill={state === 'SERIOUS' ? '#ff4444' : '#06b6d4'}
-                        className="transition-colors duration-300"
-                    />
-
-                    {/* Mouth Line */}
-                    <rect
-                        x="35"
-                        y="70"
-                        width="30"
-                        height={isTyping ? "4" : "1.5"}
-                        rx="1"
-                        fill="#06b6d4"
-                        className={isTyping ? "animate-pulse" : "transition-all duration-300"}
-                    />
-
-                    {/* Side Ears/Antennas */}
-                    <rect x="15" y="45" width="2" height="15" rx="1" fill="#06b6d4" opacity="0.6" />
-                    <rect x="83" y="45" width="2" height="15" rx="1" fill="#06b6d4" opacity="0.6" />
-                </svg>
-            </div>
-        );
-    };
 
     // Welcome Sequence Effect
     useEffect(() => {
@@ -482,8 +397,12 @@ const AlmightBot = () => {
             <div className={`pointer-events-auto relative group cursor-pointer w-32 h-32 flex items-center justify-center ${isWelcomeSequence ? 'pointer-events-none' : ''}`} onClick={() => !isWelcomeSequence && setIsOpen(!isOpen)}>
                 <div className="absolute inset-0 bg-cyan-500/20 blur-2xl rounded-full scale-0 group-hover:scale-75 transition-transform duration-500"></div>
 
-                <div className="floating-avatar relative w-full h-full transition-transform duration-300 group-hover:scale-110">
-                    <InteractiveAvatar state={currentState} isTyping={isTyping} mousePos={mousePos} />
+                <div className="floating-avatar relative w-full h-full transition-transform duration-300 group-hover:scale-110 drop-shadow-[0_0_15px_rgba(6,182,212,0.4)]">
+                    <img
+                        src={AVATAR_STATES[currentState]}
+                        alt="Mini Almight"
+                        className="w-full h-full object-contain filter brightness-110 contrast-110"
+                    />
                 </div>
 
                 <div className={`absolute bottom-4 right-8 w-3 h-3 rounded-full border border-black ${currentState === 'SERIOUS' ? 'bg-red-500 shadow-[0_0_8px_red]' : 'bg-green-500 shadow-[0_0_8px_green]'} transition-colors duration-300`}></div>
