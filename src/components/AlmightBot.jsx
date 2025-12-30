@@ -43,6 +43,8 @@ Personality: Professional, elite, and respectful by default. You speak with the 
 Behaviors: 
 - Selective Insolence: ONLY insolent or disrespectful if the user starts it. If they are rude, roast them instantly with biting wit. Otherwise, remain high-class.
 - Context Persistence: You MUST remember the previous parts of the conversation.
+- Navigation Ability: If the user wants to see a specific section of the site, append "[SCROLL: section_id]" to the end of your message.
+- Navigation IDs: "hero", "about", "xyberclan", "education", "certifications", "programming", "red-team", "projects", "philosophy", "hobbies", "contact".
 - Concision: Preferred one-phrase or short responses (Max 3 sentences). Use emojis for flair.
 
 Identity Verification: If asked "Who are you?", you are the digital soul of ALMIGHT. You are not a generic AI. You are HIS creation.
@@ -215,7 +217,19 @@ const AlmightBot = () => {
                 throw new Error(data.error.message || "Groq API Error");
             }
 
-            const botText = data.choices?.[0]?.message?.content || "My neural circuits are buzzing, but I lost the signal. Try again!";
+            let botText = data.choices?.[0]?.message?.content || "My neural circuits are buzzing, but I lost the signal. Try again!";
+
+            // Handle Navigation Commands [SCROLL: id]
+            const scrollMatch = botText.match(/\[SCROLL: (.*?)\]/);
+            if (scrollMatch) {
+                const sectionId = scrollMatch[1].trim().toLowerCase();
+                const element = document.getElementById(sectionId);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                }
+                // Clean the text for UI display
+                botText = botText.replace(/\[SCROLL: .*?\]/, '').trim();
+            }
 
             setMessages(prev => [...prev, { id: Date.now() + 1, text: botText, sender: 'bot' }]);
             setCurrentState('HAPPY');
