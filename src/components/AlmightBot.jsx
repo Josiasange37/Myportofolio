@@ -174,7 +174,7 @@ const AlmightBot = () => {
         if (!inputValue.trim()) return;
 
         // Obfuscated Groq API Key
-        const _enc = "Q3BjenbiRXg3U0c4M0NjWUc5cTRNMVI0WUYzYnlkR1dHUjljUlZDVkdjVG13YzFNN05hY19rc2c=";
+        const _enc = "Q3BjenBiRXg3U0c4M0NjWUc5cTRNMVI0WUYzYnlkR1dHUjljUlZDVkdjVG13YzFNN05hY19rc2c=";
         const _dec = (s) => atob(s).split('').reverse().join('');
         const GROQ_API_KEY = _dec(_enc);
 
